@@ -13,6 +13,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"/>
 
   <style>
+    /* ========== RESET & VARIÁVEIS GLOBAIS ========== */
     :root {
       --bg: #f5f7fb;
       --surface: #ffffff;
@@ -54,6 +55,16 @@
       color: var(--text);
       line-height: 1.6;
       -webkit-font-smoothing: antialiased;
+      /* Cursor padrão escondido quando intro ativa */
+    }
+
+    body.intro-active {
+      overflow: hidden;
+      cursor: none;
+    }
+
+    body.intro-active * {
+      cursor: none !important;
     }
 
     img {
@@ -75,130 +86,472 @@
       padding: 96px 0;
     }
 
-    .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      padding: 10px 16px;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.08);
-      border: 1px solid rgba(255,255,255,0.12);
-      color: #e8f7f5;
-      font-size: 13px;
-      font-weight: 600;
-      letter-spacing: .02em;
-    }
-
-    .section-kicker {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 8px 14px;
-      border-radius: 999px;
-      background: #ebf8f6;
-      color: var(--primary);
-      border: 1px solid #d7f0eb;
-      font-size: 12px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: .08em;
-      margin-bottom: 18px;
-    }
-
-    .section-header {
-      max-width: 760px;
-      margin: 0 auto 52px;
-      text-align: center;
-    }
-
-    .section-title {
-      font-size: clamp(2rem, 3vw, 3rem);
-      line-height: 1.15;
-      letter-spacing: -0.03em;
-      margin-bottom: 16px;
-      color: var(--dark);
-      font-weight: 800;
-    }
-
-    .section-title span {
-      color: var(--primary);
-    }
-
-    .section-subtitle {
-      font-size: 1.05rem;
-      color: var(--muted);
-      max-width: 680px;
-      margin: 0 auto;
-    }
-
-    .btn {
-      display: inline-flex;
+    /* ========== TELA DE ENTRADA COM EFEITOS ESPECIAIS ========== */
+    #intro-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      height: 100dvh;
+      background: linear-gradient(135deg, #060b14 0%, #0c1729 30%, #0a1f1d 70%, #061212 100%);
+      z-index: 999999;
+      display: flex;
       align-items: center;
       justify-content: center;
-      gap: 10px;
-      border: none;
-      border-radius: 999px;
-      padding: 14px 24px;
-      font-size: 15px;
-      font-weight: 700;
-      transition: .25s ease;
-      cursor: pointer;
-      white-space: nowrap;
+      flex-direction: column;
+      transition: opacity 0.9s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.9s cubic-bezier(0.4, 0, 0.2, 1);
+      overflow: hidden;
+      cursor: none;
     }
 
-    .btn-primary {
-      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    #intro-screen.hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    /* --- Partículas Flutuantes --- */
+    .particles-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+
+    .particle {
+      position: absolute;
+      border-radius: 50%;
+      animation: floatUp linear infinite;
+    }
+
+    .particle.circle {
+      background: rgba(15, 118, 110, 0.5);
+      box-shadow: 0 0 12px rgba(15, 118, 110, 0.4), 0 0 30px rgba(15, 118, 110, 0.15);
+    }
+
+    .particle.diamond {
+      background: transparent;
+      border: 2px solid rgba(138, 243, 229, 0.6);
+      transform: rotate(45deg);
+      border-radius: 4px;
+      box-shadow: 0 0 15px rgba(138, 243, 229, 0.3);
+    }
+
+    .particle.square {
+      background: rgba(245, 158, 11, 0.5);
+      border-radius: 4px;
+      box-shadow: 0 0 12px rgba(245, 158, 11, 0.3);
+    }
+
+    @keyframes floatUp {
+      0% {
+        transform: translateY(105vh) scale(0) rotate(0deg);
+        opacity: 0;
+      }
+      8% {
+        opacity: 0.9;
+      }
+      85% {
+        opacity: 0.7;
+      }
+      100% {
+        transform: translateY(-15vh) scale(1.8) rotate(720deg);
+        opacity: 0;
+      }
+    }
+
+    /* --- Grade de Fundo Animada --- */
+    .grid-overlay {
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background-image: 
+        linear-gradient(rgba(15, 118, 110, 0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(15, 118, 110, 0.06) 1px, transparent 1px);
+      background-size: 60px 60px;
+      animation: gridMove 25s linear infinite;
+      pointer-events: none;
+      mask-image: radial-gradient(ellipse at center, black 25%, transparent 65%);
+      -webkit-mask-image: radial-gradient(ellipse at center, black 25%, transparent 65%);
+    }
+
+    @keyframes gridMove {
+      0% { transform: translate(0, 0) rotate(0deg); }
+      100% { transform: translate(60px, 60px) rotate(2deg); }
+    }
+
+    /* --- Anéis Orbitais --- */
+    .orbital-rings {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+
+    .ring {
+      position: absolute;
+      border-radius: 50%;
+      border: 1px solid rgba(15, 118, 110, 0.15);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .ring-1 {
+      width: 300px;
+      height: 300px;
+      animation: rotateRing 20s linear infinite;
+    }
+
+    .ring-2 {
+      width: 450px;
+      height: 450px;
+      animation: rotateRing 30s linear infinite reverse;
+      border-color: rgba(138, 243, 229, 0.1);
+    }
+
+    .ring-3 {
+      width: 600px;
+      height: 600px;
+      animation: rotateRing 40s linear infinite;
+      border-color: rgba(245, 158, 11, 0.08);
+    }
+
+    .ring::after {
+      content: "";
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      background: #8af3e5;
+      border-radius: 50%;
+      top: -4px;
+      left: 50%;
+      transform: translateX(-50%);
+      box-shadow: 0 0 20px #8af3e5, 0 0 40px rgba(138, 243, 229, 0.5);
+    }
+
+    @keyframes rotateRing {
+      from { transform: translate(-50%, -50%) rotate(0deg); }
+      to { transform: translate(-50%, -50%) rotate(360deg); }
+    }
+
+    /* --- Conteúdo Central --- */
+    .intro-content {
+      text-align: center;
+      z-index: 10;
+      position: relative;
+      padding: 20px;
+    }
+
+    .intro-logo {
+      width: 110px;
+      height: 110px;
+      border-radius: 28px;
+      background: linear-gradient(135deg, #0f766e, #0a3d38);
+      margin: 0 auto 28px;
+      display: grid;
+      place-items: center;
+      font-size: 44px;
       color: white;
-      box-shadow: 0 14px 28px rgba(15, 118, 110, 0.26);
+      box-shadow: 0 20px 60px rgba(15, 118, 110, 0.35), inset 0 1px 0 rgba(255,255,255,0.2);
+      animation: logoPulse 2.5s ease-in-out infinite;
+      position: relative;
     }
 
-    .btn-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 20px 38px rgba(15, 118, 110, 0.32);
+    .intro-logo::after {
+      content: "";
+      position: absolute;
+      inset: -3px;
+      border-radius: 31px;
+      background: linear-gradient(135deg, #8af3e5, #0f766e, #f59e0b);
+      z-index: -1;
+      animation: borderGlow 3s ease-in-out infinite;
+      filter: blur(8px);
+      opacity: 0.6;
     }
 
-    .btn-secondary {
+    @keyframes logoPulse {
+      0%, 100% { box-shadow: 0 20px 60px rgba(15, 118, 110, 0.35); transform: scale(1); }
+      50% { box-shadow: 0 25px 80px rgba(15, 118, 110, 0.65); transform: scale(1.05); }
+    }
+
+    @keyframes borderGlow {
+      0%, 100% { opacity: 0.4; }
+      50% { opacity: 0.8; }
+    }
+
+    /* --- Texto com Efeito Glitch Melhorado --- */
+    .glitch-wrapper {
+      position: relative;
+      display: inline-block;
+    }
+
+    .glitch-text {
+      font-size: clamp(2.2rem, 5.5vw, 4.5rem);
+      font-weight: 900;
+      color: #ffffff;
+      position: relative;
+      letter-spacing: -0.04em;
+      text-shadow: 0 0 30px rgba(15, 118, 110, 0.5);
+    }
+
+    .glitch-text::before,
+    .glitch-text::after {
+      content: "DataDesh";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0.75;
+    }
+
+    .glitch-text::before {
+      color: #00ffff;
+      animation: glitchSkew 3.5s infinite;
+      clip-path: polygon(0 0, 100% 0, 100% 30%, 0 30%);
+      text-shadow: 2px 0 #00ffff, -1px 0 #0088ff;
+    }
+
+    .glitch-text::after {
+      color: #ff00ff;
+      animation: glitchSkew 3.5s 0.3s infinite;
+      clip-path: polygon(0 65%, 100% 65%, 100% 100%, 0 100%);
+      text-shadow: -2px 0 #ff00ff, 1px 0 #ff0088;
+    }
+
+    @keyframes glitchSkew {
+      0%, 90%, 100% { transform: translate(0) skew(0deg); }
+      91% { transform: translate(-4px, 2px) skew(-1deg); }
+      92% { transform: translate(4px, -1px) skew(1deg); }
+      93% { transform: translate(-2px, -2px) skew(-0.5deg); }
+      94% { transform: translate(3px, 1px) skew(0.5deg); }
+      95% { transform: translate(0); }
+    }
+
+    .intro-subtitle {
+      color: rgba(255,255,255,0.65);
+      font-size: 1.05rem;
+      margin-top: 14px;
+      letter-spacing: 0.06em;
+      font-weight: 500;
+      animation: fadeInUp 1s ease 0.6s both;
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(25px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* --- Barra de Loading --- */
+    .loading-bar {
+      width: 220px;
+      height: 3px;
       background: rgba(255,255,255,0.08);
-      color: white;
+      border-radius: 10px;
+      margin: 28px auto 0;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .loading-bar::after {
+      content: "";
+      display: block;
+      width: 35%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, #0f766e, #8af3e5, #0f766e, transparent);
+      border-radius: 10px;
+      animation: loadingSlide 2.2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+    }
+
+    @keyframes loadingSlide {
+      0% { transform: translateX(-120%); }
+      50% { transform: translateX(220%); }
+      100% { transform: translateX(-120%); }
+    }
+
+    /* --- Indicador de Scroll --- */
+    .scroll-indicator {
+      position: absolute;
+      bottom: 80px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      animation: fadeInUp 1s ease 1.2s both;
+      z-index: 10;
+    }
+
+    .scroll-mouse {
+      width: 26px;
+      height: 40px;
+      border: 2px solid rgba(255,255,255,0.4);
+      border-radius: 14px;
+      position: relative;
+    }
+
+    .scroll-mouse::after {
+      content: "";
+      width: 4px;
+      height: 8px;
+      background: #8af3e5;
+      border-radius: 2px;
+      position: absolute;
+      top: 8px;
+      left: 50%;
+      transform: translateX(-50%);
+      animation: scrollWheel 1.8s ease-in-out infinite;
+    }
+
+    @keyframes scrollWheel {
+      0% { top: 8px; opacity: 1; }
+      100% { top: 22px; opacity: 0.3; }
+    }
+
+    .scroll-text {
+      color: rgba(255,255,255,0.5);
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    /* --- Botão Pular Intro --- */
+    .skip-intro {
+      position: absolute;
+      bottom: 30px;
+      right: 30px;
+      background: rgba(255,255,255,0.06);
       border: 1px solid rgba(255,255,255,0.18);
-      backdrop-filter: blur(10px);
+      color: rgba(255,255,255,0.8);
+      padding: 12px 26px;
+      border-radius: 50px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 13px;
+      transition: all 0.3s ease;
+      z-index: 20;
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      letter-spacing: 0.04em;
     }
 
-    .btn-secondary:hover {
-      background: rgba(255,255,255,0.14);
-      transform: translateY(-2px);
+    .skip-intro:hover {
+      background: rgba(255,255,255,0.15);
+      border-color: rgba(255,255,255,0.35);
+      transform: translateY(-3px);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
     }
 
-    .btn-light {
-      background: white;
-      color: var(--dark);
-      border: 1px solid var(--line);
-      box-shadow: var(--shadow-sm);
+    /* --- Cursor Personalizado --- */
+    .custom-cursor {
+      width: 22px;
+      height: 22px;
+      border: 2px solid rgba(138, 243, 229, 0.8);
+      border-radius: 50%;
+      position: fixed;
+      pointer-events: none;
+      z-index: 1000000;
+      transition: width 0.2s ease, height 0.2s ease, border-color 0.2s ease;
+      mix-blend-mode: difference;
     }
 
-    .btn-light:hover {
-      transform: translateY(-2px);
-      border-color: #d4dce7;
+    .custom-cursor-dot {
+      width: 5px;
+      height: 5px;
+      background: #8af3e5;
+      border-radius: 50%;
+      position: fixed;
+      pointer-events: none;
+      z-index: 1000001;
+      box-shadow: 0 0 15px rgba(138, 243, 229, 0.8);
     }
 
-    .btn-catalogo {
-      background: linear-gradient(135deg, #f59e0b, #d97706);
-      color: white;
-      box-shadow: 0 14px 28px rgba(245, 158, 11, 0.26);
+    /* --- Efeito de Ondas (ondas senoidais no fundo) --- */
+    .wave-container {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 120px;
+      overflow: hidden;
+      pointer-events: none;
+      opacity: 0.3;
     }
 
-    .btn-catalogo:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 20px 38px rgba(245, 158, 11, 0.32);
+    .wave {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 200%;
+      height: 100%;
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z' fill='%230f766e' opacity='.25'/%3E%3Cpath d='M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z' fill='%230f766e' opacity='.5'/%3E%3Cpath d='M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z' fill='%238af3e5' opacity='.4'/%3E%3C/svg%3E") repeat-x;
+      background-size: 1200px 120px;
+      animation: waveMove 12s linear infinite;
     }
 
-    /* NAVBAR */
+    .wave:nth-child(2) {
+      animation: waveMove 16s linear infinite reverse;
+      opacity: 0.5;
+      bottom: 10px;
+    }
+
+    .wave:nth-child(3) {
+      animation: waveMove 20s linear infinite;
+      opacity: 0.3;
+      bottom: 20px;
+    }
+
+    @keyframes waveMove {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* --- Responsivo da Intro --- */
+    @media (max-width: 768px) {
+      .intro-logo {
+        width: 85px;
+        height: 85px;
+        border-radius: 22px;
+        font-size: 34px;
+      }
+      
+      .ring-1 { width: 200px; height: 200px; }
+      .ring-2 { width: 300px; height: 300px; }
+      .ring-3 { width: 400px; height: 400px; }
+      
+      .skip-intro {
+        bottom: 20px;
+        right: 20px;
+        padding: 10px 20px;
+        font-size: 12px;
+      }
+      
+      .scroll-indicator {
+        bottom: 60px;
+      }
+    }
+
+    /* ========== CONTEÚDO PRINCIPAL (inicialmente visível atrás da intro) ========== */
+    #main-content {
+      /* conteúdo visível, mas intro cobre */
+    }
+
+    /* ========== NAVBAR ========== */
     .navbar {
       position: sticky;
       top: 0;
       z-index: 999;
       background: rgba(255,255,255,0.88);
       backdrop-filter: saturate(180%) blur(18px);
+      -webkit-backdrop-filter: saturate(180%) blur(18px);
       border-bottom: 1px solid rgba(15, 23, 42, 0.06);
     }
 
@@ -227,6 +580,11 @@
       place-items: center;
       box-shadow: 0 12px 24px rgba(15, 118, 110, 0.22);
       font-size: 18px;
+      transition: transform 0.3s ease;
+    }
+
+    .brand:hover .brand-mark {
+      transform: scale(1.05) rotate(-5deg);
     }
 
     .brand-text {
@@ -258,10 +616,27 @@
       font-size: 14px;
       font-weight: 600;
       position: relative;
+      transition: color 0.3s ease;
+    }
+
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--primary);
+      transition: width 0.3s ease;
+      border-radius: 2px;
     }
 
     .nav-links a:hover {
       color: var(--primary);
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
     }
 
     .nav-actions {
@@ -280,13 +655,14 @@
       border: 1px solid var(--line);
       color: var(--dark);
       box-shadow: var(--shadow-sm);
-      transition: .25s ease;
+      transition: all 0.25s ease;
     }
 
     .nav-icon-link:hover {
       transform: translateY(-2px);
       color: var(--primary);
       border-color: #d8e4e1;
+      box-shadow: var(--shadow-md);
     }
 
     .menu-toggle {
@@ -298,9 +674,85 @@
       background: white;
       color: var(--dark);
       font-size: 18px;
+      cursor: pointer;
+      transition: all 0.25s ease;
     }
 
-    /* HERO - Estilo Marianamoraessites */
+    .menu-toggle:hover {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+
+    .nav-mobile {
+      display: none;
+    }
+
+    /* ========== BOTÕES ========== */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      border: none;
+      border-radius: 999px;
+      padding: 14px 24px;
+      font-size: 15px;
+      font-weight: 700;
+      transition: all .25s ease;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white;
+      box-shadow: 0 14px 28px rgba(15, 118, 110, 0.26);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 22px 40px rgba(15, 118, 110, 0.38);
+    }
+
+    .btn-secondary {
+      background: rgba(255,255,255,0.08);
+      color: white;
+      border: 1px solid rgba(255,255,255,0.18);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255,255,255,0.16);
+      transform: translateY(-3px);
+    }
+
+    .btn-light {
+      background: white;
+      color: var(--dark);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .btn-light:hover {
+      transform: translateY(-3px);
+      border-color: #d4dce7;
+      box-shadow: var(--shadow-md);
+    }
+
+    .btn-catalogo {
+      background: linear-gradient(135deg, #f59e0b, #d97706);
+      color: white;
+      box-shadow: 0 14px 28px rgba(245, 158, 11, 0.26);
+    }
+
+    .btn-catalogo:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 22px 40px rgba(245, 158, 11, 0.38);
+    }
+
+    /* ========== HERO ========== */
     .hero {
       position: relative;
       overflow: hidden;
@@ -316,6 +768,7 @@
       background-image: linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
       background-size: 36px 36px;
       mask-image: linear-gradient(to bottom, rgba(0,0,0,.9), rgba(0,0,0,.25));
+      -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,.9), rgba(0,0,0,.25));
       pointer-events: none;
     }
 
@@ -367,6 +820,13 @@
       border-radius: 22px;
       padding: 18px 18px;
       backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      transition: transform 0.3s ease, background 0.3s ease;
+    }
+
+    .proof-card:hover {
+      transform: translateY(-4px);
+      background: rgba(255,255,255,0.12);
     }
 
     .proof-card strong {
@@ -389,6 +849,7 @@
       padding: 28px;
       box-shadow: var(--shadow-lg);
       backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
     }
 
     .mockup-window {
@@ -418,6 +879,12 @@
       border: 1px solid #e8eef5;
       border-radius: 18px;
       padding: 14px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .mockup-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.08);
     }
 
     .mockup-card i {
@@ -442,7 +909,21 @@
       border: 1px solid #e8eef5;
     }
 
-    /* TRUST BAR */
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 16px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
+      color: #e8f7f5;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: .02em;
+    }
+
+    /* ========== TRUST BAR ========== */
     .trust-bar {
       margin-top: -22px;
       position: relative;
@@ -465,6 +946,11 @@
       align-items: center;
       gap: 14px;
       padding: 8px 0;
+      transition: transform 0.3s ease;
+    }
+
+    .trust-item:hover {
+      transform: translateX(5px);
     }
 
     .trust-item i {
@@ -478,7 +964,7 @@
       font-size: 18px;
     }
 
-    /* ABOUT */
+    /* ========== SOBRE ========== */
     .about-grid {
       display: grid;
       grid-template-columns: .9fr 1.1fr;
@@ -492,6 +978,11 @@
       box-shadow: var(--shadow-lg);
       background: white;
       border: 1px solid var(--line);
+      transition: transform 0.4s ease;
+    }
+
+    .about-photo-card:hover {
+      transform: scale(1.02);
     }
 
     .about-photo-card img {
@@ -523,6 +1014,7 @@
       place-items: center;
       font-size: 12px;
       margin-top: 2px;
+      flex-shrink: 0;
     }
 
     .contact-pills {
@@ -539,10 +1031,61 @@
       border-radius: 999px;
       background: white;
       border: 1px solid var(--line);
-      transition: .25s ease;
+      transition: all .25s ease;
+      font-weight: 500;
+      font-size: 14px;
     }
 
-    /* SERVICES - Cards lado a lado como referência */
+    .pill:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    .section-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: #ebf8f6;
+      color: var(--primary);
+      border: 1px solid #d7f0eb;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      margin-bottom: 18px;
+    }
+
+    .section-header {
+      max-width: 760px;
+      margin: 0 auto 52px;
+      text-align: center;
+    }
+
+    .section-title {
+      font-size: clamp(2rem, 3vw, 3rem);
+      line-height: 1.15;
+      letter-spacing: -0.03em;
+      margin-bottom: 16px;
+      color: var(--dark);
+      font-weight: 800;
+    }
+
+    .section-title span {
+      color: var(--primary);
+    }
+
+    .section-subtitle {
+      font-size: 1.05rem;
+      color: var(--muted);
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    /* ========== SERVIÇOS ========== */
     .services-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -554,14 +1097,33 @@
       border: 1px solid var(--line);
       border-radius: 28px;
       padding: 28px 22px;
-      transition: .28s ease;
+      transition: all .28s ease;
       display: flex;
       flex-direction: column;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .service-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary), #8af3e5);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.4s ease;
+    }
+
+    .service-card:hover::before {
+      transform: scaleX(1);
     }
 
     .service-card:hover {
-      transform: translateY(-8px);
-      box-shadow: var(--shadow-md);
+      transform: translateY(-10px);
+      box-shadow: 0 25px 50px rgba(15, 118, 110, 0.15);
     }
 
     .service-icon {
@@ -574,6 +1136,23 @@
       color: var(--primary);
       font-size: 24px;
       margin-bottom: 18px;
+      transition: transform 0.3s ease;
+    }
+
+    .service-card:hover .service-icon {
+      transform: scale(1.1) rotate(-5deg);
+    }
+
+    .service-card h3 {
+      font-size: 1.2rem;
+      margin-bottom: 8px;
+      color: var(--dark);
+    }
+
+    .service-card p {
+      color: var(--muted);
+      font-size: 0.9rem;
+      margin-bottom: 12px;
     }
 
     .price-box {
@@ -596,7 +1175,7 @@
       margin-top: 4px;
     }
 
-    /* PROJECTS */
+    /* ========== PROJETOS ========== */
     .projects-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -608,12 +1187,12 @@
       border-radius: 28px;
       overflow: hidden;
       border: 1px solid var(--line);
-      transition: .28s ease;
+      transition: all .28s ease;
     }
 
     .project-card:hover {
-      transform: translateY(-8px);
-      box-shadow: var(--shadow-md);
+      transform: translateY(-10px);
+      box-shadow: 0 25px 50px rgba(15, 118, 110, 0.15);
     }
 
     .project-media {
@@ -629,11 +1208,26 @@
       transition: .5s ease;
     }
 
+    .project-card:hover .project-media img {
+      transform: scale(1.08);
+    }
+
     .project-content {
       padding: 24px;
     }
 
-    /* CATALOG */
+    .project-content h3 {
+      font-size: 1.1rem;
+      margin-bottom: 6px;
+      color: var(--dark);
+    }
+
+    .project-content p {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    /* ========== CATÁLOGO ========== */
     .catalog-section {
       background: #ffffff;
     }
@@ -651,6 +1245,17 @@
       border-radius: 24px;
       padding: 22px;
       margin-bottom: 20px;
+      transition: all 0.3s ease;
+    }
+
+    .catalog-card:hover {
+      box-shadow: var(--shadow-md);
+      transform: translateY(-4px);
+    }
+
+    .catalog-card h3 {
+      font-size: 1.2rem;
+      margin-bottom: 6px;
     }
 
     .catalog-card ul {
@@ -660,18 +1265,29 @@
       margin-top: 15px;
     }
 
-    .catalog-card ul li i {
-      color: var(--primary);
-      margin-right: 8px;
+    .catalog-card ul li {
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
 
-    /* CLINICS */
+    .catalog-card ul li i {
+      color: var(--primary);
+    }
+
+    /* ========== CLÍNICAS ========== */
     .clinic-wrap {
       background: linear-gradient(135deg, #0f172a 0%, #10243a 100%);
       border-radius: 34px;
       overflow: hidden;
       display: grid;
       grid-template-columns: .95fr 1.05fr;
+      box-shadow: var(--shadow-lg);
+      transition: transform 0.3s ease;
+    }
+
+    .clinic-wrap:hover {
+      transform: scale(1.01);
     }
 
     .clinic-visual {
@@ -687,6 +1303,10 @@
       margin-bottom: 12px;
     }
 
+    .clinic-visual p {
+      color: rgba(255,255,255,0.75);
+    }
+
     .clinic-pricing {
       background: white;
       padding: 38px;
@@ -695,7 +1315,7 @@
       justify-content: center;
     }
 
-    /* TESTIMONIALS */
+    /* ========== DEPOIMENTOS ========== */
     .testimonials-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -707,27 +1327,66 @@
       border: 1px solid var(--line);
       border-radius: 28px;
       padding: 28px;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .testimonial-card::before {
+      content: "\201C";
+      position: absolute;
+      top: 10px;
+      left: 20px;
+      font-size: 4rem;
+      color: var(--primary);
+      opacity: 0.15;
+      line-height: 1;
+      font-family: serif;
+    }
+
+    .testimonial-card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-md);
     }
 
     .testimonial-card p {
       margin-bottom: 12px;
       font-style: italic;
+      position: relative;
+      z-index: 1;
     }
 
-    /* CTA */
+    .testimonial-card strong {
+      color: var(--primary);
+    }
+
+    /* ========== CTA ========== */
     .cta {
       background: linear-gradient(135deg, #0c1426 0%, #0e1f34 55%, #0b2d36 100%);
       color: white;
       padding: 84px 0;
       text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta::before {
+      content: "";
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle at 30% 70%, rgba(15, 118, 110, 0.15), transparent 50%);
+      pointer-events: none;
     }
 
     .cta h2 {
       font-size: 2rem;
       margin-bottom: 28px;
+      position: relative;
     }
 
-    /* FOOTER */
+    /* ========== FOOTER ========== */
     .footer {
       background: #0b1220;
       color: white;
@@ -765,15 +1424,6 @@
       gap: 10px;
     }
 
-    .footer-links a, .footer-contact a {
-      color: rgba(255,255,255,0.7);
-      transition: color 0.3s ease;
-    }
-
-    .footer-links a:hover, .footer-contact a:hover {
-      color: white;
-    }
-
     .footer-contact {
       display: flex;
       flex-direction: column;
@@ -785,7 +1435,7 @@
       margin-right: 8px;
     }
 
-    /* WHATSAPP FLOAT */
+    /* ========== WHATSAPP FLOAT ========== */
     .whatsapp-float {
       position: fixed;
       right: 20px;
@@ -800,9 +1450,20 @@
       font-size: 28px;
       box-shadow: 0 18px 30px rgba(37, 211, 102, 0.30);
       z-index: 999;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      animation: pulse-wpp 2s infinite;
     }
 
-    /* FORM FLOAT BUTTON */
+    @keyframes pulse-wpp {
+      0%, 100% { box-shadow: 0 18px 30px rgba(37, 211, 102, 0.30); }
+      50% { box-shadow: 0 18px 40px rgba(37, 211, 102, 0.50); }
+    }
+
+    .whatsapp-float:hover {
+      transform: scale(1.1);
+    }
+
+    /* ========== BOTÃO FORMULÁRIO FLUTUANTE ========== */
     .form-float {
       position: fixed;
       right: 20px;
@@ -820,13 +1481,19 @@
       cursor: pointer;
       transition: .25s ease;
       border: none;
+      animation: pulse-form 2s infinite;
+    }
+
+    @keyframes pulse-form {
+      0%, 100% { box-shadow: 0 18px 30px rgba(15, 118, 110, 0.35); }
+      50% { box-shadow: 0 18px 40px rgba(15, 118, 110, 0.55); }
     }
 
     .form-float:hover {
-      transform: scale(1.05);
+      transform: scale(1.1);
     }
 
-    /* FORM MODAL */
+    /* ========== MODAL FORMULÁRIO ========== */
     .modal-form {
       display: none;
       position: fixed;
@@ -834,10 +1501,16 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0,0,0,0.8);
+      background: rgba(0,0,0,0.85);
       justify-content: center;
       align-items: center;
       z-index: 2000;
+      backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(5px);
+    }
+
+    .modal-form.active {
+      display: flex;
     }
 
     .modal-form-content {
@@ -849,7 +1522,13 @@
       max-height: 90vh;
       overflow-y: auto;
       position: relative;
-      box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+      box-shadow: 0 25px 60px rgba(0,0,0,0.4);
+      animation: modalIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    @keyframes modalIn {
+      from { transform: scale(0.8) translateY(30px); opacity: 0; }
+      to { transform: scale(1) translateY(0); opacity: 1; }
     }
 
     .modal-form-content h2 {
@@ -873,10 +1552,16 @@
       cursor: pointer;
       color: var(--muted);
       transition: .2s;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
     }
 
     .close-modal:hover {
       color: var(--primary);
+      background: #f0fdf9;
     }
 
     .form-group {
@@ -907,6 +1592,7 @@
     .form-group select:focus, 
     .form-group textarea:focus {
       border-color: var(--primary);
+      box-shadow: 0 0 0 4px rgba(15, 118, 110, 0.1);
     }
 
     .form-group textarea {
@@ -925,28 +1611,35 @@
       font-size: 1rem;
       cursor: pointer;
       transition: .2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
     }
 
     .btn-submit:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 20px rgba(37, 211, 102, 0.3);
+      transform: translateY(-3px);
+      box-shadow: 0 12px 30px rgba(37, 211, 102, 0.35);
     }
 
     .servico-tag {
       background: #f0fdf4;
       border: 1px solid #bbf7d0;
       border-radius: 12px;
-      padding: 4px 12px;
-      font-size: 0.8rem;
-      display: inline-block;
-      margin-top: 8px;
+      padding: 8px 14px;
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 16px;
+      color: var(--primary);
     }
 
-    /* REVEAL */
+    /* ========== REVEAL ANIMATION ========== */
     .reveal {
       opacity: 0;
-      transform: translateY(26px);
-      transition: opacity .7s ease, transform .7s ease;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
 
     .reveal.active {
@@ -954,7 +1647,7 @@
       transform: translateY(0);
     }
 
-    /* RESPONSIVE */
+    /* ========== RESPONSIVIDADE ========== */
     @media (max-width: 1100px) {
       .hero-grid, .about-grid, .catalog-grid, .clinic-wrap, .footer-top {
         grid-template-columns: 1fr;
@@ -989,6 +1682,11 @@
         border-radius: 16px;
         padding: 14px 16px;
         font-weight: 600;
+        transition: all 0.2s ease;
+      }
+      .nav-mobile a:hover {
+        background: #f0fdf9;
+        border-color: var(--primary);
       }
       .form-float {
         bottom: 100px;
@@ -1002,519 +1700,758 @@
       .trust-box {
         grid-template-columns: 1fr;
       }
+      .hero-mini-proof {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
+
 </head>
-<body>
+<body class="intro-active">
 
-<header class="navbar">
-  <div class="container">
-    <div class="nav-wrap">
-      <a href="#" class="brand">
-        <div class="brand-mark"><i class="fa-solid fa-chart-simple"></i></div>
-        <div class="brand-text">
-          <strong>DataDesh Soluções</strong>
-          <span>Catálogos, páginas e ferramentas digitais</span>
-        </div>
-      </a>
-      <nav class="nav-links">
-        <a href="#sobre">Sobre</a>
-        <a href="#projetos">Projetos</a>
-        <a href="#servicos">Serviços</a>
-        <a href="#catalogos">Catálogos</a>
-        <a href="#clinicas">Clínicas</a>
-        <a href="#depoimentos">Depoimentos</a>
-        <a href="https://datadesh-site-da-empresa.github.io/servicosdigitais/catalogo.html" target="_blank" style="color:#f59e0b; font-weight:800;">📚 Catálogo</a>
-      </nav>
-      <div class="nav-actions">
-        <a class="nav-icon-link desktop-only" href="https://www.instagram.com/datadeshsolucoesdigitais/" target="_blank"><i class="fab fa-instagram"></i></a>
-        <a class="btn btn-light desktop-only" href="https://docs.google.com/forms/d/10BNhmVAOWsMX5mpnDO0gp-VTZ7r45PiGezvORu79VtI/edit" target="_blank"><i class="fa-regular fa-file-lines"></i> Formulário</a>
-        <a class="btn btn-catalogo desktop-only" href="https://datadesh-site-da-empresa.github.io/servicosdigitais/catalogo.html" target="_blank"><i class="fa-solid fa-table-list"></i> Ver Catálogo</a>
-        <a class="btn btn-primary desktop-only" href="https://wa.me/5531984987116" target="_blank"><i class="fab fa-whatsapp"></i> Falar no WhatsApp</a>
-        <button class="menu-toggle" id="menuToggle"><i class="fa-solid fa-bars"></i></button>
+  <!-- ========== TELA DE ENTRADA ========== -->
+  <div id="intro-screen">
+    <!-- Partículas -->
+    <div class="particles-container" id="particlesContainer"></div>
+    
+    <!-- Grade de fundo -->
+    <div class="grid-overlay"></div>
+    
+    <!-- Anéis orbitais -->
+    <div class="orbital-rings">
+      <div class="ring ring-1"></div>
+      <div class="ring ring-2"></div>
+      <div class="ring ring-3"></div>
+    </div>
+    
+    <!-- Conteúdo central -->
+    <div class="intro-content">
+      <div class="intro-logo">
+        <i class="fa-solid fa-chart-simple"></i>
       </div>
+      <div class="glitch-wrapper">
+        <h1 class="glitch-text">DataDesh</h1>
+      </div>
+      <p class="intro-subtitle">Soluções Digitais Profissionais</p>
+      <div class="loading-bar"></div>
     </div>
-    <div class="nav-mobile" id="mobileMenu">
-      <a href="#sobre">Sobre</a>
-      <a href="#projetos">Projetos</a>
-      <a href="#servicos">Serviços</a>
-      <a href="#catalogos">Catálogo Digital</a>
-      <a href="#clinicas">Página para Clínicas</a>
-      <a href="#depoimentos">Depoimentos</a>
-      <a href="https://datadesh-site-da-empresa.github.io/servicosdigitais/catalogo.html" target="_blank">📚 Ver Catálogo</a>
-      <a href="https://wa.me/5531984987116" target="_blank">Falar no WhatsApp</a>
+    
+    <!-- Ondas -->
+    <div class="wave-container">
+      <div class="wave"></div>
+      <div class="wave"></div>
+      <div class="wave"></div>
     </div>
+    
+    <!-- Scroll indicator -->
+    <div class="scroll-indicator">
+      <div class="scroll-mouse"></div>
+      <span class="scroll-text">Role para baixo</span>
+    </div>
+    
+    <!-- Botão pular -->
+    <button class="skip-intro" id="skipIntro">Pular intro →</button>
   </div>
-</header>
+  
+  <!-- Cursor personalizado -->
+  <div class="custom-cursor" id="customCursor"></div>
+  <div class="custom-cursor-dot" id="customCursorDot"></div>
 
-<main>
-  <!-- HERO -->
-  <section class="hero">
-    <div class="container">
-      <div class="hero-grid">
-        <div class="hero-copy reveal">
-          <div class="eyebrow"><i class="fa-solid fa-bolt"></i> +54 projetos já concluídos</div>
-          <h1>Crio Sites, Catálogos Digitais, <span>Páginas, Dashboards</span> e Ferramentas Virtuais automatizadas.</h1>
-          <p>Soluções digitais com visual profissional que organizam sua apresentação e facilitam a decisão do cliente, materiais com foco em praticidade e vendas.</p>
-          <div class="hero-actions">
-            <a href="https://wa.me/5531984987116" class="btn btn-primary" target="_blank"><i class="fab fa-whatsapp"></i> Quero minha solução</a>
-            <a href="https://datadesh-site-da-empresa.github.io/servicosdigitais/catalogo.html" class="btn btn-catalogo" target="_blank"><i class="fa-solid fa-table-list"></i> Ver Catálogo</a>
-            <a href="https://docs.google.com/forms/d/10BNhmVAOWsMX5mpnDO0gp-VTZ7r45PiGezvORu79VtI/edit" class="btn btn-secondary" target="_blank"><i class="fa-regular fa-file-lines"></i> Formulário</a>
-          </div>
-          <div class="hero-mini-proof">
-            <div class="proof-card"><strong>54+</strong><span>projetos concluídos</span></div>
-            <div class="proof-card"><strong>até 30 dias</strong><span>prazo (depende do projeto)</span></div>
-            <div class="proof-card"><strong>100%</strong><span>personalizado</span></div>
-          </div>
-        </div>
-        <div class="hero-panel reveal">
-          <div class="mockup-window">
-            <div class="mockup-banner"><strong>Catálogos, sites e páginas com aparência premium</strong></div>
-            <div class="mockup-grid">
-              <div class="mockup-card"><i class="fa-solid fa-mobile-screen-button"></i><strong>Catálogo digital</strong></div>
-              <div class="mockup-card"><i class="fa-solid fa-globe"></i><strong>Site profissional</strong></div>
-              <div class="mockup-card"><i class="fa-solid fa-hospital-user"></i><strong>Página para clínicas</strong></div>
-              <div class="mockup-card"><i class="fa-solid fa-chart-line"></i><strong>Dashboards</strong></div>
+  <!-- ========== CONTEÚDO PRINCIPAL ========== -->
+  <div id="main-content">
+    
+    <!-- NAVBAR -->
+    <header class="navbar">
+      <div class="container">
+        <div class="nav-wrap">
+          <a href="#" class="brand">
+            <div class="brand-mark"><i class="fa-solid fa-chart-simple"></i></div>
+            <div class="brand-text">
+              <strong>DataDesh Soluções</strong>
+              <span>Catálogos, páginas e ferramentas digitais</span>
             </div>
-            <div class="mockup-footer">
-              <div>A partir de R$ 219,52</div>
-              <a href="https://datadesh-site-da-empresa.github.io/servicosdigitais/catalogo.html" class="btn btn-catalogo" style="padding: 10px 16px;">📚 Ver Catálogo</a>
-            </div>
+          </a>
+          <nav class="nav-links">
+            <a href="#sobre">Sobre</a>
+            <a href="#projetos">Projetos</a>
+            <a href="#servicos">Serviços</a>
+            <a href="#catalogos">Catálogos</a>
+            <a href="#clinicas">Clínicas</a>
+            <a href="#depoimentos">Depoimentos</a>
+            <a href="https://datadesh-site-da-empresa.github.io/servicosdigitais/catalogo.html" target="_blank" style="color:#f59e0b; font-weight:800;">📚 Catálogo</a>
+          </nav>
+          <div class="nav-actions">
+            <a class="nav-icon-link desktop-only" href="https://www.instagram.com/datadeshsolucoesdigitais/" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+            <a class="btn btn-light desktop-only" href="https://docs.google.com/forms/d/10BNhmVAOWsMX5mpnDO0gp-VTZ7r45PiGezvORu79VtI/edit" target="_blank"><i class="fa-regular fa-file-lines"></i> Formulário</a>
+            <a class="btn btn-catalogo desktop-only" href="https://datadesh-site-da-empresa.github.io/servicosdigitais/catalogo.html" target="_blank"><i class="fa-solid fa-table-list"></i> Ver Catálogo</a>
+            <a class="btn btn-primary desktop-only" href="https://wa.me/5531984987116" target="_blank"><i class="fab fa-whatsapp"></i> Falar no WhatsApp</a>
+            <button class="menu-toggle" id="menuToggle" aria-label="Menu"><i class="fa-solid fa-bars"></i></button>
           </div>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- TRUST BAR -->
-  <div class="trust-bar">
-    <div class="container">
-      <div class="trust-box reveal">
-        <div class="trust-item"><i class="fa-solid fa-layer-group"></i><div><strong>Estrutura profissional</strong><span>Layout confiável</span></div></div>
-        <div class="trust-item"><i class="fa-solid fa-paper-plane"></i><div><strong>Entrega planejada</strong><span>até 30 dias</span></div></div>
-        <div class="trust-item"><i class="fa-solid fa-envelope-circle-check"></i><div><strong>Prova por email</strong><span>Você aprova antes</span></div></div>
-        <div class="trust-item"><i class="fa-solid fa-file-signature"></i><div><strong>20% de sinal</strong><span>Processo seguro</span></div></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- SOBRE -->
-  <section id="sobre" class="section">
-    <div class="container">
-      <div class="about-grid">
-        <div class="about-photo-card reveal">
-          <img src="https://raw.githubusercontent.com/datadeshsolucoes-design/servicosdigitais/main/FOTO.jpeg.jpeg" alt="Ana">
-        </div>
-        <div class="about-copy reveal">
-          <div class="section-kicker"><i class="fa-solid fa-user-tie"></i> Sobre a profissional</div>
-          <h2>Oi, sou a <span>Ana</span> — transformo ideias em presença digital</h2>
-          <p>Tecnóloga em Ciência de Dados, especialista em criar páginas, catálogos e ferramentas digitais com visual moderno e foco em resultado. Já concluí <strong>mais de 54 projetos</strong> para diferentes negócios.</p>
-          <ul class="about-list">
-            <li><i class="fa-solid fa-check"></i> Sites, páginas e catálogos com visual sofisticado</li>
-            <li><i class="fa-solid fa-check"></i> Soluções pensadas para WhatsApp e vendas</li>
-            <li><i class="fa-solid fa-check"></i> Processo simples: sinal, protótipo, entrega</li>
-          </ul>
-          <div class="contact-pills">
-            <a href="https://wa.me/5531984987116" class="pill"><i class="fab fa-whatsapp"></i> (31) 98498-7116</a>
-            <a href="mailto:datadshsolucoes@gmail.com" class="pill"><i class="fa-regular fa-envelope"></i> E-mail</a>
-            <a href="https://www.instagram.com/datadeshsolucoesdigitais/" class="pill"><i class="fab fa-instagram"></i> Instagram</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- PROJETOS -->
-  <section id="projetos" class="section" style="background:#fff">
-    <div class="container">
-      <div class="section-header reveal">
-        <div class="section-kicker"><i class="fa-solid fa-diagram-project"></i> Portfólio</div>
-        <h2 class="section-title">Projetos <span>já concluídos</span></h2>
-      </div>
-      <div class="projects-grid">
-        
-        <div class="project-card reveal">
-          <div class="project-media">
-            <img src="https://raw.githubusercontent.com/datadeshsolucoes-design/servicosdigitais/main/filtros%20com%20graficos%20interativos.png" alt="Dashboard Filtros">
-          </div>
-          <div class="project-content">
-            <h3>Dashboard para gestão da saúde</h3>
-            <p>Painel com gráficos interativos e filtros dinâmicos.</p>
-          </div>
-        </div>
-
-        <div class="project-card reveal">
-          <div class="project-media">
-            <img src="https://raw.githubusercontent.com/datadeshsolucoes-design/servicosdigitais/main/graficos%20interativos.png" alt="Dashboards Interativos">
-          </div>
-          <div class="project-content">
-            <h3>Dashboards interativos</h3>
-            <p>Gráficos sincronizados e visual profissional.</p>
-          </div>
-        </div>
-
-        <div class="project-card reveal">
-          <div class="project-media">
-            <img src="https://raw.githubusercontent.com/datadeshsolucoes-design/servicosdigitais/main/filtros%20dianamicos.png" alt="Dashboards com Filtros">
-          </div>
-          <div class="project-content">
-            <h3>Dashboards com Filtros Especiais</h3>
-            <p>Gráficos sincronizados e visual profissional.</p>
-          </div>
-        </div>
-
-        <div class="project-card reveal">
-          <div class="project-media">
-            <img src="https://raw.githubusercontent.com/datadeshsolucoes-design/servicosdigitais/main/graficos%20interativos%202.png" alt="Dashboards Especiais">
-          </div>
-          <div class="project-content">
-            <h3>Dashboards Especiais</h3>
-            <p>Gráficos Exclusivos.</p>
-          </div>
-        </div>
-
-        <div class="project-card reveal">
-          <div class="project-media">
-            <img src="https://raw.githubusercontent.com/datadeshsolucoes-design/servicosdigitais/main/area%20de%20trabalho.png" alt="Dashboard Área de Trabalho">
-          </div>
-          <div class="project-content">
-            <h3>Dashboards profissionais</h3>
-            <p>Páginas modernas que transmitem credibilidade.</p>
-          </div>
-        </div>
-
-        <div class="project-card reveal">
-          <div class="project-media">
-            <img src="https://raw.githubusercontent.com/datadeshsolucoes-design/servicosdigitais/main/foto3.png" alt="Sites e Páginas Virtuais">
-          </div>
-          <div class="project-content">
-            <h3>Páginas na WEB/Diversas</h3>
-            <p>Páginas modernas em vários Estilos.</p>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- SERVIÇOS -->
-  <section id="servicos" class="section">
-    <div class="container">
-      <div class="section-header reveal">
-        <div class="section-kicker"><i class="fa-solid fa-screwdriver-wrench"></i> Soluções</div>
-        <h2 class="section-title">O que eu <span>faço</span></h2>
-      </div>
-      <div class="services-grid">
-        <!-- Site Simples -->
-        <div class="service-card reveal">
-          <div class="service-icon"><i class="fa-solid fa-globe"></i></div>
-          <h3>Site Simples</h3>
-          <p>Código e domínio entregues. Layout moderno e responsivo.</p>
-          <div class="price-box">
-            <div class="price-main"><strong>R$ 219,52</strong></div>
-            <div class="price-installment">ou 10x de R$ 21,95 sem juros</div>
-          </div>
-          <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-            <a href="https://wa.me/5531984987116?text=Quero%20o%20*Site%20Simples*%20(R%24%20219%2C52)" class="btn btn-primary" style="flex:1;" target="_blank">Quero</a>
-            <a href="https://datadesh-site-da-empresa.github.io/servicosdigitais/catalogo.html" class="btn btn-catalogo" style="flex:1;" target="_blank">Catálogo</a>
-          </div>
-        </div>
-        
-        <!-- Catálogo Virtual Básico -->
-        <div class="service-card reveal">
-          <div class="service-icon"><i class="fa-solid fa-mobile-screen-button"></i></div>
-          <h3>Catálogo Virtual Básico</h3>
-          <p>Até 50 produtos, busca por nome, integrado ao WhatsApp</p>
-          <div class="price-box">
-            <div class="price-main"><strong>R$ 403,20</strong></div>
-            <div class="price-installment">ou 10x de R$ 40,32 sem juros</div>
-          </div>
-          <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-            <a href="https://wa.me/5531984987116?text=Quero%20o%20*Cat%C3%A1logo%20Virtual%20B%C3%A1sico*%20(R%24%20403%2C20)" class="btn btn-primary" style="flex:1;" target="_blank">Quero</a>
-            <a href="https://datadesh-site-da-empresa.github.io/servicosdigitais/catalogo.html" class="btn btn-catalogo" style="flex:1;" target="_blank">Catálogo</a>
-          </div>
-        </div>
-        
-        <!-- Página para Clínicas -->
-        <div class="service-card reveal">
-          <div class="service-icon"><i class="fa-solid fa-hospital-user"></i></div>
-          <h3>Página para Clínicas</h3>
-          <p>Apresentação profissional para consultórios e clínicas</p>
-          <div class="price-box">
-            <div class="price-main"><strong>R$ 332,64</strong></div>
-            <div class="price-installment">ou 10x de R$ 33,26 sem juros</div>
-          </div>
-          <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-            <a href="https://wa.me/5531984987116?text=Quero%20uma%20*P%C3%A1gina%20para%20Cl%C3%ADnicas*%20(R%24%20332%2C64)" class="btn btn-primary" style="flex:1;" target="_blank">Quero</a>
-            <a href="https://datadesh-site-da-empresa.github.io/servicosdigitais/catalogo.html" class="btn btn-catalogo" style="flex:1;" target="_blank">Catálogo</a>
-          </div>
-        </div>
-        
-        <!-- Dashboard Básico -->
-        <div class="service-card reveal">
-          <div class="service-icon"><i class="fa-solid fa-chart-line"></i></div>
-          <h3>Dashboard Básico</h3>
-          <p>Painel com gráficos interativos sincronizado com planilhas</p>
-          <div class="price-box">
-            <div class="price-main"><strong>R$ 280,00</strong></div>
-            <div class="price-installment">ou 10x de R$ 28,00 sem juros</div>
-          </div>
-          <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-            <a href="https://wa.me/5531984987116?text=Quero%20o%20*Dashboard%20B%C3%A1sico*%20(R%24%20280%2C00)" class="btn btn-primary" style="flex:1;" target="_blank">Quero</a>
-            <a href="https://datadesh-site-da-empresa.github.io/servicosdigitais/catalogo.html" class="btn btn-catalogo" style="flex:1;" target="_blank">Catálogo</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CATÁLOGOS -->
-  <section id="catalogos" class="section catalog-section">
-    <div class="container">
-      <div class="section-header reveal">
-        <div class="section-kicker"><i class="fa-solid fa-store"></i> Catálogo Digital</div>
-        <h2 class="section-title"><span>Catálogo digital</span> profissional</h2>
-        <p class="section-subtitle">Vitrine virtual com carrinho, busca por nome e pedido direto via WhatsApp</p>
-      </div>
-      <div class="catalog-grid">
-        <div class="catalog-card reveal">
-          <h3>Por que ter um catálogo digital?</h3>
-          <ul>
-            <li><i class="fa-solid fa-check"></i> Visual organizado e profissional</li>
-            <li><i class="fa-solid fa-check"></i> Categorias personalizadas</li>
-            <li><i class="fa-solid fa-check"></i> Botão direto para WhatsApp</li>
-            <li><i class="fa-solid fa-check"></i> Cliente monta o carrinho sozinho</li>
-          </ul>
-        </div>
-        <div class="catalog-card reveal">
-          <h3>Catálogo Virtual Básico</h3>
-          <p style="margin-top:8px;">Até 50 produtos • Busca por nome • WhatsApp integrado</p>
-          <div class="price-main" style="margin-top:15px;"><strong>R$ 403,20</strong></div>
-          <div class="price-installment">ou 10x de R$ 40,32 sem juros</div>
-          <div style="display: flex; gap: 8px; margin-top: 15px;">
-            <a href="https://wa.me/5531984987116?text=Quero%20o%20*Cat%C3%A1logo%20Virtual%20B%C3%A1sico*%20(R%24%20403%2C20)" class="btn btn-primary" target="_blank">Solicitar</a>
-            <a href="https://datadesh-site-da-empresa.github.io/servicosdigitais/catalogo.html" class="btn btn-catalogo" target="_blank">Ver Catálogo</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CLÍNICAS -->
-  <section id="clinicas" class="section">
-    <div class="container">
-      <div class="clinic-wrap reveal">
-        <div class="clinic-visual">
-          <h3>Página profissional para <span style="color:#8af3e5">clínicas e consultórios</span></h3>
-          <p>Estrutura completa para apresentar serviços, diferenciais, equipe e contato. Visual moderno que transmite credibilidade ao paciente.</p>
-        </div>
-        <div class="clinic-pricing">
-          <div class="price-main"><strong>R$ 332,64</strong></div>
-          <div class="price-installment">ou 10x de R$ 33,26 sem juros</div>
-          <div style="display: flex; gap: 8px; margin-top: 15px;">
-            <a href="https://wa.me/5531984987116?text=Quero%20uma%20*P%C3%A1gina%20para%20Cl%C3%ADnicas*%20(R%24%20332%2C64)" class="btn btn-primary" target="_blank">Quero</a>
-            <a href="https://datadesh-site-da-empresa.github.io/servicosdigitais/catalogo.html" class="btn btn-catalogo" target="_blank">Ver Catálogo</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- DEPOIMENTOS -->
-  <section id="depoimentos" class="section" style="background:#fff">
-    <div class="container">
-      <div class="section-header reveal">
-        <div class="section-kicker"><i class="fa-regular fa-message"></i> Feedbacks</div>
-        <h2 class="section-title">Quem já usou <span>recomenda</span></h2>
-      </div>
-      <div class="testimonials-grid">
-        <div class="testimonial-card reveal">
-          <p>"A página que a Ana criou trouxe muita credibilidade para minha clínica."</p>
-          <strong>Dra. Mariana L.</strong>
-        </div>
-        <div class="testimonial-card reveal">
-          <p>"Meu catálogo digital antes era uma bagunça. Agora é profissional e as vendas aumentaram."</p>
-          <strong>Renata S.</strong>
-        </div>
-        <div class="testimonial-card reveal">
-          <p>"Excelente profissional, entrega no prazo e resolveu todas as minhas dúvidas."</p>
-          <strong>Carlos A.</strong>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CTA -->
-  <section class="cta">
-    <div class="container">
-      <h2>Pronto para dar um upgrade digital no seu negócio?</h2>
-      <div class="hero-actions" style="justify-content:center">
-        <a href="https://wa.me/5531984987116" class="btn btn-primary"><i class="fab fa-whatsapp"></i> Falar com Ana</a>
-        <a href="https://datadesh-site-da-empresa.github.io/servicosdigitais/catalogo.html" class="btn btn-catalogo" target="_blank"><i class="fa-solid fa-table-list"></i> Ver Catálogo Completo</a>
-        <a href="https://docs.google.com/forms/d/10BNhmVAOWsMX5mpnDO0gp-VTZ7r45PiGezvORu79VtI/edit" class="btn btn-light">Formulário</a>
-      </div>
-    </div>
-  </section>
-</main>
-
-<footer class="footer">
-  <div class="container">
-    <div class="footer-top">
-      <div>
-        <strong>DataDesh Soluções</strong>
-        <p style="margin-top: 10px;">Soluções digitais para pequenos negócios</p>
-      </div>
-      <div>
-        <h4 style="margin-bottom: 15px;">Links Rápidos</h4>
-        <div class="footer-links">
+        <div class="nav-mobile" id="mobileMenu">
           <a href="#sobre">Sobre</a>
           <a href="#projetos">Projetos</a>
           <a href="#servicos">Serviços</a>
-          <a href="#catalogos">Catálogos</a>
-          <a href="#clinicas">Clínicas</a>
-          <a href="https://datadesh-site-da-empresa.github.io/servicosdigitais/catalogo.html" target="_blank">📚 Catálogo Completo</a>
+          <a href="#catalogos">Catálogo Digital</a>
+          <a href="#clinicas">Página para Clínicas</a>
+          <a href="#depoimentos">Depoimentos</a>
+          <a href="https://datadesh-site-da-empresa.github.io/servicosdigitais/catalogo.html" target="_blank">📚 Ver Catálogo</a>
+          <a href="https://wa.me/5531984987116" target="_blank">Falar no WhatsApp</a>
         </div>
       </div>
-      <div>
-        <h4 style="margin-bottom: 15px;">Contato</h4>
-        <div class="footer-contact">
-          <a href="https://wa.me/5531984987116" target="_blank"><i class="fab fa-whatsapp"></i> (31) 98498-7116</a>
-          <a href="mailto:datadshsolucoes@gmail.com"><i class="fa-regular fa-envelope"></i> datadshsolucoes@gmail.com</a>
-          <a href="https://www.instagram.com/datadeshsolucoesdigitais/" target="_blank"><i class="fab fa-instagram"></i> @datadeshsolucoesdigitais</a>
+    </header>
+
+    <main>
+      <!-- HERO -->
+      <section class="hero">
+        <div class="container">
+          <div class="hero-grid">
+            <div class="hero-copy reveal">
+              <div class="eyebrow"><i class="fa-solid fa-bolt"></i> +54 projetos já concluídos</div>
+              <h1>Crio Sites, Catálogos Digitais, <span>Páginas, Dashboards</span> e Ferramentas Virtuais automatizadas.</h1>
+              <p>Soluções digitais com visual profissional que organizam sua apresentação e facilitam a decisão do cliente, materiais com foco em praticidade e vendas.</p>
+              <div class="hero-actions">
+                <a href="https://wa.me/5531984987116" class="btn btn-primary" target="_blank"><i class="fab fa-whatsapp"></i> Quero minha solução</a>
+                <a href="https://datadesh-site-da-empresa.github.io/servicosdigitais/catalogo.html" class="btn btn-catalogo" target="_blank"><i class="fa-solid fa-table-list"></i> Ver Catálogo</a>
+                <a href="https://docs.google.com/forms/d/10BNhmVAOWsMX5mpnDO0gp-VTZ7r45PiGezvORu79VtI/edit" class="btn btn-secondary" target="_blank"><i class="fa-regular fa-file-lines"></i> Formulário</a>
+              </div>
+              <div class="hero-mini-proof">
+                <div class="proof-card"><strong>54+</strong><span>projetos concluídos</span></div>
+                <div class="proof-card"><strong>até 30 dias</strong><span>prazo (depende do projeto)</span></div>
+                <div class="proof-card"><strong>100%</strong><span>personalizado</span></div>
+              </div>
+            </div>
+            <div class="hero-panel reveal">
+              <div class="mockup-window">
+                <div class="mockup-banner"><strong>Catálogos, sites e páginas com aparência premium</strong></div>
+                <div class="mockup-grid">
+                  <div class="mockup-card"><i class="fa-solid fa-mobile-screen-button"></i><strong>Catálogo digital</strong></div>
+                  <div class="mockup-card"><i class="fa-solid fa-globe"></i><strong>Site profissional</strong></div>
+                  <div class="mockup-card"><i class="fa-solid fa-hospital-user"></i><strong>Página para clínicas</strong></div>
+                  <div class="mockup-card"><i class="fa-solid fa-chart-line"></i><strong>Dashboards</strong></div>
+                </div>
+                <div class="mockup-footer">
+                  <div>A partir de R$ 219,52</div>
+                  <a href="https://datadesh-site-da-empresa.github.io/servicosdigitais/catalogo.html" class="btn btn-catalogo" style="padding: 10px 16px;">📚 Ver Catálogo</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TRUST BAR -->
+      <div class="trust-bar">
+        <div class="container">
+          <div class="trust-box reveal">
+            <div class="trust-item"><i class="fa-solid fa-layer-group"></i><div><strong>Estrutura profissional</strong><span>Layout confiável</span></div></div>
+            <div class="trust-item"><i class="fa-solid fa-paper-plane"></i><div><strong>Entrega planejada</strong><span>até 30 dias</span></div></div>
+            <div class="trust-item"><i class="fa-solid fa-envelope-circle-check"></i><div><strong>Prova por email</strong><span>Você aprova antes</span></div></div>
+            <div class="trust-item"><i class="fa-solid fa-file-signature"></i><div><strong>20% de sinal</strong><span>Processo seguro</span></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SOBRE -->
+      <section id="sobre" class="section">
+        <div class="container">
+          <div class="about-grid">
+            <div class="about-photo-card reveal">
+              <img src="https://raw.githubusercontent.com/datadeshsolucoes-design/servicosdigitais/main/FOTO.jpeg.jpeg" alt="Ana - DataDesh Soluções">
+            </div>
+            <div class="about-copy reveal">
+              <div class="section-kicker"><i class="fa-solid fa-user-tie"></i> Sobre a profissional</div>
+              <h2>Oi, sou a <span>Ana</span> — transformo ideias em presença digital</h2>
+              <p>Tecnóloga em Ciência de Dados, especialista em criar páginas, catálogos e ferramentas digitais com visual moderno e foco em resultado. Já concluí <strong>mais de 54 projetos</strong> para diferentes negócios.</p>
+              <ul class="about-list">
+                <li><i class="fa-solid fa-check"></i> Sites, páginas e catálogos com visual sofisticado</li>
+                <li><i class="fa-solid fa-check"></i> Soluções pensadas para WhatsApp e vendas</li>
+                <li><i class="fa-solid fa-check"></i> Processo simples: sinal, protótipo, entrega</li>
+              </ul>
+              <div class="contact-pills">
+                <a href="https://wa.me/5531984987116" class="pill"><i class="fab fa-whatsapp"></i> (31) 98498-7116</a>
+                <a href="mailto:datadshsolucoes@gmail.com" class="pill"><i class="fa-regular fa-envelope"></i> E-mail</a>
+                <a href="https://www.instagram.com/datadeshsolucoesdigitais/" class="pill"><i class="fab fa-instagram"></i> Instagram</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- PROJETOS -->
+      <section id="projetos" class="section" style="background:#fff">
+        <div class="container">
+          <div class="section-header reveal">
+            <div class="section-kicker"><i class="fa-solid fa-diagram-project"></i> Portfólio</div>
+            <h2 class="section-title">Projetos <span>já concluídos</span></h2>
+          </div>
+          <div class="projects-grid">
+            
+            <div class="project-card reveal">
+              <div class="project-media">
+                <img src="https://raw.githubusercontent.com/datadeshsolucoes-design/servicosdigitais/main/filtros%20com%20graficos%20interativos.png" alt="Dashboard Filtros" loading="lazy">
+              </div>
+              <div class="project-content">
+                <h3>Dashboard para gestão da saúde</h3>
+                <p>Painel com gráficos interativos e filtros dinâmicos.</p>
+              </div>
+            </div>
+
+            <div class="project-card reveal">
+              <div class="project-media">
+                <img src="https://raw.githubusercontent.com/datadeshsolucoes-design/servicosdigitais/main/graficos%20interativos.png" alt="Dashboards Interativos" loading="lazy">
+              </div>
+              <div class="project-content">
+                <h3>Dashboards interativos</h3>
+                <p>Gráficos sincronizados e visual profissional.</p>
+              </div>
+            </div>
+
+            <div class="project-card reveal">
+              <div class="project-media">
+                <img src="https://raw.githubusercontent.com/datadeshsolucoes-design/servicosdigitais/main/filtros%20dianamicos.png" alt="Dashboards com Filtros" loading="lazy">
+              </div>
+              <div class="project-content">
+                <h3>Dashboards com Filtros Especiais</h3>
+                <p>Gráficos sincronizados e visual profissional.</p>
+              </div>
+            </div>
+
+            <div class="project-card reveal">
+              <div class="project-media">
+                <img src="https://raw.githubusercontent.com/datadeshsolucoes-design/servicosdigitais/main/graficos%20interativos%202.png" alt="Dashboards Especiais" loading="lazy">
+              </div>
+              <div class="project-content">
+                <h3>Dashboards Especiais</h3>
+                <p>Gráficos Exclusivos.</p>
+              </div>
+            </div>
+
+            <div class="project-card reveal">
+              <div class="project-media">
+                <img src="https://raw.githubusercontent.com/datadeshsolucoes-design/servicosdigitais/main/area%20de%20trabalho.png" alt="Dashboard Área de Trabalho" loading="lazy">
+              </div>
+              <div class="project-content">
+                <h3>Dashboards profissionais</h3>
+                <p>Páginas modernas que transmitem credibilidade.</p>
+              </div>
+            </div>
+
+            <div class="project-card reveal">
+              <div class="project-media">
+                <img src="https://raw.githubusercontent.com/datadeshsolucoes-design/servicosdigitais/main/foto3.png" alt="Sites e Páginas Virtuais" loading="lazy">
+              </div>
+              <div class="project-content">
+                <h3>Páginas na WEB/Diversas</h3>
+                <p>Páginas modernas em vários Estilos.</p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- SERVIÇOS -->
+      <section id="servicos" class="section">
+        <div class="container">
+          <div class="section-header reveal">
+            <div class="section-kicker"><i class="fa-solid fa-screwdriver-wrench"></i> Soluções</div>
+            <h2 class="section-title">O que eu <span>faço</span></h2>
+          </div>
+          <div class="services-grid">
+            <!-- Site Simples -->
+            <div class="service-card reveal">
+              <div class="service-icon"><i class="fa-solid fa-globe"></i></div>
+              <h3>Site Simples</h3>
+              <p>Código e domínio entregues. Layout moderno e responsivo.</p>
+              <div class="price-box">
+                <div class="price-main"><strong>R$ 219,52</strong></div>
+                <div class="price-installment">ou 10x de R$ 21,95 sem juros</div>
+              </div>
+              <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                <a href="https://wa.me/5531984987116?text=Quero%20o%20*Site%20Simples*%20(R%24%20219%2C52)" class="btn btn-primary" style="flex:1;" target="_blank">Quero</a>
+                <a href="https://datadesh-site-da-empresa.github.io/servicosdigitais/catalogo.html" class="btn btn-catalogo" style="flex:1;" target="_blank">Catálogo</a>
+              </div>
+            </div>
+            
+            <!-- Catálogo Virtual Básico -->
+            <div class="service-card reveal">
+              <div class="service-icon"><i class="fa-solid fa-mobile-screen-button"></i></div>
+              <h3>Catálogo Virtual Básico</h3>
+              <p>Até 50 produtos, busca por nome, integrado ao WhatsApp</p>
+              <div class="price-box">
+                <div class="price-main"><strong>R$ 403,20</strong></div>
+                <div class="price-installment">ou 10x de R$ 40,32 sem juros</div>
+              </div>
+              <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                <a href="https://wa.me/5531984987116?text=Quero%20o%20*Cat%C3%A1logo%20Virtual%20B%C3%A1sico*%20(R%24%20403%2C20)" class="btn btn-primary" style="flex:1;" target="_blank">Quero</a>
+                <a href="https://datadesh-site-da-empresa.github.io/servicosdigitais/catalogo.html" class="btn btn-catalogo" style="flex:1;" target="_blank">Catálogo</a>
+              </div>
+            </div>
+            
+            <!-- Página para Clínicas -->
+            <div class="service-card reveal">
+              <div class="service-icon"><i class="fa-solid fa-hospital-user"></i></div>
+              <h3>Página para Clínicas</h3>
+              <p>Apresentação profissional para consultórios e clínicas</p>
+              <div class="price-box">
+                <div class="price-main"><strong>R$ 332,64</strong></div>
+                <div class="price-installment">ou 10x de R$ 33,26 sem juros</div>
+              </div>
+              <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                <a href="https://wa.me/5531984987116?text=Quero%20uma%20*P%C3%A1gina%20para%20Cl%C3%ADnicas*%20(R%24%20332%2C64)" class="btn btn-primary" style="flex:1;" target="_blank">Quero</a>
+                <a href="https://datadesh-site-da-empresa.github.io/servicosdigitais/catalogo.html" class="btn btn-catalogo" style="flex:1;" target="_blank">Catálogo</a>
+              </div>
+            </div>
+            
+            <!-- Dashboard Básico -->
+            <div class="service-card reveal">
+              <div class="service-icon"><i class="fa-solid fa-chart-line"></i></div>
+              <h3>Dashboard Básico</h3>
+              <p>Painel com gráficos interativos sincronizado com planilhas</p>
+              <div class="price-box">
+                <div class="price-main"><strong>R$ 280,00</strong></div>
+                <div class="price-installment">ou 10x de R$ 28,00 sem juros</div>
+              </div>
+              <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                <a href="https://wa.me/5531984987116?text=Quero%20o%20*Dashboard%20B%C3%A1sico*%20(R%24%20280%2C00)" class="btn btn-primary" style="flex:1;" target="_blank">Quero</a>
+                <a href="https://datadesh-site-da-empresa.github.io/servicosdigitais/catalogo.html" class="btn btn-catalogo" style="flex:1;" target="_blank">Catálogo</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CATÁLOGOS -->
+      <section id="catalogos" class="section catalog-section">
+        <div class="container">
+          <div class="section-header reveal">
+            <div class="section-kicker"><i class="fa-solid fa-store"></i> Catálogo Digital</div>
+            <h2 class="section-title"><span>Catálogo digital</span> profissional</h2>
+            <p class="section-subtitle">Vitrine virtual com carrinho, busca por nome e pedido direto via WhatsApp</p>
+          </div>
+          <div class="catalog-grid">
+            <div class="catalog-card reveal">
+              <h3>Por que ter um catálogo digital?</h3>
+              <ul>
+                <li><i class="fa-solid fa-check"></i> Visual organizado e profissional</li>
+                <li><i class="fa-solid fa-check"></i> Categorias personalizadas</li>
+                <li><i class="fa-solid fa-check"></i> Botão direto para WhatsApp</li>
+                <li><i class="fa-solid fa-check"></i> Cliente monta o carrinho sozinho</li>
+              </ul>
+            </div>
+            <div class="catalog-card reveal">
+              <h3>Catálogo Virtual Básico</h3>
+              <p style="margin-top:8px;">Até 50 produtos • Busca por nome • WhatsApp integrado</p>
+              <div class="price-main" style="margin-top:15px;"><strong>R$ 403,20</strong></div>
+              <div class="price-installment">ou 10x de R$ 40,32 sem juros</div>
+              <div style="display: flex; gap: 8px; margin-top: 15px;">
+                <a href="https://wa.me/5531984987116?text=Quero%20o%20*Cat%C3%A1logo%20Virtual%20B%C3%A1sico*%20(R%24%20403%2C20)" class="btn btn-primary" target="_blank">Solicitar</a>
+                <a href="https://datadesh-site-da-empresa.github.io/servicosdigitais/catalogo.html" class="btn btn-catalogo" target="_blank">Ver Catálogo</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CLÍNICAS -->
+      <section id="clinicas" class="section">
+        <div class="container">
+          <div class="clinic-wrap reveal">
+            <div class="clinic-visual">
+              <h3>Página profissional para <span style="color:#8af3e5">clínicas e consultórios</span></h3>
+              <p>Estrutura completa para apresentar serviços, diferenciais, equipe e contato. Visual moderno que transmite credibilidade ao paciente.</p>
+            </div>
+            <div class="clinic-pricing">
+              <div class="price-main"><strong>R$ 332,64</strong></div>
+              <div class="price-installment">ou 10x de R$ 33,26 sem juros</div>
+              <div style="display: flex; gap: 8px; margin-top: 15px;">
+                <a href="https://wa.me/5531984987116?text=Quero%20uma%20*P%C3%A1gina%20para%20Cl%C3%ADnicas*%20(R%24%20332%2C64)" class="btn btn-primary" target="_blank">Quero</a>
+                <a href="https://datadesh-site-da-empresa.github.io/servicosdigitais/catalogo.html" class="btn btn-catalogo" target="_blank">Ver Catálogo</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- DEPOIMENTOS -->
+      <section id="depoimentos" class="section" style="background:#fff">
+        <div class="container">
+          <div class="section-header reveal">
+            <div class="section-kicker"><i class="fa-regular fa-message"></i> Feedbacks</div>
+            <h2 class="section-title">Quem já usou <span>recomenda</span></h2>
+          </div>
+          <div class="testimonials-grid">
+            <div class="testimonial-card reveal">
+              <p>"A página que a Ana criou trouxe muita credibilidade para minha clínica."</p>
+              <strong>Dra. Mariana L.</strong>
+            </div>
+            <div class="testimonial-card reveal">
+              <p>"Meu catálogo digital antes era uma bagunça. Agora é profissional e as vendas aumentaram."</p>
+              <strong>Renata S.</strong>
+            </div>
+            <div class="testimonial-card reveal">
+              <p>"Excelente profissional, entrega no prazo e resolveu todas as minhas dúvidas."</p>
+              <strong>Carlos A.</strong>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CTA -->
+      <section class="cta">
+        <div class="container">
+          <h2>Pronto para dar um upgrade digital no seu negócio?</h2>
+          <div class="hero-actions" style="justify-content:center">
+            <a href="https://wa.me/5531984987116" class="btn btn-primary"><i class="fab fa-whatsapp"></i> Falar com Ana</a>
+            <a href="https://datadesh-site-da-empresa.github.io/servicosdigitais/catalogo.html" class="btn btn-catalogo" target="_blank"><i class="fa-solid fa-table-list"></i> Ver Catálogo Completo</a>
+            <a href="https://docs.google.com/forms/d/10BNhmVAOWsMX5mpnDO0gp-VTZ7r45PiGezvORu79VtI/edit" class="btn btn-light">Formulário</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-top">
+          <div>
+            <strong style="font-size: 1.2rem;">DataDesh Soluções</strong>
+            <p style="margin-top: 10px;">Soluções digitais para pequenos negócios</p>
+          </div>
+          <div>
+            <h4 style="margin-bottom: 15px;">Links Rápidos</h4>
+            <div class="footer-links">
+              <a href="#sobre">Sobre</a>
+              <a href="#projetos">Projetos</a>
+              <a href="#servicos">Serviços</a>
+              <a href="#catalogos">Catálogos</a>
+              <a href="#clinicas">Clínicas</a>
+              <a href="https://datadesh-site-da-empresa.github.io/servicosdigitais/catalogo.html" target="_blank">📚 Catálogo Completo</a>
+            </div>
+          </div>
+          <div>
+            <h4 style="margin-bottom: 15px;">Contato</h4>
+            <div class="footer-contact">
+              <a href="https://wa.me/5531984987116" target="_blank"><i class="fab fa-whatsapp"></i> (31) 98498-7116</a>
+              <a href="mailto:datadshsolucoes@gmail.com"><i class="fa-regular fa-envelope"></i> datadshsolucoes@gmail.com</a>
+              <a href="https://www.instagram.com/datadeshsolucoesdigitais/" target="_blank"><i class="fab fa-instagram"></i> @datadeshsolucoesdigitais</a>
+            </div>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>© 2025 DataDesh Soluções - Ana | Todos os direitos reservados</p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Botão WhatsApp -->
+    <a href="https://wa.me/5531984987116" class="whatsapp-float" target="_blank" aria-label="WhatsApp">
+      <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- Botão Formulário Flutuante -->
+    <button class="form-float" id="openFormBtn" aria-label="Abrir formulário">
+      <i class="fa-regular fa-message"></i>
+    </button>
+
+    <!-- Modal Formulário -->
+    <div id="formModal" class="modal-form">
+      <div class="modal-form-content">
+        <button class="close-modal" id="closeModalBtn">&times;</button>
+        <h2><i class="fa-regular fa-file-lines"></i> Fale com a Ana</h2>
+        <p>Preencha os campos abaixo e receba um retorno rápido no WhatsApp!</p>
+        
+        <form id="leadForm">
+          <div class="form-group">
+            <label>👤 Seu nome completo *</label>
+            <input type="text" id="nomeCliente" required placeholder="Ex: Maria Silva">
+          </div>
+          
+          <div class="form-group">
+            <label>📞 Telefone com DDD *</label>
+            <input type="tel" id="telefoneCliente" required placeholder="(31) 99999-9999">
+          </div>
+          
+          <div class="form-group">
+            <label>🎯 Tipo de serviço *</label>
+            <select id="tipoServico" required>
+              <option value="">Selecione...</option>
+              <option value="Dúvida sobre sites">💻 Dúvida sobre sites</option>
+              <option value="Orçamento de catálogo digital">📱 Orçamento de catálogo digital</option>
+              <option value="Orçamento de página para clínica">🏥 Orçamento para clínica</option>
+              <option value="Orçamento de dashboard">📊 Orçamento de dashboard</option>
+              <option value="Suporte técnico">🔧 Suporte técnico</option>
+              <option value="Outro serviço">✨ Outro serviço</option>
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label>💬 Mensagem (detalhes do que precisa)</label>
+            <textarea id="mensagemCliente" placeholder="Descreva brevemente o que você está procurando..."></textarea>
+          </div>
+          
+          <button type="submit" class="btn-submit">
+            <i class="fab fa-whatsapp"></i> Enviar mensagem
+          </button>
+        </form>
+        
+        <div class="servico-tag">
+          <i class="fa-solid fa-clock"></i> Retorno em até 15 minutos
         </div>
       </div>
     </div>
-    <div class="footer-bottom">
-      <p>© 2025 DataDesh Soluções - Ana | Todos os direitos reservados</p>
-    </div>
+
   </div>
-</footer>
+  <!-- FIM DO CONTEÚDO PRINCIPAL -->
 
-<!-- Botão WhatsApp original -->
-<a href="https://wa.me/5531984987116" class="whatsapp-float" target="_blank"><i class="fab fa-whatsapp"></i></a>
+  <script>
+    // ========== ELEMENTOS DA INTRO ==========
+    const introScreen = document.getElementById('intro-screen');
+    const skipIntroBtn = document.getElementById('skipIntro');
+    const customCursor = document.getElementById('customCursor');
+    const customCursorDot = document.getElementById('customCursorDot');
+    const particlesContainer = document.getElementById('particlesContainer');
+    const body = document.body;
 
-<!-- Botão flutuante de formulário -->
-<button class="form-float" id="openFormBtn">
-  <i class="fa-regular fa-message"></i>
-</button>
+    // ========== GERAR PARTÍCULAS ==========
+    function createParticles() {
+      const particleCount = 55;
+      const shapes = ['circle', 'diamond', 'square'];
+      
+      for (let i = 0; i < particleCount; i++) {
+        const particle = document.createElement('div');
+        const shape = shapes[Math.floor(Math.random() * shapes.length)];
+        
+        particle.classList.add('particle', shape);
+        
+        // Tamanho aleatório
+        const size = Math.random() * 8 + 3;
+        particle.style.width = size + 'px';
+        particle.style.height = shape === 'diamond' ? size * 1.5 + 'px' : size + 'px';
+        
+        // Posição horizontal aleatória
+        particle.style.left = Math.random() * 100 + '%';
+        
+        // Duração da animação aleatória
+        const duration = Math.random() * 15 + 8;
+        particle.style.animationDuration = duration + 's';
+        
+        // Delay aleatório
+        particle.style.animationDelay = Math.random() * 10 + 's';
+        
+        // Opacidade variável
+        particle.style.opacity = Math.random() * 0.6 + 0.2;
+        
+        particlesContainer.appendChild(particle);
+      }
+    }
 
-<!-- Modal do formulário -->
-<div id="formModal" class="modal-form">
-  <div class="modal-form-content">
-    <button class="close-modal" id="closeModalBtn">&times;</button>
-    <h2><i class="fa-regular fa-file-lines"></i> Fale com a Ana</h2>
-    <p>Preencha os campos abaixo e receba um retorno rápido no WhatsApp!</p>
+    // ========== CURSOR PERSONALIZADO ==========
+    let mouseX = 0;
+    let mouseY = 0;
+    let cursorX = 0;
+    let cursorY = 0;
+    let dotX = 0;
+    let dotY = 0;
+
+    document.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+    });
+
+    function animateCursor() {
+      // Cursor principal (suave)
+      cursorX += (mouseX - cursorX) * 0.15;
+      cursorY += (mouseY - cursorY) * 0.15;
+      
+      // Ponto central (mais rápido)
+      dotX += (mouseX - dotX) * 0.4;
+      dotY += (mouseY - dotY) * 0.4;
+      
+      if (customCursor) {
+        customCursor.style.left = cursorX - 11 + 'px';
+        customCursor.style.top = cursorY - 11 + 'px';
+      }
+      
+      if (customCursorDot) {
+        customCursorDot.style.left = dotX - 2.5 + 'px';
+        customCursorDot.style.top = dotY - 2.5 + 'px';
+      }
+      
+      requestAnimationFrame(animateCursor);
+    }
+
+    // ========== FECHAR INTRO ==========
+    function closeIntro() {
+      introScreen.classList.add('hidden');
+      body.classList.remove('intro-active');
+      
+      // Esconder cursor personalizado
+      if (customCursor) customCursor.style.display = 'none';
+      if (customCursorDot) customCursorDot.style.display = 'none';
+      
+      // Remover intro do DOM após a transição
+      setTimeout(() => {
+        if (introScreen) introScreen.style.display = 'none';
+      }, 900);
+    }
+
+    // Fechar ao clicar em "Pular intro"
+    if (skipIntroBtn) {
+      skipIntroBtn.addEventListener('click', closeIntro);
+    }
+
+    // Fechar automaticamente após 5 segundos
+    setTimeout(closeIntro, 5000);
+
+    // ========== INICIAR ==========
+    document.addEventListener('DOMContentLoaded', () => {
+      createParticles();
+      animateCursor();
+    });
+
+    // ========== MENU MOBILE ==========
+    const menuToggle = document.getElementById('menuToggle');
+    const mobileMenu = document.getElementById('mobileMenu');
     
-    <form id="leadForm">
-      <div class="form-group">
-        <label>👤 Seu nome completo *</label>
-        <input type="text" id="nomeCliente" required placeholder="Ex: Maria Silva">
-      </div>
-      
-      <div class="form-group">
-        <label>📞 Telefone com DDD *</label>
-        <input type="tel" id="telefoneCliente" required placeholder="(31) 99999-9999">
-      </div>
-      
-      <div class="form-group">
-        <label>🎯 Tipo de serviço *</label>
-        <select id="tipoServico" required>
-          <option value="">Selecione...</option>
-          <option value="Dúvida sobre sites">💻 Dúvida sobre sites</option>
-          <option value="Orçamento de catálogo digital">📱 Orçamento de catálogo digital</option>
-          <option value="Orçamento de página para clínica">🏥 Orçamento para clínica</option>
-          <option value="Orçamento de dashboard">📊 Orçamento de dashboard</option>
-          <option value="Suporte técnico">🔧 Suporte técnico</option>
-          <option value="Outro serviço">✨ Outro serviço</option>
-        </select>
-      </div>
-      
-      <div class="form-group">
-        <label>💬 Mensagem (detalhes do que precisa)</label>
-        <textarea id="mensagemCliente" placeholder="Descreva brevemente o que você está procurando..."></textarea>
-      </div>
-      
-      <button type="submit" class="btn-submit">
-        <i class="fab fa-whatsapp"></i> Enviar mensagem
-      </button>
-    </form>
+    if (menuToggle) {
+      menuToggle.addEventListener('click', () => {
+        mobileMenu.classList.toggle('active');
+        // Alternar ícone
+        const icon = menuToggle.querySelector('i');
+        if (mobileMenu.classList.contains('active')) {
+          icon.classList.remove('fa-bars');
+          icon.classList.add('fa-xmark');
+        } else {
+          icon.classList.remove('fa-xmark');
+          icon.classList.add('fa-bars');
+        }
+      });
+    }
+
+    // Fechar menu mobile ao clicar em um link
+    document.querySelectorAll('.nav-mobile a').forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.remove('active');
+        const icon = menuToggle.querySelector('i');
+        icon.classList.remove('fa-xmark');
+        icon.classList.add('fa-bars');
+      });
+    });
+
+    // ========== REVEAL ON SCROLL ==========
+    const reveals = document.querySelectorAll('.reveal');
     
-    <div class="servico-tag">
-      <i class="fa-solid fa-clock"></i> Retorno em até 15 minutos
-    </div>
-  </div>
-</div>
+    function revealOnScroll() {
+      const windowHeight = window.innerHeight;
+      const revealPoint = 120;
+      
+      reveals.forEach(el => {
+        const revealTop = el.getBoundingClientRect().top;
+        if (revealTop < windowHeight - revealPoint) {
+          el.classList.add('active');
+        }
+      });
+    }
 
-<script>
-  // Menu mobile
-  const menuToggle = document.getElementById('menuToggle');
-  const mobileMenu = document.getElementById('mobileMenu');
-  if (menuToggle) {
-    menuToggle.addEventListener('click', () => mobileMenu.classList.toggle('active'));
-  }
+    window.addEventListener('scroll', revealOnScroll);
+    window.addEventListener('load', revealOnScroll);
 
-  // Reveal on scroll
-  const reveals = document.querySelectorAll('.reveal');
-  function revealOnScroll() {
-    reveals.forEach(el => {
-      if (el.getBoundingClientRect().top < window.innerHeight - 100) {
-        el.classList.add('active');
+    // ========== MODAL FORMULÁRIO ==========
+    const openFormBtn = document.getElementById('openFormBtn');
+    const formModal = document.getElementById('formModal');
+    const closeModalBtn = document.getElementById('closeModalBtn');
+    
+    if (openFormBtn) {
+      openFormBtn.addEventListener('click', () => {
+        formModal.classList.add('active');
+        formModal.style.display = 'flex';
+        body.style.overflow = 'hidden';
+      });
+    }
+    
+    if (closeModalBtn) {
+      closeModalBtn.addEventListener('click', () => {
+        formModal.classList.remove('active');
+        formModal.style.display = 'none';
+        body.style.overflow = '';
+      });
+    }
+    
+    window.addEventListener('click', (event) => {
+      if (event.target === formModal) {
+        formModal.classList.remove('active');
+        formModal.style.display = 'none';
+        body.style.overflow = '';
       }
     });
-  }
-  window.addEventListener('scroll', revealOnScroll);
-  window.addEventListener('load', revealOnScroll);
 
-  // FORMULÁRIO MODAL
-  const openFormBtn = document.getElementById('openFormBtn');
-  const formModal = document.getElementById('formModal');
-  const closeModalBtn = document.getElementById('closeModalBtn');
-  
-  openFormBtn.onclick = () => {
-    formModal.style.display = 'flex';
-  };
-  
-  closeModalBtn.onclick = () => {
-    formModal.style.display = 'none';
-  };
-  
-  window.onclick = (event) => {
-    if (event.target === formModal) {
-      formModal.style.display = 'none';
-    }
-  };
-  
-  // Envio do formulário via WhatsApp
-  const leadForm = document.getElementById('leadForm');
-  const NUMERO_WPP = "5531984987116";
-  
-  leadForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    
-    const nome = document.getElementById('nomeCliente').value.trim();
-    const telefone = document.getElementById('telefoneCliente').value.trim();
-    const servico = document.getElementById('tipoServico').value;
-    const mensagem = document.getElementById('mensagemCliente').value.trim();
-    
-    if (!nome || !telefone || !servico) {
-      alert('⚠️ Por favor, preencha nome, telefone e tipo de serviço!');
-      return;
-    }
-    
-    let textoWhats = `📋 *NOVO CONTATO - SITE DATADESH* 📋%0A%0A` +
-      `👤 *Nome:* ${nome}%0A` +
-      `📞 *Telefone:* ${telefone}%0A` +
-      `🎯 *Tipo de serviço:* ${servico}%0A` +
-      `💬 *Mensagem:* ${mensagem || "Cliente não deixou mensagem adicional"}%0A%0A` +
-      `✅ *Origem:* Formulário do site DataDesh Soluções`;
-    
-    const urlWhats = `https://wa.me/${NUMERO_WPP}?text=${textoWhats}`;
-    window.open(urlWhats, "_blank");
-    
-    formModal.style.display = 'none';
-    leadForm.reset();
-  });
-</script>
+    // Fechar modal com tecla ESC
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && formModal.classList.contains('active')) {
+        formModal.classList.remove('active');
+        formModal.style.display = 'none';
+        body.style.overflow = '';
+      }
+    });
 
+    // ========== ENVIO DO FORMULÁRIO VIA WHATSAPP ==========
+    const leadForm = document.getElementById('leadForm');
+    const NUMERO_WPP = "5531984987116";
+    
+    if (leadForm) {
+      leadForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        
+        const nome = document.getElementById('nomeCliente').value.trim();
+        const telefone = document.getElementById('telefoneCliente').value.trim();
+        const servico = document.getElementById('tipoServico').value;
+        const mensagem = document.getElementById('mensagemCliente').value.trim();
+        
+        if (!nome || !telefone || !servico) {
+          alert('⚠️ Por favor, preencha nome, telefone e tipo de serviço!');
+          return;
+        }
+        
+        let textoWhats = `📋 *NOVO CONTATO - SITE DATADESH* 📋%0A%0A` +
+          `👤 *Nome:* ${nome}%0A` +
+          `📞 *Telefone:* ${telefone}%0A` +
+          `🎯 *Tipo de serviço:* ${servico}%0A` +
+          `💬 *Mensagem:* ${mensagem || "Cliente não deixou mensagem adicional"}%0A%0A` +
+          `✅ *Origem:* Formulário do site DataDesh Soluções`;
+        
+        const urlWhats = `https://wa.me/${NUMERO_WPP}?text=${textoWhats}`;
+        window.open(urlWhats, "_blank");
+        
+        formModal.classList.remove('active');
+        formModal.style.display = 'none';
+        body.style.overflow = '';
+        leadForm.reset();
+      });
+    }
+
+    // ========== EFEITO DE HOVER NOS LINKS PARA CURSOR ==========
+    document.querySelectorAll('a, button, .btn, .skip-intro').forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        if (customCursor && body.classList.contains('intro-active')) {
+          customCursor.style.width = '40px';
+          customCursor.style.height = '40px';
+          customCursor.style.borderColor = 'rgba(138, 243, 229, 1)';
+        }
+      });
+      
+      el.addEventListener('mouseleave', () => {
+        if (customCursor && body.classList.contains('intro-active')) {
+          customCursor.style.width = '22px';
+          customCursor.style.height = '22px';
+          customCursor.style.borderColor = 'rgba(138, 243, 229, 0.8)';
+        }
+      });
+    });
+
+    console.log('✨ DataDesh Soluções - Site carregado com sucesso!');
+    console.log('💡 Dica: A intro pode ser fechada clicando em "Pular intro" ou aguardando 5 segundos.');
+  </script>
 </body>
 </html>
