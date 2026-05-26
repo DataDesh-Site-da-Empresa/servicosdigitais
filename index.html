@@ -1,1939 +1,2436 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>DataDesh Soluções | Sites, Catálogos e Dashboards Profissionais</title>
-  <meta name="description" content="Sites, catálogos digitais, dashboards e páginas profissionais. CNPJ 66.884.261/0001-20. +77 projetos concluídos." />
-  <meta name="author" content="Ana Paula Araujo da Silva - DataDesh Soluções Digitais" />
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"/>
-
-  <style>
-    /* ========== VARIÁVEIS E RESET ========== */
-    :root {
-      --bg: #f5f7fb;
-      --surface: #ffffff;
-      --surface-2: #f8fafc;
-      --text: #122033;
-      --muted: #667085;
-      --line: #e6ebf2;
-      --primary: #0f766e;
-      --primary-dark: #0a4f4a;
-      --primary-light: #14b8a6;
-      --secondary: #f59e0b;
-      --secondary-dark: #d97706;
-      --dark: #0f172a;
-      --dark-2: #162033;
-      --gradient-primary: linear-gradient(135deg, #0f766e, #14b8a6);
-      --gradient-dark: linear-gradient(135deg, #0c1426, #0f2b33);
-      --gradient-gold: linear-gradient(135deg, #f59e0b, #fbbf24);
-      --shadow-sm: 0 10px 30px rgba(15, 23, 42, 0.06);
-      --shadow-md: 0 18px 45px rgba(15, 23, 42, 0.10);
-      --shadow-lg: 0 30px 60px rgba(2, 8, 23, 0.14);
-      --shadow-glow: 0 20px 60px rgba(15, 118, 110, 0.25);
-      --radius-sm: 14px;
-      --radius-md: 20px;
-      --radius-lg: 28px;
-      --radius-xl: 36px;
-      --container: 1200px;
-    }
-
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-
-    html { scroll-behavior: smooth; scroll-padding-top: 90px; }
-
-    body {
-      font-family: "Inter", sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.6;
-      -webkit-font-smoothing: antialiased;
-      overflow-x: hidden;
-    }
-
-    img { max-width: 100%; display: block; }
-    a { text-decoration: none; color: inherit; }
-
-    .container { width: min(100% - 32px, var(--container)); margin-inline: auto; }
-    .section { padding: 100px 0; }
-
-    /* ========== BOTÕES GLOBAIS ========== */
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      border: none;
-      border-radius: 999px;
-      padding: 15px 28px;
-      font-size: 15px;
-      font-weight: 700;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      cursor: pointer;
-      white-space: nowrap;
-      font-family: "Inter", sans-serif;
-    }
-
-    .btn-primary {
-      background: var(--gradient-primary);
-      color: white;
-      box-shadow: 0 14px 30px rgba(15, 118, 110, 0.3);
-    }
-
-    .btn-primary:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 22px 45px rgba(15, 118, 110, 0.45);
-    }
-
-    .btn-secondary {
-      background: white;
-      color: var(--dark);
-      border: 2px solid var(--line);
-      box-shadow: var(--shadow-sm);
-    }
-
-    .btn-secondary:hover {
-      transform: translateY(-3px);
-      border-color: var(--primary);
-      box-shadow: var(--shadow-md);
-    }
-
-    .btn-gold {
-      background: var(--gradient-gold);
-      color: white;
-      box-shadow: 0 14px 30px rgba(245, 158, 11, 0.3);
-    }
-
-    .btn-gold:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 22px 45px rgba(245, 158, 11, 0.45);
-    }
-
-    .btn-wpp {
-      background: #25D366;
-      color: white;
-      box-shadow: 0 14px 30px rgba(37, 211, 102, 0.3);
-    }
-
-    .btn-wpp:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 22px 45px rgba(37, 211, 102, 0.45);
-    }
-
-    .btn-outline-light {
-      background: transparent;
-      color: white;
-      border: 2px solid rgba(255,255,255,0.3);
-      backdrop-filter: blur(10px);
-    }
-
-    .btn-outline-light:hover {
-      background: rgba(255,255,255,0.1);
-      border-color: white;
-      transform: translateY(-3px);
-    }
-
-    .btn-sm {
-      padding: 10px 18px;
-      font-size: 13px;
-    }
-
-    /* ========== NAVBAR ========== */
-    .navbar {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      z-index: 9999;
-      background: rgba(255, 255, 255, 0.92);
-      backdrop-filter: saturate(200%) blur(20px);
-      -webkit-backdrop-filter: saturate(200%) blur(20px);
-      border-bottom: 1px solid rgba(15, 118, 110, 0.1);
-      transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    .navbar.scrolled {
-      box-shadow: 0 4px 30px rgba(15, 118, 110, 0.12);
-      background: rgba(255, 255, 255, 0.96);
-    }
-
-    .nav-wrap {
-      min-height: 75px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 20px;
-      padding: 0 8px;
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      flex-shrink: 0;
-    }
-
-    .brand-icon {
-      width: 48px;
-      height: 48px;
-      border-radius: 16px;
-      background: var(--gradient-primary);
-      color: white;
-      display: grid;
-      place-items: center;
-      font-size: 22px;
-      box-shadow: 0 12px 30px rgba(15, 118, 110, 0.3);
-      transition: transform 0.3s ease;
-    }
-
-    .brand:hover .brand-icon {
-      transform: rotate(-5deg) scale(1.05);
-    }
-
-    .brand-info {
-      display: flex;
-      flex-direction: column;
-      line-height: 1.1;
-    }
-
-    .brand-name {
-      font-family: "Outfit", sans-serif;
-      font-size: 1.15rem;
-      font-weight: 800;
-      color: var(--dark);
-      letter-spacing: -0.02em;
-    }
-
-    .brand-tagline {
-      font-size: 0.7rem;
-      color: var(--muted);
-      font-weight: 500;
-      letter-spacing: 0.02em;
-    }
-
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .nav-links a {
-      color: var(--text);
-      font-size: 13px;
-      font-weight: 600;
-      padding: 10px 16px;
-      border-radius: 12px;
-      transition: all 0.25s ease;
-      position: relative;
-      white-space: nowrap;
-    }
-
-    .nav-links a:hover {
-      color: var(--primary);
-      background: rgba(15, 118, 110, 0.06);
-    }
-
-    .nav-links a.nav-highlight {
-      background: var(--gradient-primary);
-      color: white;
-      font-weight: 700;
-      box-shadow: 0 8px 20px rgba(15, 118, 110, 0.25);
-    }
-
-    .nav-links a.nav-highlight:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 12px 28px rgba(15, 118, 110, 0.35);
-    }
-
-    .nav-actions {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .nav-btn {
-      padding: 10px 18px;
-      border-radius: 50px;
-      font-size: 13px;
-      font-weight: 700;
-      transition: all 0.25s ease;
-      border: none;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      white-space: nowrap;
-    }
-
-    .nav-btn-wpp {
-      background: #25D366;
-      color: white;
-      box-shadow: 0 8px 20px rgba(37, 211, 102, 0.3);
-    }
-
-    .nav-btn-wpp:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 14px 30px rgba(37, 211, 102, 0.4);
-    }
-
-    .menu-toggle {
-      display: none;
-      width: 44px;
-      height: 44px;
-      border-radius: 14px;
-      border: 2px solid var(--line);
-      background: white;
-      color: var(--dark);
-      font-size: 18px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-    }
-
-    .menu-toggle.active {
-      background: var(--primary);
-      color: white;
-      border-color: var(--primary);
-    }
-
-    .nav-mobile {
-      display: none;
-      background: white;
-      border-top: 1px solid var(--line);
-      padding: 16px;
-      flex-direction: column;
-      gap: 6px;
-      max-height: 70vh;
-      overflow-y: auto;
-    }
-
-    .nav-mobile.active {
-      display: flex;
-    }
-
-    .nav-mobile a {
-      padding: 14px 18px;
-      border-radius: 14px;
-      font-weight: 600;
-      font-size: 15px;
-      color: var(--dark);
-      background: var(--surface-2);
-      border: 1px solid transparent;
-      transition: all 0.2s ease;
-    }
-
-    .nav-mobile a:hover {
-      background: var(--primary);
-      color: white;
-      border-color: var(--primary);
-    }
-
-    .nav-mobile a.nav-highlight {
-      background: var(--gradient-primary);
-      color: white;
-      text-align: center;
-      font-size: 16px;
-    }
-
-    .nav-mobile .mobile-cnpj {
-      text-align: center;
-      padding: 12px;
-      font-size: 12px;
-      color: var(--muted);
-      border-top: 1px solid var(--line);
-      margin-top: 8px;
-    }
-
-    /* ========== HERO ========== */
-    .hero {
-      position: relative;
-      overflow: hidden;
-      background: var(--gradient-dark);
-      color: white;
-      padding: 140px 0 80px;
-      margin-top: 0;
-    }
-
-    .hero::before {
-      content: "";
-      position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: radial-gradient(circle at 30% 40%, rgba(15, 118, 110, 0.2), transparent 50%),
-                  radial-gradient(circle at 70% 60%, rgba(245, 158, 11, 0.1), transparent 50%);
-      pointer-events: none;
-      animation: heroGlow 8s ease-in-out infinite alternate;
-    }
-
-    @keyframes heroGlow {
-      0% { transform: translate(0, 0); }
-      100% { transform: translate(20px, -20px); }
-    }
-
-    .hero-grid {
-      position: relative;
-      display: grid;
-      grid-template-columns: 1.1fr 0.9fr;
-      gap: 50px;
-      align-items: center;
-    }
-
-    .hero-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      padding: 10px 18px;
-      border-radius: 50px;
-      background: rgba(255,255,255,0.08);
-      border: 1px solid rgba(255,255,255,0.15);
-      color: #e8f7f5;
-      font-size: 13px;
-      font-weight: 600;
-      letter-spacing: 0.02em;
-      margin-bottom: 24px;
-      backdrop-filter: blur(10px);
-    }
-
-    .hero-badge i { color: #f59e0b; }
-
-    .hero-copy h1 {
-      font-family: "Outfit", sans-serif;
-      font-size: clamp(2.5rem, 5vw, 5rem);
-      line-height: 1.05;
-      letter-spacing: -0.04em;
-      margin-bottom: 24px;
-      font-weight: 900;
-    }
-
-    .hero-copy h1 span {
-      background: linear-gradient(135deg, #8af3e5, #14b8a6);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .hero-copy p {
-      font-size: 1.1rem;
-      color: rgba(255,255,255,0.8);
-      max-width: 600px;
-      margin-bottom: 32px;
-      line-height: 1.7;
-    }
-
-    .hero-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 14px;
-      margin-bottom: 36px;
-    }
-
-    .hero-stats {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
-    }
-
-    .stat-card {
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 20px;
-      padding: 20px;
-      backdrop-filter: blur(10px);
-      transition: transform 0.3s ease;
-    }
-
-    .stat-card:hover {
-      transform: translateY(-5px);
-      background: rgba(255,255,255,0.1);
-    }
-
-    .stat-number {
-      font-family: "Outfit", sans-serif;
-      font-size: 2.2rem;
-      font-weight: 900;
-      color: #8af3e5;
-      line-height: 1;
-      margin-bottom: 6px;
-    }
-
-    .stat-label { color: rgba(255,255,255,0.7); font-size: 0.9rem; }
-
-    .hero-visual {
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 28px;
-      padding: 24px;
-      backdrop-filter: blur(15px);
-      box-shadow: 0 30px 60px rgba(0,0,0,0.3);
-    }
-
-    .mockup-browser {
-      background: rgba(255,255,255,0.95);
-      border-radius: 18px;
-      overflow: hidden;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.2);
-    }
-
-    .mockup-header {
-      background: #e8eaed;
-      padding: 12px 16px;
-      display: flex;
-      gap: 8px;
-      align-items: center;
-    }
-
-    .mockup-dot { width: 12px; height: 12px; border-radius: 50%; }
-    .mockup-dot.red { background: #ff5f57; }
-    .mockup-dot.yellow { background: #febc2e; }
-    .mockup-dot.green { background: #28c840; }
-
-    .mockup-body { padding: 20px; }
-
-    .mockup-banner-inner {
-      background: var(--gradient-primary);
-      border-radius: 14px;
-      padding: 18px;
-      color: white;
-      margin-bottom: 16px;
-      font-weight: 700;
-    }
-
-    .mockup-grid-inner {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-    }
-
-    .mockup-item {
-      background: #f5f7fb;
-      border-radius: 14px;
-      padding: 14px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--dark);
-    }
-
-    .mockup-item i {
-      width: 36px;
-      height: 36px;
-      border-radius: 10px;
-      background: #e0f5f2;
-      color: var(--primary);
-      display: grid;
-      place-items: center;
-      font-size: 16px;
-    }
-
-    /* ========== TRUST BAR ========== */
-    .trust-section {
-      margin-top: -30px;
-      position: relative;
-      z-index: 5;
-    }
-
-    .trust-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 16px;
-      background: white;
-      border-radius: 24px;
-      padding: 24px;
-      box-shadow: 0 20px 50px rgba(15, 118, 110, 0.12);
-      border: 1px solid var(--line);
-    }
-
-    .trust-item {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      padding: 8px;
-    }
-
-    .trust-icon {
-      width: 50px;
-      height: 50px;
-      border-radius: 16px;
-      background: linear-gradient(135deg, #ecfdf9, #d5f5f0);
-      display: grid;
-      place-items: center;
-      color: var(--primary);
-      font-size: 20px;
-      flex-shrink: 0;
-    }
-
-    .trust-text strong { display: block; font-size: 14px; color: var(--dark); }
-    .trust-text span { font-size: 12px; color: var(--muted); }
-
-    /* ========== SEÇÃO HEADERS ========== */
-    .section-kicker {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 8px 16px;
-      border-radius: 50px;
-      background: #ecfdf9;
-      color: var(--primary);
-      border: 1px solid #d5f5f0;
-      font-size: 12px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      margin-bottom: 18px;
-    }
-
-    .section-header {
-      text-align: center;
-      max-width: 700px;
-      margin: 0 auto 56px;
-    }
-
-    .section-title {
-      font-family: "Outfit", sans-serif;
-      font-size: clamp(2rem, 3.5vw, 3.2rem);
-      line-height: 1.15;
-      letter-spacing: -0.03em;
-      margin-bottom: 16px;
-      color: var(--dark);
-      font-weight: 800;
-    }
-
-    .section-title span { color: var(--primary); }
-
-    .section-subtitle {
-      font-size: 1.05rem;
-      color: var(--muted);
-      line-height: 1.6;
-    }
-
-    /* ========== CREDIBILIDADE / CNPJ ========== */
-    .credibility-section {
-      background: white;
-      border-top: 1px solid var(--line);
-      border-bottom: 1px solid var(--line);
-    }
-
-    .credibility-card {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 40px;
-      padding: 40px;
-      flex-wrap: wrap;
-      text-align: center;
-    }
-
-    .credibility-item {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-    }
-
-    .credibility-icon {
-      width: 56px;
-      height: 56px;
-      border-radius: 18px;
-      background: linear-gradient(135deg, #ecfdf9, #f0fdfa);
-      display: grid;
-      place-items: center;
-      font-size: 24px;
-      color: var(--primary);
-    }
-
-    .credibility-text strong { display: block; font-size: 1rem; color: var(--dark); }
-    .credibility-text span { font-size: 0.85rem; color: var(--muted); }
-
-    .cnpj-badge {
-      background: linear-gradient(135deg, #0f172a, #1a2a3a);
-      color: white;
-      padding: 14px 24px;
-      border-radius: 16px;
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      font-weight: 700;
-      font-size: 15px;
-      box-shadow: 0 12px 30px rgba(15, 23, 42, 0.3);
-    }
-
-    .cnpj-badge i { color: #8af3e5; }
-
-    /* ========== REVEAL ANIMATION ========== */
-    .reveal {
-      opacity: 0;
-      transform: translateY(35px);
-      transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    }
-
-    .reveal.active {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    /* ========== RESPONSIVO (PARTE 1) ========== */
-    @media (max-width: 1100px) {
-      .hero-grid { grid-template-columns: 1fr; }
-      .trust-grid { grid-template-columns: repeat(2, 1fr); }
-    }
-
-    @media (max-width: 860px) {
-      .nav-links, .nav-actions .nav-btn { display: none; }
-      .menu-toggle { display: flex; }
-      .hero { padding-top: 110px; }
-      .hero-stats { grid-template-columns: 1fr; }
-      .credibility-card { flex-direction: column; gap: 20px; }
-    }
-
-    @media (max-width: 640px) {
-      .trust-grid { grid-template-columns: 1fr 1fr; }
-      .hero-actions { flex-direction: column; }
-      .hero-actions .btn { width: 100%; justify-content: center; }
-      .section { padding: 60px 0; }
-    }
-  </style>
-</head>
-<body>
-
-  <!-- ========== NAVBAR ========== -->
-  <header class="navbar" id="navbar">
-    <div class="container">
-      <div class="nav-wrap">
-        <a href="#" class="brand">
-          <div class="brand-icon"><i class="fa-solid fa-chart-simple"></i></div>
-          <div class="brand-info">
-            <span class="brand-name">DataDesh</span>
-            <span class="brand-tagline">Soluções Digitais</span>
-          </div>
-        </a>
-        
-        <nav class="nav-links" id="navLinks">
-          <a href="#sobre">Sobre</a>
-          <a href="#projetos">Projetos</a>
-          <a href="#servicos">Serviços</a>
-          <a href="#catalogos">Catálogos</a>
-          <a href="#clinicas">Clínicas</a>
-          <a href="#depoimentos">Depoimentos</a>
-          <a href="#formulario">Contato</a>
-          <a href="https://datadesh-site-da-empresa.github.io/servicosdigitais/catalogo.html" target="_blank" class="nav-highlight">📚 Catálogo</a>
-        </nav>
-        
-        <div class="nav-actions">
-          <a href="https://wa.me/5531984987116" class="nav-btn nav-btn-wpp" target="_blank">
-            <i class="fab fa-whatsapp"></i> WhatsApp
-          </a>
-          <button class="menu-toggle" id="menuToggle" aria-label="Menu">
-            <i class="fa-solid fa-bars"></i>
-          </button>
-        </div>
-      </div>
-      
-      <div class="nav-mobile" id="mobileMenu">
-        <a href="#sobre">👤 Sobre</a>
-        <a href="#projetos">📂 Projetos</a>
-        <a href="#servicos">🛠️ Serviços</a>
-        <a href="#catalogos">📱 Catálogos</a>
-        <a href="#clinicas">🏥 Clínicas</a>
-        <a href="#depoimentos">⭐ Depoimentos</a>
-        <a href="#formulario">📝 Contato</a>
-        <a href="https://datadesh-site-da-empresa.github.io/servicosdigitais/catalogo.html" target="_blank" class="nav-highlight">📚 Ver Catálogo Completo</a>
-        <a href="https://wa.me/5531984987116" target="_blank" style="background:#25D366; color:white; text-align:center;">
-          <i class="fab fa-whatsapp"></i> Falar no WhatsApp
-        </a>
-        <div class="mobile-cnpj">🏢 CNPJ: 66.884.261/0001-20</div>
-      </div>
-    </div>
-  </header>
-
-  <main>
-    <!-- ========== HERO ========== -->
-    <section class="hero" id="home">
-      <div class="container">
-        <div class="hero-grid">
-          <div class="hero-copy reveal">
-            <div class="hero-badge">
-              <i class="fa-solid fa-star"></i> +77 projetos concluídos com sucesso
-            </div>
-            <h1>Crio <span>Sites, Catálogos, Dashboards</span> e Páginas que vendem</h1>
-            <p>Soluções digitais profissionais com foco em resultados. Transformo ideias em ferramentas que organizam seu negócio e aumentam suas vendas.</p>
-            <div class="hero-actions">
-              <a href="https://wa.me/5531984987116" class="btn btn-primary" target="_blank">
-                <i class="fab fa-whatsapp"></i> Quero minha solução
-              </a>
-              <a href="https://datadesh-site-da-empresa.github.io/servicosdigitais/catalogo.html" class="btn btn-gold" target="_blank">
-                <i class="fa-solid fa-table-list"></i> Ver Catálogo
-              </a>
-              <a href="#formulario" class="btn btn-outline-light">
-                <i class="fa-regular fa-file-lines"></i> Formulário
-              </a>
-            </div>
-            <div class="hero-stats">
-              <div class="stat-card">
-                <div class="stat-number">77+</div>
-                <div class="stat-label">Projetos concluídos</div>
-              </div>
-              <div class="stat-card">
-                <div class="stat-number">100%</div>
-                <div class="stat-label">Personalizado</div>
-              </div>
-              <div class="stat-card">
-                <div class="stat-number">30</div>
-                <div class="stat-label">Dias (prazo máx)</div>
-              </div>
-            </div>
-          </div>
-          
-          <div class="hero-visual reveal">
-            <div class="mockup-browser">
-              <div class="mockup-header">
-                <div class="mockup-dot red"></div>
-                <div class="mockup-dot yellow"></div>
-                <div class="mockup-dot green"></div>
-              </div>
-              <div class="mockup-body">
-                <div class="mockup-banner-inner">✨ Sites, Catálogos e Dashboards Premium</div>
-                <div class="mockup-grid-inner">
-                  <div class="mockup-item"><i class="fa-solid fa-globe"></i> Sites</div>
-                  <div class="mockup-item"><i class="fa-solid fa-mobile-screen"></i> Catálogos</div>
-                  <div class="mockup-item"><i class="fa-solid fa-chart-line"></i> Dashboards</div>
-                  <div class="mockup-item"><i class="fa-solid fa-hospital"></i> Clínicas</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ========== TRUST BAR ========== -->
-    <div class="trust-section">
-      <div class="container">
-        <div class="trust-grid reveal">
-          <div class="trust-item">
-            <div class="trust-icon"><i class="fa-solid fa-shield-halved"></i></div>
-            <div class="trust-text"><strong>Profissional Verificado</strong><span>CNPJ ativo e regular</span></div>
-          </div>
-          <div class="trust-item">
-            <div class="trust-icon"><i class="fa-solid fa-rocket"></i></div>
-            <div class="trust-text"><strong>Entrega ágil</strong><span>Em até 30 dias</span></div>
-          </div>
-          <div class="trust-item">
-            <div class="trust-icon"><i class="fa-solid fa-envelope-circle-check"></i></div>
-            <div class="trust-text"><strong>Aprovação prévia</strong><span>Prova por e-mail</span></div>
-          </div>
-          <div class="trust-item">
-            <div class="trust-icon"><i class="fa-solid fa-lock"></i></div>
-            <div class="trust-text"><strong>20% de sinal</strong><span>Processo seguro</span></div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ========== CREDIBILIDADE / CNPJ ========== -->
-    <section class="credibility-section">
-      <div class="container">
-        <div class="credibility-card reveal">
-          <div class="credibility-item">
-            <div class="credibility-icon"><i class="fa-solid fa-user-tie"></i></div>
-            <div class="credibility-text">
-              <strong>Ana Paula Araujo da Silva</strong>
-              <span>Fundadora & Especialista</span>
-            </div>
-          </div>
-          <div class="cnpj-badge">
-            <i class="fa-solid fa-building"></i>
-            <span>CNPJ: 66.884.261/0001-20</span>
-          </div>
-          <div class="credibility-item">
-            <div class="credibility-icon"><i class="fa-solid fa-certificate"></i></div>
-            <div class="credibility-text">
-              <strong>DataDesh Soluções Digitais</strong>
-              <span>Empresa regularizada</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- CONTINUAÇÃO DO CSS (dentro da tag <style>) -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DataDesh Soluções | Sites, Catálogos e Dashboards Profissionais</title>
+    <meta name="description" content="Sites, catálogos digitais, dashboards e páginas profissionais. CNPJ 66.884.261/0001-20. +77 projetos concluídos." />
+    <meta name="author" content="Ana Paula Araujo da Silva - DataDesh Soluções Digitais" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
     <style>
-    /* ========== SOBRE ========== */
-    .about-grid {
-      display: grid;
-      grid-template-columns: .9fr 1.1fr;
-      gap: 44px;
-      align-items: center;
-    }
-
-    .about-photo-card {
-      border-radius: 32px;
-      overflow: hidden;
-      box-shadow: var(--shadow-lg);
-      background: white;
-      border: 1px solid var(--line);
-      transition: transform 0.4s ease;
-    }
-
-    .about-photo-card:hover { transform: scale(1.02); }
-
-    .about-photo-card img {
-      width: 100%;
-      height: auto;
-      object-fit: cover;
-    }
-
-    .about-list {
-      display: grid;
-      gap: 12px;
-      margin: 26px 0 30px;
-    }
-
-    .about-list li {
-      list-style: none;
-      display: flex;
-      gap: 12px;
-      align-items: flex-start;
-    }
-
-    .about-list i {
-      width: 24px;
-      height: 24px;
-      border-radius: 50%;
-      background: #e8faf6;
-      color: var(--primary);
-      display: grid;
-      place-items: center;
-      font-size: 12px;
-      margin-top: 2px;
-      flex-shrink: 0;
-    }
-
-    .contact-pills {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
-
-    .pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 12px 16px;
-      border-radius: 999px;
-      background: white;
-      border: 1px solid var(--line);
-      transition: all .25s ease;
-      font-weight: 500;
-      font-size: 14px;
-    }
-
-    .pill:hover {
-      transform: translateY(-2px);
-      box-shadow: var(--shadow-md);
-      border-color: var(--primary);
-      color: var(--primary);
-    }
-
-    /* ========== PROJETOS ========== */
-    .projects-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 24px;
-    }
-
-    .project-card {
-      background: white;
-      border-radius: 24px;
-      overflow: hidden;
-      border: 1px solid var(--line);
-      transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-      position: relative;
-    }
-
-    .project-card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 25px 50px rgba(15, 118, 110, 0.15);
-    }
-
-    .project-card.featured {
-      border: 2px solid var(--primary);
-    }
-
-    .project-card.featured::before {
-      content: "🔥 CARRO CHEFE";
-      position: absolute;
-      top: 16px;
-      right: 16px;
-      background: linear-gradient(135deg, #f59e0b, #ef4444);
-      color: white;
-      padding: 6px 14px;
-      border-radius: 50px;
-      font-size: 11px;
-      font-weight: 800;
-      z-index: 2;
-      letter-spacing: 0.04em;
-      box-shadow: 0 8px 20px rgba(245, 158, 11, 0.4);
-    }
-
-    .project-media {
-      aspect-ratio: 16/11;
-      overflow: hidden;
-      background: #eaf0f7;
-    }
-
-    .project-media img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform 0.6s ease;
-    }
-
-    .project-card:hover .project-media img { transform: scale(1.06); }
-
-    .project-content { padding: 22px; }
-
-    .project-content h3 {
-      font-size: 1.1rem;
-      margin-bottom: 8px;
-      color: var(--dark);
-    }
-
-    .project-content p {
-      color: var(--muted);
-      font-size: 0.9rem;
-      margin-bottom: 14px;
-    }
-
-    .project-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      color: var(--primary);
-      font-weight: 700;
-      font-size: 14px;
-      transition: gap 0.3s ease;
-    }
-
-    .project-link:hover { gap: 10px; }
-
-    /* ========== SERVIÇOS ========== */
-    .services-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 22px;
-    }
-
-    .service-card {
-      background: white;
-      border: 1px solid var(--line);
-      border-radius: 24px;
-      padding: 28px 22px;
-      transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-      display: flex;
-      flex-direction: column;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .service-card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 25px 50px rgba(15, 118, 110, 0.15);
-      border-color: var(--primary-light);
-    }
-
-    .service-card::after {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 4px;
-      background: var(--gradient-primary);
-      transform: scaleX(0);
-      transform-origin: left;
-      transition: transform 0.4s ease;
-    }
-
-    .service-card:hover::after { transform: scaleX(1); }
-
-    .service-icon {
-      width: 56px;
-      height: 56px;
-      border-radius: 16px;
-      display: grid;
-      place-items: center;
-      background: linear-gradient(135deg, #ecfdf9, #f0fdfa);
-      color: var(--primary);
-      font-size: 22px;
-      margin-bottom: 18px;
-    }
-
-    .service-card h3 { font-size: 1.15rem; margin-bottom: 8px; }
-
-    .service-card p {
-      color: var(--muted);
-      font-size: 0.9rem;
-      margin-bottom: 16px;
-      flex-grow: 1;
-    }
-
-    .price-block {
-      background: linear-gradient(135deg, #f8fafc, #f0fdf9);
-      border-radius: 18px;
-      padding: 18px;
-      text-align: center;
-      margin-bottom: 16px;
-      border: 1px solid #e0f0ec;
-    }
-
-    .price-installment-highlight {
-      font-family: "Outfit", sans-serif;
-      font-size: 1.8rem;
-      font-weight: 900;
-      color: var(--primary);
-      line-height: 1;
-      margin-bottom: 6px;
-    }
-
-    .price-total-small {
-      font-size: 0.8rem;
-      color: var(--muted);
-      font-weight: 500;
-    }
-
-    .price-total-small strong { color: var(--dark); }
-
-    .service-btns { display: flex; gap: 8px; }
-
-    .service-btns .btn {
-      flex: 1;
-      padding: 12px 16px;
-      font-size: 13px;
-    }
-
-    /* ========== CATÁLOGO ========== */
-    .catalog-section { background: white; }
-
-    .catalog-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 32px;
-      align-items: center;
-    }
-
-    .catalog-card {
-      background: var(--surface-2);
-      border-radius: 24px;
-      padding: 28px;
-      border: 1px solid var(--line);
-      transition: all 0.3s ease;
-    }
-
-    .catalog-card:hover {
-      box-shadow: var(--shadow-md);
-      transform: translateY(-4px);
-    }
-
-    /* ========== CLÍNICAS ========== */
-    .clinic-wrap {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      background: var(--gradient-dark);
-      border-radius: 28px;
-      overflow: hidden;
-      box-shadow: var(--shadow-lg);
-    }
-
-    .clinic-visual {
-      padding: 44px;
-      color: white;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-
-    .clinic-pricing {
-      background: white;
-      padding: 44px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-
-    /* ========== FORMULÁRIO ========== */
-    .form-section { background: var(--surface-2); }
-
-    .form-wrapper {
-      display: grid;
-      grid-template-columns: 1fr 1.2fr;
-      gap: 40px;
-      align-items: start;
-    }
-
-    .form-info h3 {
-      font-family: "Outfit", sans-serif;
-      font-size: 1.8rem;
-      margin-bottom: 16px;
-    }
-
-    .form-info p { color: var(--muted); margin-bottom: 20px; }
-
-    .form-benefits {
-      list-style: none;
-      display: grid;
-      gap: 12px;
-    }
-
-    .form-benefits li {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-weight: 500;
-    }
-
-    .form-benefits i { color: var(--primary); font-size: 18px; }
-
-    .form-card {
-      background: white;
-      border-radius: 24px;
-      padding: 32px;
-      box-shadow: var(--shadow-lg);
-      border: 1px solid var(--line);
-    }
-
-    .form-card h4 {
-      font-family: "Outfit", sans-serif;
-      font-size: 1.3rem;
-      margin-bottom: 6px;
-    }
-
-    .form-card .sub {
-      color: var(--muted);
-      font-size: 0.9rem;
-      margin-bottom: 22px;
-    }
-
-    .form-group { margin-bottom: 18px; }
-
-    .form-group label {
-      display: block;
-      font-weight: 600;
-      margin-bottom: 6px;
-      font-size: 14px;
-      color: var(--dark);
-    }
-
-    .form-group input,
-    .form-group select,
-    .form-group textarea {
-      width: 100%;
-      padding: 14px 16px;
-      border: 2px solid var(--line);
-      border-radius: 14px;
-      font-size: 15px;
-      font-family: "Inter", sans-serif;
-      transition: all 0.2s ease;
-      outline: none;
-      background: var(--surface-2);
-    }
-
-    .form-group input:focus,
-    .form-group select:focus,
-    .form-group textarea:focus {
-      border-color: var(--primary);
-      background: white;
-      box-shadow: 0 0 0 4px rgba(15, 118, 110, 0.08);
-    }
-
-    .form-group textarea { resize: vertical; min-height: 100px; }
-
-    .btn-submit-form {
-      width: 100%;
-      padding: 16px;
-      background: linear-gradient(135deg, #25D366, #128C7E);
-      color: white;
-      border: none;
-      border-radius: 16px;
-      font-size: 16px;
-      font-weight: 700;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-    }
-
-    .btn-submit-form:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 16px 35px rgba(37, 211, 102, 0.35);
-    }
-
-    .form-response-time {
-      text-align: center;
-      margin-top: 14px;
-      font-size: 13px;
-      color: var(--muted);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-    }
-
-    /* ========== DEPOIMENTOS ========== */
-    .testimonials-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 22px;
-    }
-
-    .testimonial-card {
-      background: white;
-      border: 1px solid var(--line);
-      border-radius: 24px;
-      padding: 28px;
-      transition: all 0.3s ease;
-    }
-
-    .testimonial-card:hover {
-      transform: translateY(-6px);
-      box-shadow: var(--shadow-md);
-    }
-
-    .testimonial-card .stars {
-      color: #f59e0b;
-      margin-bottom: 12px;
-    }
-
-    .testimonial-card p {
-      font-style: italic;
-      margin-bottom: 14px;
-    }
-
-    /* ========== CTA ========== */
-    .cta {
-      background: var(--gradient-dark);
-      color: white;
-      padding: 90px 0;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .cta h2 {
-      font-family: "Outfit", sans-serif;
-      font-size: 2.2rem;
-      margin-bottom: 28px;
-    }
-
-    /* ========== FOOTER ========== */
-    .footer {
-      background: #0b1220;
-      color: white;
-      padding: 60px 0 30px;
-    }
-
-    .footer-grid {
-      display: grid;
-      grid-template-columns: 1.5fr 1fr 1fr;
-      gap: 40px;
-      margin-bottom: 40px;
-      padding-bottom: 30px;
-      border-bottom: 1px solid rgba(255,255,255,0.08);
-    }
-
-    .footer-brand .brand-icon-footer {
-      width: 48px;
-      height: 48px;
-      border-radius: 14px;
-      background: var(--gradient-primary);
-      display: grid;
-      place-items: center;
-      color: white;
-      font-size: 20px;
-      margin-bottom: 16px;
-    }
-
-    .footer-links {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .footer-links a {
-      color: rgba(255,255,255,0.65);
-      transition: color 0.3s;
-    }
-
-    .footer-links a:hover { color: white; }
-
-    .footer-contact-item {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 12px;
-      color: rgba(255,255,255,0.65);
-    }
-
-    .footer-bottom {
-      text-align: center;
-      color: rgba(255,255,255,0.4);
-      font-size: 13px;
-    }
-
-    /* ========== WHATSAPP FLOAT ========== */
-    .whatsapp-float {
-      position: fixed;
-      right: 24px;
-      bottom: 24px;
-      width: 62px;
-      height: 62px;
-      border-radius: 50%;
-      background: #25D366;
-      color: white;
-      font-size: 28px;
-      display: grid;
-      place-items: center;
-      box-shadow: 0 12px 30px rgba(37, 211, 102, 0.4);
-      z-index: 999;
-      animation: wppPulse 2.5s infinite;
-      transition: transform 0.3s;
-    }
-
-    .whatsapp-float:hover { transform: scale(1.1); }
-
-    @keyframes wppPulse {
-      0%, 100% { box-shadow: 0 12px 30px rgba(37, 211, 102, 0.4); }
-      50% { box-shadow: 0 12px 45px rgba(37, 211, 102, 0.65); }
-    }
-
-    /* ========== RESPONSIVO FINAL ========== */
-    @media (max-width: 1100px) {
-      .about-grid,
-      .catalog-grid,
-      .clinic-wrap,
-      .form-wrapper { grid-template-columns: 1fr; }
-      .services-grid,
-      .projects-grid { grid-template-columns: repeat(2, 1fr); }
-      .testimonials-grid { grid-template-columns: repeat(2, 1fr); }
-    }
-
-    @media (max-width: 640px) {
-      .services-grid,
-      .projects-grid,
-      .testimonials-grid { grid-template-columns: 1fr; }
-      .footer-grid { grid-template-columns: 1fr; gap: 24px; }
-    }
-  </style>
-
-    <!-- ========== SOBRE ========== -->
-    <section id="sobre" class="section">
-      <div class="container">
-        <div class="about-grid">
-          <div class="about-photo-card reveal">
-            <img src="https://raw.githubusercontent.com/datadeshsolucoes-design/servicosdigitais/main/FOTO.jpeg.jpeg" alt="Ana - DataDesh Soluções">
-          </div>
-          <div class="about-copy reveal">
-            <div class="section-kicker"><i class="fa-solid fa-user-tie"></i> Sobre a profissional</div>
-            <h2>Oi, sou a <span>Ana</span> — transformo ideias em presença digital</h2>
-            <p>Tecnóloga em Ciência de Dados, especialista em criar páginas, catálogos e ferramentas digitais com visual moderno e foco em resultado. Já concluí <strong>mais de 77 projetos</strong> para diferentes negócios.</p>
-            <ul class="about-list">
-              <li><i class="fa-solid fa-check"></i> Sites, páginas e catálogos com visual sofisticado</li>
-              <li><i class="fa-solid fa-check"></i> Soluções pensadas para WhatsApp e vendas</li>
-              <li><i class="fa-solid fa-check"></i> Processo simples: sinal, protótipo, entrega</li>
-            </ul>
-            <div class="contact-pills">
-              <a href="https://wa.me/5531984987116" class="pill"><i class="fab fa-whatsapp"></i> (31) 98498-7116</a>
-              <a href="mailto:datadshsolucoes@gmail.com" class="pill"><i class="fa-regular fa-envelope"></i> E-mail</a>
-              <a href="https://www.instagram.com/datadeshsolucoesdigitais/" class="pill"><i class="fab fa-instagram"></i> Instagram</a>
-            </div>
-          </div>
+        :root {
+            --bg: #f5f7fb;
+            --surface: #ffffff;
+            --surface-2: #f8fafc;
+            --text: #122033;
+            --muted: #667085;
+            --line: #e6ebf2;
+            --primary: #0f766e;
+            --primary-dark: #0a4f4a;
+            --primary-light: #14b8a6;
+            --secondary: #f59e0b;
+            --secondary-dark: #d97706;
+            --dark: #0f172a;
+            --dark-2: #162033;
+            --gradient-primary: linear-gradient(135deg, #0f766e, #14b8a6);
+            --gradient-dark: linear-gradient(135deg, #0c1426, #0f2b33);
+            --gradient-gold: linear-gradient(135deg, #f59e0b, #fbbf24);
+            --shadow-sm: 0 10px 30px rgba(15, 23, 42, 0.06);
+            --shadow-md: 0 18px 45px rgba(15, 23, 42, 0.10);
+            --shadow-lg: 0 30px 60px rgba(2, 8, 23, 0.14);
+            --radius-sm: 14px;
+            --radius-md: 20px;
+            --radius-lg: 28px;
+            --container: 1200px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 90px;
+        }
+
+        body {
+            font-family: "Inter", sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        body.intro-active {
+            overflow: hidden;
+            cursor: none;
+        }
+
+        body.intro-active * {
+            cursor: none !important;
+        }
+
+        img {
+            max-width: 100%;
+            display: block;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .container {
+            width: min(100% - 32px, var(--container));
+            margin-inline: auto;
+        }
+
+        .section {
+            padding: 100px 0;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            border: none;
+            border-radius: 999px;
+            padding: 15px 28px;
+            font-size: 15px;
+            font-weight: 700;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            white-space: nowrap;
+            font-family: "Inter", sans-serif;
+        }
+
+        .btn-primary {
+            background: var(--gradient-primary);
+            color: white;
+            box-shadow: 0 14px 30px rgba(15, 118, 110, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 22px 45px rgba(15, 118, 110, 0.45);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: var(--dark);
+            border: 2px solid var(--line);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .btn-secondary:hover {
+            transform: translateY(-3px);
+            border-color: var(--primary);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-gold {
+            background: var(--gradient-gold);
+            color: white;
+            box-shadow: 0 14px 30px rgba(245, 158, 11, 0.3);
+        }
+
+        .btn-gold:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 22px 45px rgba(245, 158, 11, 0.45);
+        }
+
+        .btn-wpp {
+            background: #25D366;
+            color: white;
+            box-shadow: 0 14px 30px rgba(37, 211, 102, 0.3);
+        }
+
+        .btn-wpp:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 22px 45px rgba(37, 211, 102, 0.45);
+        }
+
+        .btn-outline-light {
+            background: transparent;
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-outline-light:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: white;
+            transform: translateY(-3px);
+        }
+
+        .btn-sm {
+            padding: 12px 18px;
+            font-size: 13px;
+        }
+    </style>
+</head>
+
+    <style>
+        /* ========== NAVBAR ========== */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 9999;
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: saturate(200%) blur(20px);
+            -webkit-backdrop-filter: saturate(200%) blur(20px);
+            border-bottom: 1px solid rgba(15, 118, 110, 0.1);
+            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .navbar.scrolled {
+            box-shadow: 0 4px 30px rgba(15, 118, 110, 0.12);
+            background: rgba(255, 255, 255, 0.96);
+        }
+
+        .nav-wrap {
+            min-height: 75px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            padding: 0 8px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-shrink: 0;
+        }
+
+        .brand-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 16px;
+            background: var(--gradient-primary);
+            color: white;
+            display: grid;
+            place-items: center;
+            font-size: 22px;
+            box-shadow: 0 12px 30px rgba(15, 118, 110, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .brand:hover .brand-icon {
+            transform: rotate(-5deg) scale(1.05);
+        }
+
+        .brand-info {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.1;
+        }
+
+        .brand-name {
+            font-family: "Outfit", sans-serif;
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: var(--dark);
+            letter-spacing: -0.02em;
+        }
+
+        .brand-tagline {
+            font-size: 0.7rem;
+            color: var(--muted);
+            font-weight: 500;
+            letter-spacing: 0.02em;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .nav-links a {
+            color: var(--text);
+            font-size: 13px;
+            font-weight: 600;
+            padding: 10px 16px;
+            border-radius: 12px;
+            transition: all 0.25s ease;
+            position: relative;
+            white-space: nowrap;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+            background: rgba(15, 118, 110, 0.06);
+        }
+
+        .nav-links a.nav-highlight {
+            background: var(--gradient-primary);
+            color: white;
+            font-weight: 700;
+            box-shadow: 0 8px 20px rgba(15, 118, 110, 0.25);
+        }
+
+        .nav-links a.nav-highlight:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 28px rgba(15, 118, 110, 0.35);
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-btn-wpp {
+            background: #25D366;
+            color: white;
+            padding: 10px 18px;
+            border-radius: 50px;
+            font-size: 13px;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            white-space: nowrap;
+            box-shadow: 0 8px 20px rgba(37, 211, 102, 0.3);
+            transition: all 0.25s ease;
+            text-decoration: none;
+        }
+
+        .nav-btn-wpp:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 14px 30px rgba(37, 211, 102, 0.4);
+            color: white;
+        }
+
+        .menu-toggle {
+            display: none;
+            width: 44px;
+            height: 44px;
+            border-radius: 14px;
+            border: 2px solid var(--line);
+            background: white;
+            color: var(--dark);
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .menu-toggle.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .nav-mobile {
+            display: none;
+            background: white;
+            border-top: 1px solid var(--line);
+            padding: 16px;
+            flex-direction: column;
+            gap: 6px;
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+
+        .nav-mobile.active {
+            display: flex;
+        }
+
+        .nav-mobile a {
+            padding: 14px 18px;
+            border-radius: 14px;
+            font-weight: 600;
+            font-size: 15px;
+            color: var(--dark);
+            background: var(--surface-2);
+            border: 1px solid transparent;
+            transition: all 0.2s ease;
+            text-decoration: none;
+        }
+
+        .nav-mobile a:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .nav-mobile a.nav-highlight {
+            background: var(--gradient-primary);
+            color: white;
+            text-align: center;
+            font-size: 16px;
+        }
+
+        .nav-mobile .mobile-cnpj {
+            text-align: center;
+            padding: 12px;
+            font-size: 12px;
+            color: var(--muted);
+            border-top: 1px solid var(--line);
+            margin-top: 8px;
+        }
+    </style>
+
+    <style>
+        /* ========== HERO SECTION ========== */
+        .hero {
+            position: relative;
+            overflow: hidden;
+            background: var(--gradient-dark);
+            color: white;
+            padding: 140px 0 80px;
+            margin-top: 0;
+        }
+
+        .hero::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 30% 40%, rgba(15, 118, 110, 0.2), transparent 50%),
+                radial-gradient(circle at 70% 60%, rgba(245, 158, 11, 0.1), transparent 50%);
+            pointer-events: none;
+            animation: heroGlow 8s ease-in-out infinite alternate;
+        }
+
+        @keyframes heroGlow {
+            0% {
+                transform: translate(0, 0);
+            }
+            100% {
+                transform: translate(20px, -20px);
+            }
+        }
+
+        .hero-grid {
+            position: relative;
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 18px;
+            border-radius: 50px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #e8f7f5;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.02em;
+            margin-bottom: 24px;
+            backdrop-filter: blur(10px);
+        }
+
+        .hero-badge i {
+            color: #f59e0b;
+        }
+
+        .hero-copy h1 {
+            font-family: "Outfit", sans-serif;
+            font-size: clamp(2.5rem, 5vw, 5rem);
+            line-height: 1.05;
+            letter-spacing: -0.04em;
+            margin-bottom: 24px;
+            font-weight: 900;
+        }
+
+        .hero-copy h1 span {
+            background: linear-gradient(135deg, #8af3e5, #14b8a6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-copy p {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.8);
+            max-width: 600px;
+            margin-bottom: 32px;
+            line-height: 1.7;
+        }
+
+        .hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px;
+            margin-bottom: 36px;
+        }
+
+        .hero-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 20px;
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .stat-number {
+            font-family: "Outfit", sans-serif;
+            font-size: 2.2rem;
+            font-weight: 900;
+            color: #8af3e5;
+            line-height: 1;
+            margin-bottom: 6px;
+        }
+
+        .stat-label {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+        }
+
+        /* Mockup Visual */
+        .hero-visual {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 28px;
+            padding: 24px;
+            backdrop-filter: blur(15px);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .mockup-browser {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .mockup-header {
+            background: #e8eaed;
+            padding: 12px 16px;
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .mockup-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .mockup-dot.red {
+            background: #ff5f57;
+        }
+
+        .mockup-dot.yellow {
+            background: #febc2e;
+        }
+
+        .mockup-dot.green {
+            background: #28c840;
+        }
+
+        .mockup-body {
+            padding: 20px;
+        }
+
+        .mockup-banner-inner {
+            background: var(--gradient-primary);
+            border-radius: 14px;
+            padding: 18px;
+            color: white;
+            margin-bottom: 16px;
+            font-weight: 700;
+        }
+
+        .mockup-grid-inner {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .mockup-item {
+            background: #f5f7fb;
+            border-radius: 14px;
+            padding: 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .mockup-item i {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            background: #e0f5f2;
+            color: var(--primary);
+            display: grid;
+            place-items: center;
+            font-size: 16px;
+        }
+
+        /* ========== TRUST BAR ========== */
+        .trust-section {
+            margin-top: -30px;
+            position: relative;
+            z-index: 5;
+        }
+
+        .trust-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            background: white;
+            border-radius: 24px;
+            padding: 24px;
+            box-shadow: 0 20px 50px rgba(15, 118, 110, 0.12);
+            border: 1px solid var(--line);
+        }
+
+        .trust-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 8px;
+        }
+
+        .trust-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 16px;
+            background: linear-gradient(135deg, #ecfdf9, #d5f5f0);
+            display: grid;
+            place-items: center;
+            color: var(--primary);
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+
+        .trust-text strong {
+            display: block;
+            font-size: 14px;
+            color: var(--dark);
+        }
+
+        .trust-text span {
+            font-size: 12px;
+            color: var(--muted);
+        }
+
+        /* ========== SEÇÃO HEADERS ========== */
+        .section-kicker {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            border-radius: 50px;
+            background: #ecfdf9;
+            color: var(--primary);
+            border: 1px solid #d5f5f0;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 18px;
+        }
+
+        .section-header {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 56px;
+        }
+
+        .section-title {
+            font-family: "Outfit", sans-serif;
+            font-size: clamp(2rem, 3.5vw, 3.2rem);
+            line-height: 1.15;
+            letter-spacing: -0.03em;
+            margin-bottom: 16px;
+            color: var(--dark);
+            font-weight: 800;
+        }
+
+        .section-title span {
+            color: var(--primary);
+        }
+
+        .section-subtitle {
+            font-size: 1.05rem;
+            color: var(--muted);
+            line-height: 1.6;
+        }
+
+        /* ========== CREDIBILIDADE / CNPJ ========== */
+        .credibility-section {
+            background: white;
+            border-top: 1px solid var(--line);
+            border-bottom: 1px solid var(--line);
+        }
+
+        .credibility-card {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 40px;
+            padding: 40px;
+            flex-wrap: wrap;
+            text-align: center;
+        }
+
+        .credibility-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .credibility-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 18px;
+            background: linear-gradient(135deg, #ecfdf9, #f0fdfa);
+            display: grid;
+            place-items: center;
+            font-size: 24px;
+            color: var(--primary);
+        }
+
+        .credibility-text strong {
+            display: block;
+            font-size: 1rem;
+            color: var(--dark);
+        }
+
+        .credibility-text span {
+            font-size: 0.85rem;
+            color: var(--muted);
+        }
+
+        .cnpj-badge {
+            background: linear-gradient(135deg, #0f172a, #1a2a3a);
+            color: white;
+            padding: 14px 24px;
+            border-radius: 16px;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 700;
+            font-size: 15px;
+            box-shadow: 0 12px 30px rgba(15, 23, 42, 0.3);
+        }
+
+        .cnpj-badge i {
+            color: #8af3e5;
+        }
+
+        /* ========== REVEAL ANIMATION ========== */
+        .reveal {
+            opacity: 0;
+            transform: translateY(35px);
+            transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+
+    <style>
+        /* ========== INTRO SCREEN - TELA DE ENTRADA ========== */
+        #intro-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            height: 100dvh;
+            background: linear-gradient(135deg, #060b14 0%, #0c1729 30%, #0a1f1d 70%, #061212 100%);
+            z-index: 999999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            transition: opacity 0.9s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.9s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: hidden;
+            cursor: none;
+        }
+
+        #intro-screen.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .particles-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            animation: floatUp linear infinite;
+        }
+
+        .particle.circle {
+            background: rgba(15, 118, 110, 0.5);
+            box-shadow: 0 0 12px rgba(15, 118, 110, 0.4), 0 0 30px rgba(15, 118, 110, 0.15);
+        }
+
+        .particle.diamond {
+            background: transparent;
+            border: 2px solid rgba(138, 243, 229, 0.6);
+            transform: rotate(45deg);
+            border-radius: 4px;
+            box-shadow: 0 0 15px rgba(138, 243, 229, 0.3);
+        }
+
+        .particle.square {
+            background: rgba(245, 158, 11, 0.5);
+            border-radius: 4px;
+            box-shadow: 0 0 12px rgba(245, 158, 11, 0.3);
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(105vh) scale(0) rotate(0deg);
+                opacity: 0;
+            }
+            8% {
+                opacity: 0.9;
+            }
+            85% {
+                opacity: 0.7;
+            }
+            100% {
+                transform: translateY(-15vh) scale(1.8) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        .grid-overlay {
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background-image:
+                linear-gradient(rgba(15, 118, 110, 0.06) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(15, 118, 110, 0.06) 1px, transparent 1px);
+            background-size: 60px 60px;
+            animation: gridMove 25s linear infinite;
+            pointer-events: none;
+            mask-image: radial-gradient(ellipse at center, black 25%, transparent 65%);
+            -webkit-mask-image: radial-gradient(ellipse at center, black 25%, transparent 65%);
+        }
+
+        @keyframes gridMove {
+            0% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+            100% {
+                transform: translate(60px, 60px) rotate(2deg);
+            }
+        }
+
+        .orbital-rings {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+        }
+
+        .ring {
+            position: absolute;
+            border-radius: 50%;
+            border: 1px solid rgba(15, 118, 110, 0.15);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .ring-1 {
+            width: 300px;
+            height: 300px;
+            animation: rotateRing 20s linear infinite;
+        }
+
+        .ring-2 {
+            width: 450px;
+            height: 450px;
+            animation: rotateRing 30s linear infinite reverse;
+            border-color: rgba(138, 243, 229, 0.1);
+        }
+
+        .ring-3 {
+            width: 600px;
+            height: 600px;
+            animation: rotateRing 40s linear infinite;
+            border-color: rgba(245, 158, 11, 0.08);
+        }
+
+        .ring::after {
+            content: "";
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: #8af3e5;
+            border-radius: 50%;
+            top: -4px;
+            left: 50%;
+            transform: translateX(-50%);
+            box-shadow: 0 0 20px #8af3e5, 0 0 40px rgba(138, 243, 229, 0.5);
+        }
+
+        @keyframes rotateRing {
+            from {
+                transform: translate(-50%, -50%) rotate(0deg);
+            }
+            to {
+                transform: translate(-50%, -50%) rotate(360deg);
+            }
+        }
+
+        .intro-content {
+            text-align: center;
+            z-index: 10;
+            position: relative;
+            padding: 20px;
+        }
+
+        .intro-logo {
+            width: 110px;
+            height: 110px;
+            border-radius: 28px;
+            background: linear-gradient(135deg, #0f766e, #0a3d38);
+            margin: 0 auto 28px;
+            display: grid;
+            place-items: center;
+            font-size: 44px;
+            color: white;
+            box-shadow: 0 20px 60px rgba(15, 118, 110, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            animation: logoPulse 2.5s ease-in-out infinite;
+            position: relative;
+        }
+
+        .intro-logo::after {
+            content: "";
+            position: absolute;
+            inset: -3px;
+            border-radius: 31px;
+            background: linear-gradient(135deg, #8af3e5, #0f766e, #f59e0b);
+            z-index: -1;
+            animation: borderGlow 3s ease-in-out infinite;
+            filter: blur(8px);
+            opacity: 0.6;
+        }
+
+        @keyframes logoPulse {
+            0%,
+            100% {
+                box-shadow: 0 20px 60px rgba(15, 118, 110, 0.35);
+                transform: scale(1);
+            }
+            50% {
+                box-shadow: 0 25px 80px rgba(15, 118, 110, 0.65);
+                transform: scale(1.05);
+            }
+        }
+
+        @keyframes borderGlow {
+            0%,
+            100% {
+                opacity: 0.4;
+            }
+            50% {
+                opacity: 0.8;
+            }
+        }
+
+        .glitch-wrapper {
+            position: relative;
+            display: inline-block;
+        }
+
+        .glitch-text {
+            font-size: clamp(2.2rem, 5.5vw, 4.5rem);
+            font-weight: 900;
+            color: #ffffff;
+            position: relative;
+            letter-spacing: -0.04em;
+            text-shadow: 0 0 30px rgba(15, 118, 110, 0.5);
+            font-family: "Outfit", sans-serif;
+        }
+
+        .glitch-text::before,
+        .glitch-text::after {
+            content: "DataDesh";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.75;
+        }
+
+        .glitch-text::before {
+            color: #00ffff;
+            animation: glitchSkew 3.5s infinite;
+            clip-path: polygon(0 0, 100% 0, 100% 30%, 0 30%);
+            text-shadow: 2px 0 #00ffff, -1px 0 #0088ff;
+        }
+
+        .glitch-text::after {
+            color: #ff00ff;
+            animation: glitchSkew 3.5s 0.3s infinite;
+            clip-path: polygon(0 65%, 100% 65%, 100% 100%, 0 100%);
+            text-shadow: -2px 0 #ff00ff, 1px 0 #ff0088;
+        }
+
+        @keyframes glitchSkew {
+            0%,
+            90%,
+            100% {
+                transform: translate(0) skew(0deg);
+            }
+            91% {
+                transform: translate(-4px, 2px) skew(-1deg);
+            }
+            92% {
+                transform: translate(4px, -1px) skew(1deg);
+            }
+            93% {
+                transform: translate(-2px, -2px) skew(-0.5deg);
+            }
+            94% {
+                transform: translate(3px, 1px) skew(0.5deg);
+            }
+            95% {
+                transform: translate(0);
+            }
+        }
+
+        .intro-subtitle {
+            color: rgba(255, 255, 255, 0.65);
+            font-size: 1.05rem;
+            margin-top: 14px;
+            letter-spacing: 0.06em;
+            font-weight: 500;
+            animation: fadeInUp 1s ease 0.6s both;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(25px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .loading-bar {
+            width: 220px;
+            height: 3px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 10px;
+            margin: 28px auto 0;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .loading-bar::after {
+            content: "";
+            display: block;
+            width: 35%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, #0f766e, #8af3e5, #0f766e, transparent);
+            border-radius: 10px;
+            animation: loadingSlide 2.2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+        }
+
+        @keyframes loadingSlide {
+            0% {
+                transform: translateX(-120%);
+            }
+            50% {
+                transform: translateX(220%);
+            }
+            100% {
+                transform: translateX(-120%);
+            }
+        }
+
+        .wave-container {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 120px;
+            overflow: hidden;
+            pointer-events: none;
+            opacity: 0.3;
+        }
+
+        .wave {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 200%;
+            height:
+
+    <style>
+        /* ========== SERVIÇOS ========== */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 22px;
+        }
+
+        .service-card {
+            background: white;
+            border: 1px solid var(--line);
+            border-radius: 24px;
+            padding: 28px 22px;
+            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 50px rgba(15, 118, 110, 0.15);
+            border-color: var(--primary-light);
+        }
+
+        .service-card::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--gradient-primary);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s ease;
+        }
+
+        .service-card:hover::after {
+            transform: scaleX(1);
+        }
+
+        .service-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 16px;
+            display: grid;
+            place-items: center;
+            background: linear-gradient(135deg, #ecfdf9, #f0fdfa);
+            color: var(--primary);
+            font-size: 22px;
+            margin-bottom: 18px;
+        }
+
+        .service-card h3 {
+            font-size: 1.15rem;
+            margin-bottom: 8px;
+            color: var(--dark);
+        }
+
+        .service-card p {
+            color: var(--muted);
+            font-size: 0.9rem;
+            margin-bottom: 16px;
+            flex-grow: 1;
+        }
+
+        .price-block {
+            background: linear-gradient(135deg, #f8fafc, #f0fdf9);
+            border-radius: 18px;
+            padding: 18px;
+            text-align: center;
+            margin-bottom: 16px;
+            border: 1px solid #e0f0ec;
+        }
+
+        .price-installment-highlight {
+            font-family: "Outfit", sans-serif;
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: var(--primary);
+            line-height: 1;
+            margin-bottom: 6px;
+        }
+
+        .price-total-small {
+            font-size: 0.8rem;
+            color: var(--muted);
+            font-weight: 500;
+        }
+
+        .price-total-small strong {
+            color: var(--dark);
+        }
+
+        .service-btns {
+            display: flex;
+            gap: 8px;
+        }
+
+        .service-btns .btn {
+            flex: 1;
+            padding: 12px 16px;
+            font-size: 13px;
+        }
+
+        /* ========== PROJETOS ========== */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .project-card {
+            background: white;
+            border-radius: 24px;
+            overflow: hidden;
+            border: 1px solid var(--line);
+            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+
+        .project-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 50px rgba(15, 118, 110, 0.15);
+        }
+
+        .project-card.featured {
+            border: 2px solid var(--primary);
+        }
+
+        .project-card.featured::before {
+            content: "🔥 CARRO CHEFE";
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: linear-gradient(135deg, #f59e0b, #ef4444);
+            color: white;
+            padding: 6px 14px;
+            border-radius: 50px;
+            font-size: 11px;
+            font-weight: 800;
+            z-index: 2;
+            letter-spacing: 0.04em;
+            box-shadow: 0 8px 20px rgba(245, 158, 11, 0.4);
+        }
+
+        .project-media {
+            aspect-ratio: 16/11;
+            overflow: hidden;
+            background: #eaf0f7;
+        }
+
+        .project-media img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+
+        .project-card:hover .project-media img {
+            transform: scale(1.06);
+        }
+
+        .project-content {
+            padding: 22px;
+        }
+
+        .project-content h3 {
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+            color: var(--dark);
+        }
+
+        .project-content p {
+            color: var(--muted);
+            font-size: 0.9rem;
+            margin-bottom: 14px;
+        }
+
+        .project-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 14px;
+            transition: gap 0.3s ease;
+        }
+
+        .project-link:hover {
+            gap: 10px;
+        }
+
+        /* ========== FORMULÁRIO ========== */
+        .form-section {
+            background: var(--surface-2);
+        }
+
+        .form-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 40px;
+            align-items: start;
+        }
+
+        .form-info h3 {
+            font-family: "Outfit", sans-serif;
+            font-size: 1.8rem;
+            margin-bottom: 16px;
+        }
+
+        .form-info p {
+            color: var(--muted);
+            margin-bottom: 20px;
+        }
+
+        .form-benefits {
+            list-style: none;
+            display: grid;
+            gap: 12px;
+        }
+
+        .form-benefits li {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 500;
+        }
+
+        .form-benefits i {
+            color: var(--primary);
+            font-size: 18px;
+        }
+
+        .form-card {
+            background: white;
+            border-radius: 24px;
+            padding: 32px;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--line);
+        }
+
+        .form-card h4 {
+            font-family: "Outfit", sans-serif;
+            font-size: 1.3rem;
+            margin-bottom: 6px;
+        }
+
+        .form-card .sub {
+            color: var(--muted);
+            font-size: 0.9rem;
+            margin-bottom: 22px;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 6px;
+            font-size: 14px;
+            color: var(--dark);
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid var(--line);
+            border-radius: 14px;
+            font-size: 15px;
+            font-family: "Inter", sans-serif;
+            transition: all 0.2s ease;
+            outline: none;
+            background: var(--surface-2);
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: var(--primary);
+            background: white;
+            box-shadow: 0 0 0 4px rgba(15, 118, 110, 0.08);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .btn-submit-form {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #25D366, #128C7E);
+            color: white;
+            border: none;
+            border-radius: 16px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn-submit-form:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 16px 35px rgba(37, 211, 102, 0.35);
+        }
+
+        .form-response-time {
+            text-align: center;
+            margin-top: 14px;
+            font-size: 13px;
+            color: var(--muted);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        /* ========== WHATSAPP FLOAT ========== */
+        .whatsapp-float {
+            position: fixed;
+            right: 24px;
+            bottom: 24px;
+            width: 62px;
+            height: 62px;
+            border-radius: 50%;
+            background: #25D366;
+            color: white;
+            font-size: 28px;
+            display: grid;
+            place-items: center;
+            box-shadow: 0 12px 30px rgba(37, 211, 102, 0.4);
+            z-index: 999;
+            animation: wppPulse 2.5s infinite;
+            transition: transform 0.3s;
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+        }
+
+        @keyframes wppPulse {
+            0%,
+            100% {
+                box-shadow: 0 12px 30px rgba(37, 211, 102, 0.4);
+            }
+            50% {
+                box-shadow: 0 12px 45px rgba(37, 211, 102, 0.65);
+            }
+        }
+
+        /* ========== SOBRE ========== */
+        .about-grid {
+            display: grid;
+            grid-template-columns: .9fr 1.1fr;
+            gap: 44px;
+            align-items: center;
+        }
+
+        .about-photo-card {
+            border-radius: 32px;
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+            background: white;
+            border: 1px solid var(--line);
+            transition: transform 0.4s ease;
+        }
+
+        .about-photo-card:hover {
+            transform: scale(1.02);
+        }
+
+        .about-photo-card img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+        }
+
+        .about-list {
+            display: grid;
+            gap: 12px;
+            margin: 26px 0 30px;
+        }
+
+        .about-list li {
+            list-style: none;
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+        }
+
+        .about-list i {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #e8faf6;
+            color: var(--primary);
+            display: grid;
+            place-items: center;
+            font-size: 12px;
+            margin-top: 2px;
+            flex-shrink: 0;
+        }
+
+        .contact-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 16px;
+            border-radius: 999px;
+            background: white;
+            border: 1px solid var(--line);
+            transition: all .25s ease;
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        .pill:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        /* ========== CATÁLOGO ========== */
+        .catalog-section {
+            background: white;
+        }
+
+        .catalog-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+            align-items: center;
+        }
+
+        .catalog-card {
+            background: var(--surface-2);
+            border-radius: 24px;
+            padding: 28px;
+            border: 1px solid var(--line);
+            transition: all 0.3s ease;
+        }
+
+        .catalog-card:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateY(-4px);
+        }
+
+        /* ========== CLÍNICAS ========== */
+        .clinic-wrap {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            background: var(--gradient-dark);
+            border-radius: 28px;
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .clinic-visual {
+            padding: 44px;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .clinic-pricing {
+            background: white;
+            padding: 44px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        /* ========== DEPOIMENTOS ========== */
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 22px;
+        }
+
+        .testimonial-card {
+            background: white;
+            border: 1px solid var(--line);
+            border-radius: 24px;
+            padding: 28px;
+            transition: all 0.3s ease;
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .testimonial-card .stars {
+            color: #f59e0b;
+            margin-bottom: 12px;
+        }
+
+        .testimonial-card p {
+            font-style: italic;
+            margin-bottom: 14px;
+        }
+
+        /* ========== CTA ========== */
+        .cta {
+            background: var(--gradient-dark);
+            color: white;
+            padding: 90px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta h2 {
+            font-family: "Outfit", sans-serif;
+            font-size: 2.2rem;
+            margin-bottom: 28px;
+        }
+
+        /* ========== FOOTER ========== */
+        .footer {
+            background: #0b1220;
+            color: white;
+            padding: 60px 0 30px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .footer-brand .brand-icon-footer {
+            width: 48px;
+            height: 48px;
+            border-radius: 14px;
+            background: var(--gradient-primary);
+            display: grid;
+            place-items: center;
+            color: white;
+            font-size: 20px;
+            margin-bottom: 16px;
+        }
+
+        .footer-links {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.65);
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .footer-contact-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+            color: rgba(255, 255, 255, 0.65);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 13px;
+        }
+
+        /* ========== RESPONSIVO ========== */
+        @media (max-width: 1100px) {
+            .hero-grid,
+            .about-grid,
+            .catalog-grid,
+            .clinic-wrap,
+            .form-wrapper {
+                grid-template-columns: 1fr;
+            }
+            .services-grid,
+            .projects-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .testimonials-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .trust-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 860px) {
+            .nav-links,
+            .nav-actions .nav-btn-wpp {
+                display: none;
+            }
+            .menu-toggle {
+                display: flex;
+            }
+            .hero {
+                padding-top: 110px;
+            }
+            .hero-stats {
+                grid-template-columns: 1fr;
+            }
+            .credibility-card {
+                flex-direction: column;
+                gap: 20px;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .services-grid,
+            .projects-grid,
+            .testimonials-grid {
+                grid-template-columns: 1fr;
+            }
+            .trust-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .hero-actions {
+                flex-direction: column;
+            }
+            .hero-actions .btn {
+                width: 100%;
+                justify-content: center;
+            }
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+            .section {
+                padding: 60px 0;
+            }
+        }
+    </style>
+</head>
+
+<body class="intro-active">
+
+    <!-- ========== TELA DE ENTRADA COM EFEITOS ========== -->
+    <div id="intro-screen">
+        <div class="particles-container" id="particlesContainer"></div>
+        <div class="grid-overlay"></div>
+        <div class="orbital-rings">
+            <div class="ring ring-1"></div>
+            <div class="ring ring-2"></div>
+            <div class="ring ring-3"></div>
         </div>
-      </div>
-    </section>
-
-    <!-- ========== PROJETOS ========== -->
-    <section id="projetos" class="section" style="background: white;">
-      <div class="container">
-        <div class="section-header reveal">
-          <div class="section-kicker"><i class="fa-solid fa-diagram-project"></i> Portfólio</div>
-          <h2 class="section-title">Projetos <span>já concluídos</span></h2>
-          <p class="section-subtitle">+77 projetos entregues. Confira alguns dos meus trabalhos recentes com links de acesso real.</p>
+        <div class="intro-content">
+            <div class="intro-logo"><i class="fa-solid fa-chart-simple"></i></div>
+            <div class="glitch-wrapper"><h1 class="glitch-text">DataDesh</h1></div>
+            <p class="intro-subtitle">Soluções Digitais Profissionais</p>
+            <div class="loading-bar"></div>
         </div>
-        
-        <div class="projects-grid">
-          
-          <!-- CARRO CHEFE -->
-          <div class="project-card featured reveal">
-            <div class="project-media">
-              <img src="https://raw.githubusercontent.com/datadeshsolucoes-design/servicosdigitais/main/filtros%20com%20graficos%20interativos.png" alt="Dashboards Interativos" loading="lazy">
-            </div>
-            <div class="project-content">
-              <h3>🔥 Dashboards Interativos (Carro Chefe)</h3>
-              <p>Painéis com gráficos dinâmicos, filtros avançados e visual profissional.</p>
-              <a href="https://marcacaodse.github.io/censoibgedistritoeldorado/" target="_blank" class="project-link">Ver projeto real <i class="fa-solid fa-arrow-right"></i></a>
-            </div>
-          </div>
-
-          <!-- DASHBOARDS AUTOMATIZADOS -->
-          <div class="project-card reveal">
-            <div class="project-media">
-              <img src="https://raw.githubusercontent.com/datadeshsolucoes-design/servicosdigitais/main/graficos%20interativos.png" alt="Dashboards Automatizados" loading="lazy">
-            </div>
-            <div class="project-content">
-              <h3>📊 Dashboards Automatizados</h3>
-              <p>Sistemas de monitoramento com atualização automática de dados.</p>
-              <a href="https://marcacaodse.github.io/total-geral-de-atendimentos/" target="_blank" class="project-link">Ver projeto real <i class="fa-solid fa-arrow-right"></i></a>
-            </div>
-          </div>
-
-          <!-- ORGANIZAÇÃO DE PASTAS -->
-          <div class="project-card reveal">
-            <div class="project-media">
-              <img src="https://raw.githubusercontent.com/datadeshsolucoes-design/servicosdigitais/main/filtros%20dianamicos.png" alt="Organização de Pastas" loading="lazy">
-            </div>
-            <div class="project-content">
-              <h3>📁 Org. de Pastas no Drive</h3>
-              <p>Sistema de organização com links customizados para acesso rápido.</p>
-              <a href="https://marcacaodse.github.io/linksdospaineis/" target="_blank" class="project-link">Ver projeto real <i class="fa-solid fa-arrow-right"></i></a>
-            </div>
-          </div>
-
-          <!-- CARTÃO DE VISITA -->
-          <div class="project-card reveal">
-            <div class="project-media">
-              <img src="https://raw.githubusercontent.com/datadeshsolucoes-design/servicosdigitais/main/graficos%20interativos%202.png" alt="Cartão de Visita Digital" loading="lazy">
-            </div>
-            <div class="project-content">
-              <h3>💳 Cartão de Visita Digital</h3>
-              <p>Modelo profissional para compartilhar com clientes.</p>
-              <a href="https://datadesh-prototipos-site.github.io/modelocart-odevisita/" target="_blank" class="project-link">Ver projeto real <i class="fa-solid fa-arrow-right"></i></a>
-            </div>
-          </div>
-
-          <!-- MINI SISTEMAS -->
-          <div class="project-card reveal">
-            <div class="project-media">
-              <img src="https://raw.githubusercontent.com/datadeshsolucoes-design/servicosdigitais/main/area%20de%20trabalho.png" alt="Mini Sistemas" loading="lazy">
-            </div>
-            <div class="project-content">
-              <h3>⚙️ Mini Sistemas com Banco de Dados</h3>
-              <p>Sistemas sincronizados com banco de dados na nuvem.</p>
-              <a href="https://datadesh-prototipos-site.github.io/controledemanuten-o/" target="_blank" class="project-link">Ver projeto real <i class="fa-solid fa-arrow-right"></i></a>
-            </div>
-          </div>
-
-          <!-- SITES E PÁGINAS -->
-          <div class="project-card reveal">
-            <div class="project-media">
-              <img src="https://raw.githubusercontent.com/datadeshsolucoes-design/servicosdigitais/main/foto3.png" alt="Sites e Páginas" loading="lazy">
-            </div>
-            <div class="project-content">
-              <h3>🌐 Sites e Páginas Web</h3>
-              <p>Páginas modernas e responsivas em diversos estilos.</p>
-              <a href="https://datadesh-site-da-empresa.github.io/servicosdigitais/catalogo.html" target="_blank" class="project-link">Ver catálogo <i class="fa-solid fa-arrow-right"></i></a>
-            </div>
-          </div>
-
+        <div class="wave-container">
+            <div class="wave"></div>
+            <div class="wave"></div>
+            <div class="wave"></div>
         </div>
-      </div>
-    </section>
-
-    <!-- ========== SERVIÇOS ========== -->
-    <section id="servicos" class="section">
-      <div class="container">
-        <div class="section-header reveal">
-          <div class="section-kicker"><i class="fa-solid fa-screwdriver-wrench"></i> Soluções</div>
-          <h2 class="section-title">O que eu <span>faço</span></h2>
-          <p class="section-subtitle">Soluções pensadas para cada tipo de negócio, com preços acessíveis e parcelamento facilitado.</p>
+        <div class="scroll-indicator">
+            <div class="scroll-mouse"></div>
+            <span class="scroll-text">Role para baixo</span>
         </div>
-        
-        <div class="services-grid">
-          
-          <!-- Site Simples -->
-          <div class="service-card reveal">
-            <div class="service-icon"><i class="fa-solid fa-globe"></i></div>
-            <h3>Site Simples</h3>
-            <p>Código e domínio entregues. Layout moderno e responsivo para seu negócio.</p>
-            <div class="price-block">
-              <div class="price-installment-highlight">10x de R$ 21,95</div>
-              <div class="price-total-small">ou <strong>R$ 219,52</strong> à vista</div>
-            </div>
-            <div class="service-btns">
-              <a href="https://wa.me/5531984987116?text=Quero%20o%20*Site%20Simples*%20(10x%20de%20R%24%2021%2C95)" class="btn btn-primary" target="_blank">Quero</a>
-              <a href="https://datadesh-site-da-empresa.github.io/servicosdigitais/catalogo.html" class="btn btn-secondary" target="_blank">Catálogo</a>
-            </div>
-          </div>
-
-          <!-- Catálogo Virtual -->
-          <div class="service-card reveal">
-            <div class="service-icon"><i class="fa-solid fa-mobile-screen-button"></i></div>
-            <h3>Catálogo Virtual Básico</h3>
-            <p>Até 50 produtos, busca por nome, integrado ao WhatsApp com carrinho.</p>
-            <div class="price-block">
-              <div class="price-installment-highlight">10x de R$ 40,32</div>
-              <div class="price-total-small">ou <strong>R$ 403,20</strong> à vista</div>
-            </div>
-            <div class="service-btns">
-              <a href="https://wa.me/5531984987116?text=Quero%20o%20*Cat%C3%A1logo%20Virtual%20B%C3%A1sico*%20(10x%20de%20R%24%2040%2C32)" class="btn btn-primary" target="_blank">Quero</a>
-              <a href="https://datadesh-site-da-empresa.github.io/servicosdigitais/catalogo.html" class="btn btn-secondary" target="_blank">Catálogo</a>
-            </div>
-          </div>
-
-          <!-- Página para Clínicas -->
-          <div class="service-card reveal">
-            <div class="service-icon"><i class="fa-solid fa-hospital-user"></i></div>
-            <h3>Página para Clínicas</h3>
-            <p>Apresentação profissional para consultórios e clínicas.</p>
-            <div class="price-block">
-              <div class="price-installment-highlight">10x de R$ 33,26</div>
-              <div class="price-total-small">ou <strong>R$ 332,64</strong> à vista</div>
-            </div>
-            <div class="service-btns">
-              <a href="https://wa.me/5531984987116?text=Quero%20uma%20*P%C3%A1gina%20para%20Cl%C3%ADnicas*%20(10x%20de%20R%24%2033%2C26)" class="btn btn-primary" target="_blank">Quero</a>
-              <a href="https://datadesh-site-da-empresa.github.io/servicosdigitais/catalogo.html" class="btn btn-secondary" target="_blank">Catálogo</a>
-            </div>
-          </div>
-
-          <!-- Dashboard Básico -->
-          <div class="service-card reveal">
-            <div class="service-icon"><i class="fa-solid fa-chart-line"></i></div>
-            <h3>Dashboard Básico</h3>
-            <p>Painel com gráficos interativos sincronizado com planilhas de dados.</p>
-            <div class="price-block">
-              <div class="price-installment-highlight">10x de R$ 28,00</div>
-              <div class="price-total-small">ou <strong>R$ 280,00</strong> à vista</div>
-            </div>
-            <div class="service-btns">
-              <a href="https://wa.me/5531984987116?text=Quero%20o%20*Dashboard%20B%C3%A1sico*%20(10x%20de%20R%24%2028%2C00)" class="btn btn-primary" target="_blank">Quero</a>
-              <a href="https://datadesh-site-da-empresa.github.io/servicosdigitais/catalogo.html" class="btn btn-secondary" target="_blank">Catálogo</a>
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </section>
-
-    <!-- ========== CATÁLOGOS ========== -->
-    <section id="catalogos" class="section catalog-section">
-      <div class="container">
-        <div class="section-header reveal">
-          <div class="section-kicker"><i class="fa-solid fa-store"></i> Catálogo Digital</div>
-          <h2 class="section-title"><span>Catálogo digital</span> profissional</h2>
-          <p class="section-subtitle">Vitrine virtual com carrinho, busca por nome e pedido direto via WhatsApp.</p>
-        </div>
-        <div class="catalog-grid">
-          <div class="catalog-card reveal">
-            <h3>📱 Por que ter um catálogo digital?</h3>
-            <ul class="form-benefits" style="margin-top:16px;">
-              <li><i class="fa-solid fa-check-circle"></i> Visual organizado e profissional</li>
-              <li><i class="fa-solid fa-check-circle"></i> Categorias personalizadas</li>
-              <li><i class="fa-solid fa-check-circle"></i> Botão direto para WhatsApp</li>
-              <li><i class="fa-solid fa-check-circle"></i> Cliente monta o carrinho sozinho</li>
-              <li><i class="fa-solid fa-check-circle"></i> Até 50 produtos com busca</li>
-            </ul>
-          </div>
-          <div class="catalog-card reveal" style="text-align:center;">
-            <h3>Catálogo Virtual Básico</h3>
-            <div class="price-block" style="margin: 20px 0;">
-              <div class="price-installment-highlight">10x de R$ 40,32</div>
-              <div class="price-total-small">ou <strong>R$ 403,20</strong> à vista</div>
-            </div>
-            <div class="service-btns">
-              <a href="https://wa.me/5531984987116?text=Quero%20o%20*Cat%C3%A1logo%20Virtual%20B%C3%A1sico*%20(10x%20de%20R%24%2040%2C32)" class="btn btn-primary" target="_blank">Solicitar</a>
-              <a href="https://datadesh-site-da-empresa.github.io/servicosdigitais/catalogo.html" class="btn btn-gold" target="_blank">Ver Catálogo</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ========== CLÍNICAS ========== -->
-    <section id="clinicas" class="section">
-      <div class="container">
-        <div class="clinic-wrap reveal">
-          <div class="clinic-visual">
-            <div class="section-kicker" style="background:rgba(255,255,255,0.1); color:#8af3e5; border-color:rgba(255,255,255,0.2);">🏥 Exclusivo</div>
-            <h3 style="font-size:1.8rem; margin:16px 0;">Página profissional para <span style="color:#8af3e5;">clínicas e consultórios</span></h3>
-            <p style="color:rgba(255,255,255,0.8);">Estrutura completa: serviços, diferenciais, equipe e contato. Visual que transmite credibilidade.</p>
-          </div>
-          <div class="clinic-pricing">
-            <div class="price-block" style="text-align:center;">
-              <div class="price-installment-highlight">10x de R$ 33,26</div>
-              <div class="price-total-small">ou <strong>R$ 332,64</strong> à vista</div>
-            </div>
-            <div class="service-btns">
-              <a href="https://wa.me/5531984987116?text=Quero%20uma%20*P%C3%A1gina%20para%20Cl%C3%ADnicas*%20(10x%20de%20R%24%2033%2C26)" class="btn btn-primary" target="_blank">Quero</a>
-              <a href="https://datadesh-site-da-empresa.github.io/servicosdigitais/catalogo.html" class="btn btn-gold" target="_blank">Catálogo</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ========== FORMULÁRIO DE CONTATO ========== -->
-    <section id="formulario" class="section form-section">
-      <div class="container">
-        <div class="section-header reveal">
-          <div class="section-kicker"><i class="fa-solid fa-paper-plane"></i> Contato</div>
-          <h2 class="section-title">Solicite seu <span>orçamento</span></h2>
-          <p class="section-subtitle">Preencha o formulário e receba resposta rápida no WhatsApp.</p>
-        </div>
-        
-        <div class="form-wrapper">
-          <div class="form-info reveal">
-            <h3>Por que entrar em contato?</h3>
-            <ul class="form-benefits">
-              <li><i class="fa-solid fa-bolt"></i> Resposta em até 15 minutos</li>
-              <li><i class="fa-solid fa-file-invoice"></i> Orçamento personalizado e gratuito</li>
-              <li><i class="fa-solid fa-headset"></i> Suporte completo do início ao fim</li>
-              <li><i class="fa-solid fa-shield-halved"></i> Profissional com CNPJ e +77 projetos</li>
-              <li><i class="fa-solid fa-thumbs-up"></i> Satisfação garantida</li>
-            </ul>
-            <div style="margin-top: 24px; padding: 16px; background: #f8fafc; border-radius: 16px; border: 1px solid var(--line);">
-              <p style="font-size:13px; color:var(--muted); margin-bottom:4px;"><strong>🏢 DataDesh Soluções Digitais</strong></p>
-              <p style="font-size:13px; color:var(--muted);">👤 Ana Paula Araujo da Silva</p>
-              <p style="font-size:13px; color:var(--muted);">📋 CNPJ: 66.884.261/0001-20</p>
-            </div>
-          </div>
-          
-          <div class="form-card reveal">
-            <h4>📝 Formulário de Contato</h4>
-            <p class="sub">Campos com * são obrigatórios</p>
-            
-            <form id="leadFormPage">
-              <div class="form-group">
-                <label>👤 Nome completo *</label>
-                <input type="text" id="nomeClientePage" required placeholder="Ex: Maria Silva">
-              </div>
-              <div class="form-group">
-                <label>📞 WhatsApp com DDD *</label>
-                <input type="tel" id="telefoneClientePage" required placeholder="(31) 99999-9999">
-              </div>
-              <div class="form-group">
-                <label>📧 E-mail</label>
-                <input type="email" id="emailClientePage" placeholder="seu@email.com">
-              </div>
-              <div class="form-group">
-                <label>🎯 Tipo de serviço *</label>
-                <select id="tipoServicoPage" required>
-                  <option value="">Selecione uma opção...</option>
-                  <option value="Site Simples">💻 Site Simples</option>
-                  <option value="Catálogo Virtual Básico">📱 Catálogo Virtual Básico</option>
-                  <option value="Página para Clínicas">🏥 Página para Clínicas</option>
-                  <option value="Dashboard Básico">📊 Dashboard Básico</option>
-                  <option value="Cartão de Visita Digital">💳 Cartão de Visita Digital</option>
-                  <option value="Mini Sistema">⚙️ Mini Sistema</option>
-                  <option value="Org. de Pastas no Drive">📁 Org. de Pastas no Drive</option>
-                  <option value="Outro">✨ Outro serviço</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label>💬 Descreva o que você precisa *</label>
-                <textarea id="mensagemClientePage" required placeholder="Conte sobre seu projeto..."></textarea>
-              </div>
-              <button type="submit" class="btn-submit-form">
-                <i class="fab fa-whatsapp"></i> Enviar e receber resposta no WhatsApp
-              </button>
-              <div class="form-response-time">
-                <i class="fa-solid fa-clock"></i> Resposta em até 15 minutos
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ========== DEPOIMENTOS ========== -->
-    <section id="depoimentos" class="section" style="background:white;">
-      <div class="container">
-        <div class="section-header reveal">
-          <div class="section-kicker"><i class="fa-regular fa-star"></i> Feedbacks</div>
-          <h2 class="section-title">Quem já usou <span>recomenda</span></h2>
-        </div>
-        <div class="testimonials-grid">
-          <div class="testimonial-card reveal">
-            <div class="stars">⭐⭐⭐⭐⭐</div>
-            <p>"A página que a Ana criou trouxe muita credibilidade para minha clínica. Pacientes elogiam!"</p>
-            <strong>Dra. Mariana L.</strong>
-          </div>
-          <div class="testimonial-card reveal">
-            <div class="stars">⭐⭐⭐⭐⭐</div>
-            <p>"Meu catálogo digital antes era uma bagunça. Agora é profissional e as vendas aumentaram."</p>
-            <strong>Renata S.</strong>
-          </div>
-          <div class="testimonial-card reveal">
-            <div class="stars">⭐⭐⭐⭐⭐</div>
-            <p>"Excelente profissional, entrega no prazo e resolveu todas as minhas dúvidas."</p>
-            <strong>Carlos A.</strong>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ========== CTA ========== -->
-    <section class="cta">
-      <div class="container">
-        <h2 class="reveal">Pronto para transformar seu negócio?</h2>
-        <div class="hero-actions reveal" style="justify-content:center;">
-          <a href="https://wa.me/5531984987116" class="btn btn-wpp" target="_blank">
-            <i class="fab fa-whatsapp"></i> Falar com Ana
-          </a>
-          <a href="https://datadesh-site-da-empresa.github.io/servicosdigitais/catalogo.html" class="btn btn-gold" target="_blank">
-            <i class="fa-solid fa-table-list"></i> Ver Catálogo
-          </a>
-          <a href="#formulario" class="btn btn-outline-light">
-            <i class="fa-regular fa-file-lines"></i> Formulário
-          </a>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <!-- ========== FOOTER ========== -->
-  <footer class="footer">
-    <div class="container">
-      <div class="footer-grid">
-        <div class="footer-brand">
-          <div class="brand-icon-footer"><i class="fa-solid fa-chart-simple"></i></div>
-          <h3 style="margin-bottom:8px;">DataDesh Soluções Digitais</h3>
-          <p style="color:rgba(255,255,255,0.5); font-size:14px;">Transformando negócios com tecnologia</p>
-          <p style="color:rgba(255,255,255,0.4); font-size:12px; margin-top:12px;">
-            👤 Ana Paula Araujo da Silva<br>
-            📋 CNPJ: 66.884.261/0001-20
-          </p>
-        </div>
-        <div>
-          <h4 style="margin-bottom:16px;">Links</h4>
-          <div class="footer-links">
-            <a href="#home">Início</a>
-            <a href="#sobre">Sobre</a>
-            <a href="#projetos">Projetos</a>
-            <a href="#servicos">Serviços</a>
-            <a href="#catalogos">Catálogos</a>
-            <a href="#clinicas">Clínicas</a>
-            <a href="#depoimentos">Depoimentos</a>
-            <a href="#formulario">Contato</a>
-            <a href="https://datadesh-site-da-empresa.github.io/servicosdigitais/catalogo.html" target="_blank">📚 Catálogo Completo</a>
-          </div>
-        </div>
-        <div>
-          <h4 style="margin-bottom:16px;">Contato</h4>
-          <div class="footer-contact-item">
-            <i class="fab fa-whatsapp"></i>
-            <a href="https://wa.me/5531984987116" target="_blank">(31) 98498-7116</a>
-          </div>
-          <div class="footer-contact-item">
-            <i class="fa-regular fa-envelope"></i>
-            <a href="mailto:datadshsolucoes@gmail.com">datadshsolucoes@gmail.com</a>
-          </div>
-          <div class="footer-contact-item">
-            <i class="fab fa-instagram"></i>
-            <a href="https://www.instagram.com/datadeshsolucoesdigitais/" target="_blank">@datadeshsolucoesdigitais</a>
-          </div>
-        </div>
-      </div>
-      <div class="footer-bottom">
-        <p>© 2025 DataDesh Soluções - Ana Paula Araujo da Silva | CNPJ: 66.884.261/0001-20 | Todos os direitos reservados</p>
-      </div>
+        <button class="skip-intro" id="skipIntro">Pular intro →</button>
     </div>
-  </footer>
 
-  <!-- WhatsApp Float -->
-  <a href="https://wa.me/5531984987116" class="whatsapp-float" target="_blank" aria-label="WhatsApp">
-    <i class="fab fa-whatsapp"></i>
-  </a>
+    <!-- Cursor personalizado -->
+    <div class="custom-cursor" id="customCursor"></div>
+    <div class="custom-cursor-dot" id="customCursorDot"></div>
 
-  <!-- ========== JAVASCRIPT ========== -->
-  <script>
-    // Navbar scroll
-    const navbar = document.getElementById('navbar');
-    window.addEventListener('scroll', () => {
-      navbar.classList.toggle('scrolled', window.scrollY > 50);
-    });
+    <!-- ========== NAVBAR ========== -->
+    <header class="navbar" id="navbar">
+        <div class="container">
+            <div class="nav-wrap">
+                <a href="#" class="brand">
+                    <div class="brand-icon"><i class="fa-solid fa-chart-simple"></i></div>
+                    <div class="brand-info">
+                        <span class="brand-name">DataDesh</span>
+                        <span class="brand-tagline">Soluções Digitais</span>
+                    </div>
+                </a>
+                <nav class="nav-links">
+                    <a href="#sobre">Sobre</a>
+                    <a href="#projetos">Projetos</a>
+                    <a href="#servicos">Serviços</a>
+                    <a href="#catalogos">Catálogos</a>
+                    <a href="#clinicas">Clínicas</a>
+                    <a href="#depoimentos">Depoimentos</a>
+                    <a href="#formulario">Contato</a>
+                    <a href="https://datadesh-site-da-empresa.github.io/servicosdigitais/catalogo.html" target="_blank" class="nav-highlight">📚 Catálogo</a>
+                </nav>
+                <div class="nav-actions">
+                    <a href="https://wa.me/5531984987116" class="nav-btn-wpp" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+                    <button class="menu-toggle" id="menuToggle" aria-label="Menu"><i class="fa-solid fa-bars"></i></button>
+                </div>
+            </div>
+            <div class="nav-mobile" id="mobileMenu">
+                <a href="#sobre">👤 Sobre</a>
+                <a href="#projetos">📂 Projetos</a>
+                <a href="#servicos">🛠️ Serviços</a>
+                <a href="#catalogos">📱 Catálogos</a>
+                <a href="#clinicas">🏥 Clínicas</a>
+                <a href="#depoimentos">⭐ Depoimentos</a>
+                <a href="#formulario">📝 Contato</a>
+                <a href="https://datadesh-site-da-empresa.github.io/servicosdigitais/catalogo.html" target="_blank" class="nav-highlight">📚 Ver Catálogo</a>
+                <a href="https://wa.me/5531984987116" target="_blank" style="background:#25D366; color:white; text-align:center;"><i class="fab fa-whatsapp"></i> Falar no WhatsApp</a>
+                <div class="mobile-cnpj">🏢 CNPJ: 66.884.261/0001-20</div>
+            </div>
+        </div>
+    </header>
 
-    // Menu mobile
-    const menuToggle = document.getElementById('menuToggle');
-    const mobileMenu = document.getElementById('mobileMenu');
-    
-    menuToggle.addEventListener('click', () => {
-      mobileMenu.classList.toggle('active');
-      menuToggle.classList.toggle('active');
-      const icon = menuToggle.querySelector('i');
-      if (mobileMenu.classList.contains('active')) {
-        icon.classList.replace('fa-bars', 'fa-xmark');
-        document.body.style.overflow = 'hidden';
-      } else {
-        icon.classList.replace('fa-xmark', 'fa-bars');
-        document.body.style.overflow = '';
-      }
-    });
+    <main>
+        <!-- ========== HERO ========== -->
+        <section class="hero" id="home">
+            <div class="container">
+                <div class="hero-grid">
+                    <div class="hero-copy reveal">
+                        <div class="hero-badge"><i class="fa-solid fa-star"></i> +77 projetos concluídos com sucesso</div>
+                        <h1>Crio <span>Sites, Catálogos, Dashboards</span> e Páginas que vendem</h1>
+                        <p>Soluções digitais profissionais com foco em resultados. Transformo ideias em ferramentas que organizam seu negócio e aumentam suas vendas.</p>
+                        <div class="hero-actions">
+                            <a href="https://wa.me/5531984987116" class="btn btn-primary" target="_blank"><i class="fab fa-whatsapp"></i> Quero minha solução</a>
+                            <a href="https://datadesh-site-da-empresa.github.io/servicosdigitais/catalogo.html" class="btn btn-gold" target="_blank"><i class="fa-solid fa-table-list"></i> Ver Catálogo</a>
+                            <a href="#formulario" class="btn btn-outline-light"><i class="fa-regular fa-file-lines"></i> Formulário</a>
+                        </div>
+                        <div class="hero-stats">
+                            <div class="stat-card"><div class="stat-number">77+</div><div class="stat-label">Projetos concluídos</div></div>
+                            <div class="stat-card"><div class="stat-number">100%</div><div class="stat-label">Personalizado</div></div>
+                            <div class="stat-card"><div class="stat-number">30</div><div class="stat-label">Dias (prazo máx)</div></div>
+                        </div>
+                    </div>
+                    <div class="hero-visual reveal">
+                        <div class="mockup-browser">
+                            <div class="mockup-header">
+                                <div class="mockup-dot red"></div><div class="mockup-dot yellow"></div><div class="mockup-dot green"></div>
+                            </div>
+                            <div class="mockup-body">
+                                <div class="mockup-banner-inner">✨ Sites, Catálogos e Dashboards Premium</div>
+                                <div class="mockup-grid-inner">
+                                    <div class="mockup-item"><i class="fa-solid fa-globe"></i> Sites</div>
+                                    <div class="mockup-item"><i class="fa-solid fa-mobile-screen"></i> Catálogos</div>
+                                    <div class="mockup-item"><i class="fa-solid fa-chart-line"></i> Dashboards</div>
+                                    <div class="mockup-item"><i class="fa-solid fa-hospital"></i> Clínicas</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-    document.querySelectorAll('.nav-mobile a').forEach(link => {
-      link.addEventListener('click', () => {
-        mobileMenu.classList.remove('active');
-        menuToggle.classList.remove('active');
-        menuToggle.querySelector('i').classList.replace('fa-xmark', 'fa-bars');
-        document.body.style.overflow = '';
-      });
-    });
+        <!-- ========== TRUST BAR ========== -->
+        <div class="trust-section">
+            <div class="container">
+                <div class="trust-grid reveal">
+                    <div class="trust-item"><div class="trust-icon"><i class="fa-solid fa-shield-halved"></i></div><div class="trust-text"><strong>Profissional Verificado</strong><span>CNPJ ativo e regular</span></div></div>
+                    <div class="trust-item"><div class="trust-icon"><i class="fa-solid fa-rocket"></i></div><div class="trust-text"><strong>Entrega ágil</strong><span>Em até 30 dias</span></div></div>
+                    <div class="trust-item"><div class="trust-icon"><i class="fa-solid fa-envelope-circle-check"></i></div><div class="trust-text"><strong>Aprovação prévia</strong><span>Prova por e-mail</span></div></div>
+                    <div class="trust-item"><div class="trust-icon"><i class="fa-solid fa-lock"></i></div><div class="trust-text"><strong>20% de sinal</strong><span>Processo seguro</span></div></div>
+                </div>
+            </div>
+        </div>
 
-    // Reveal on scroll
-    const reveals = document.querySelectorAll('.reveal');
-    function revealOnScroll() {
-      const h = window.innerHeight;
-      reveals.forEach(el => {
-        if (el.getBoundingClientRect().top < h - 100) el.classList.add('active');
-      });
-    }
-    window.addEventListener('scroll', revealOnScroll);
-    window.addEventListener('load', revealOnScroll);
+        <!-- ========== CREDIBILIDADE / CNPJ ========== -->
+        <section class="credibility-section">
+            <div class="container">
+                <div class="credibility-card reveal">
+                    <div class="credibility-item"><div class="credibility-icon"><i class="fa-solid fa-user-tie"></i></div><div class="credibility-text"><strong>Ana Paula Araujo da Silva</strong><span>Fundadora & Especialista</span></div></div>
+                    <div class="cnpj-badge"><i class="fa-solid fa-building"></i><span>CNPJ: 66.884.261/0001-20</span></div>
+                    <div class="credibility-item"><div class="credibility-icon"><i class="fa-solid fa-certificate"></i></div><div class="credibility-text"><strong>DataDesh Soluções Digitais</strong><span>Empresa regularizada</span></div></div>
+                </div>
+            </div>
+        </section>
 
-    // Formulário da página
-    document.getElementById('leadFormPage').addEventListener('submit', function(e) {
-      e.preventDefault();
-      const nome = document.getElementById('nomeClientePage').value.trim();
-      const tel = document.getElementById('telefoneClientePage').value.trim();
-      const email = document.getElementById('emailClientePage').value.trim();
-      const servico = document.getElementById('tipoServicoPage').value;
-      const msg = document.getElementById('mensagemClientePage').value.trim();
-      
-      if (!nome || !tel || !servico || !msg) {
-        alert('⚠️ Preencha todos os campos obrigatórios (*)');
-        return;
-      }
-      
-      const texto = `📋 *NOVO ORÇAMENTO - DATADESH* 📋%0A%0A` +
-        `👤 *Nome:* ${nome}%0A` +
-        `📞 *WhatsApp:* ${tel}%0A` +
-        `📧 *E-mail:* ${email || "Não informado"}%0A` +
-        `🎯 *Serviço:* ${servico}%0A` +
-        `💬 *Mensagem:* ${msg}%0A%0A` +
-        `✅ *Origem:* Formulário do site DataDesh`;
-      
-      window.open(`https://wa.me/5531984987116?text=${texto}`, "_blank");
-      
-      const btn = this.querySelector('.btn-submit-form');
-      btn.innerHTML = '<i class="fa-solid fa-check"></i> Redirecionando...';
-      btn.style.background = 'linear-gradient(135deg, #128C7E, #0d6e5c)';
-      setTimeout(() => {
-        btn.innerHTML = '<i class="fab fa-whatsapp"></i> Enviar e receber resposta no WhatsApp';
-        btn.style.background = 'linear-gradient(135deg, #25D366, #128C7E)';
-        this.reset();
-      }, 3000);
-    });
+        <!-- ========== SOBRE ========== -->
+        <section id="sobre" class="section">
+            <div class="container">
+                <div class="about-grid">
+                    <div class="about-photo-card reveal">
+                        <img src="https://raw.githubusercontent.com/datadeshsolucoes-design/servicosdigitais/main/FOTO.jpeg.jpeg" alt="Ana - DataDesh Soluções">
+                    </div>
+                    <div class="reveal">
+                        <div class="section-kicker"><i class="fa-solid fa-user-tie"></i> Sobre a profissional</div>
+                        <h2 style="font-size:2rem; font-weight:800; margin-bottom:16px; color:var(--dark);">Oi, sou a <span style="color:var(--primary);">Ana</span> — transformo ideias em presença digital</h2>
+                        <p style="margin-bottom:20px; color:var(--text);">Tecnóloga em Ciência de Dados, especialista em criar páginas, catálogos e ferramentas digitais com visual moderno e foco em resultado. Já concluí <strong>mais de 77 projetos</strong> para diferentes negócios.</p>
+                        <ul class="about-list">
+                            <li><i class="fa-solid fa-check"></i> Sites, páginas e catálogos com visual sofisticado</li>
+                            <li><i class="fa-solid fa-check"></i> Soluções pensadas para WhatsApp e vendas</li>
+                            <li><i class="fa-solid fa-check"></i> Processo simples: sinal, protótipo, entrega</li>
+                        </ul>
+                        <div class="contact-pills">
+                            <a href="https://wa.me/5531984987116" class="pill"><i class="fab fa-whatsapp"></i> (31) 98498-7116</a>
+                            <a href="mailto:datadshsolucoes@gmail.com" class="pill"><i class="fa-regular fa-envelope"></i> E-mail</a>
+                            <a href="https://www.instagram.com/datadeshsolucoesdigitais/" class="pill"><i class="fab fa-instagram"></i> Instagram</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-    console.log('✨ DataDesh Soluções - Site completo carregado!');
-    console.log('👤 Ana Paula Araujo da Silva | 📋 CNPJ: 66.884.261/0001-20 | 📊 +77 projetos');
-  </script>
+        <!-- ========== PROJETOS ========== -->
+        <section id="projetos" class="section" style="background:white;">
+            <div class="container">
+                <div class="section-header reveal">
+                    <div class="section-kicker"><i class="fa-solid fa-diagram-project"></i> Portfólio</div>
+                    <h2 class="section-title">Projetos <span>já concluídos</span></h2>
+                    <p class="section-subtitle">+77 projetos entregues. Confira alguns dos meus trabalhos recentes com links de acesso real.</p>
+                </div>
+                <div class="projects-grid">
+                    
+                    <!-- CARRO CHEFE -->
+                    <div class="project-card featured reveal">
+                        <div class="project-media"><img src="https://raw.githubusercontent.com/datadeshsolucoes-design/servicosdigitais/main/filtros%20com%20graficos%20interativos.png" alt="Dashboards Interativos" loading="lazy"></div>
+                        <div class="project-content">
+                            <h3>🔥 Dashboards Interativos (Carro Chefe)</h3>
+                            <p>Painéis com gráficos dinâmicos, filtros avançados e visual profissional. Ideal para gestão de dados.</p>
+                            <a href="https://marcacaodse.github.io/censoibgedistritoeldorado/" target="_blank" class="project-link">Ver projeto real <i class="fa-solid fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+
+                    <!-- DASHBOARDS AUTOMATIZADOS -->
+                    <div class="project-card reveal">
+                        <div class="project-media"><img src="https://raw.githubusercontent.com/datadeshsolucoes-design/servicosdigitais/main/graficos%20interativos.png" alt="Dashboards Automatizados" loading="lazy"></div>
+                        <div class="project-content">
+                            <h3>📊 Dashboards Automatizados</h3>
+                            <p>Sistemas de monitoramento com atualização automática de dados e indicadores visuais.</p>
+                            <a href="https://marcacaodse.github.io/total-geral-de-atendimentos/" target="_blank" class="project-link">Ver projeto real <i class="fa-solid fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+
+                    <!-- ORGANIZAÇÃO DE PASTAS -->
+                    <div class="project-card reveal">
+                        <div class="project-media"><img src="https://raw.githubusercontent.com/datadeshsolucoes-design/servicosdigitais/main/filtros%20dianamicos.png" alt="Org. de Pastas no Drive" loading="lazy"></div>
+                        <div class="project-content">
+                            <h3>📁 Org. de Pastas no Drive</h3>
+                            <p>Sistema de organização com links customizados para acesso rápido a painéis e documentos.</p>
+                            <a href="https://marcacaodse.github.io/linksdospaineis/" target="_blank" class="project-link">Ver projeto real <i class="fa-solid fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+
+                    <!-- CARTÃO DE VISITA -->
+                    <div class="project-card reveal">
+                        <div class="project-media"><img src="https://raw.githubusercontent.com/datadeshsolucoes-design/servicosdigitais/main/graficos%20interativos%202.png" alt="Cartão de Visita Digital" loading="lazy"></div>
+                        <div class="project-content">
+                            <h3>💳 Cartão de Visita Digital</h3>
+                            <p>Modelo profissional para compartilhar com clientes via WhatsApp e redes sociais.</p>
+                            <a href="https://datadesh-prototipos-site.github.io/modelocart-odevisita/" target="_blank" class="project-link">Ver projeto real <i class="fa-solid fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+
+                    <!-- MINI SISTEMAS -->
+                    <div class="project-card reveal">
+                        <div class="project-media"><img src="https://raw.githubusercontent.com/datadeshsolucoes-design/servicosdigitais/main/area%20de%20trabalho.png" alt="Mini Sistemas" loading="lazy"></div>
+                        <div class="project-content">
+                            <h3>⚙️ Mini Sistemas com Banco de Dados</h3>
+                            <p>Sistemas sincronizados com banco de dados na nuvem para controle e gestão.</p>
+                            <a href="https://datadesh-prototipos-site.github.io/controledemanuten-o/" target="_blank" class="project-link">Ver projeto real <i class="fa-solid fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+
+                    <!-- SITES E PÁGINAS -->
+                    <div class="project-card reveal">
+                        <div class="project-media"><img src="https://raw.githubusercontent.com/datadeshsolucoes-design/servicosdigitais/main/foto3.png" alt="Sites e Páginas" loading="lazy"></div>
+                        <div class="project-content">
+                            <h3>🌐 Sites e Páginas Web</h3>
+                            <p>Páginas modernas e responsivas em diversos estilos para diferentes tipos de negócio.</p>
+                            <a href="https://datadesh-site-da-empresa.github.io/servicosdigitais/catalogo.html" target="_blank" class="project-link">Ver catálogo <i class="fa-solid fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== SERVIÇOS ========== -->
+        <section id="servicos" class="section">
+            <div class="container">
+                <div class="section-header reveal">
+                    <div class="section-kicker"><i class="fa-solid fa-screwdriver-wrench"></i> Soluções</div>
+                    <h2 class="section-title">O que eu <span>faço</span></h2>
+                    <p class="section-subtitle">Soluções pensadas para cada tipo de negócio, com preços acessíveis e parcelamento facilitado.</p>
+                </div>
+                <div class="services-grid">
+                    
+                    <!-- Site Simples -->
+                    <div class="service-card reveal">
+                        <div class="service-icon"><i class="fa-solid fa-globe"></i></div>
+                        <h3>Site Simples</h3>
+                        <p>Código e domínio entregues. Layout moderno e responsivo para seu negócio.</p>
+                        <div class="price-block">
+                            <div class="price-installment-highlight">10x de R$ 21,95</div>
+                            <div class="price-total-small">ou <strong>R$ 219,52</strong> à vista</div>
+                        </div>
+                        <div class="service-btns">
+                            <a href="https://wa.me/5531984987116?text=Quero%20o%20*Site%20Simples*%20(10x%20de%20R%24%2021%2C95)" class="btn btn-primary" target="_blank">Quero</a>
+                            <a href="https://datadesh-site-da-empresa.github.io/servicosdigitais/catalogo.html" class="btn btn-secondary" target="_blank">Catálogo</a>
+                        </div>
+                    </div>
+
+                    <!-- Catálogo Virtual -->
+                    <div class="service-card reveal">
+                        <div class="service-icon"><i class="fa-solid fa-mobile-screen-button"></i></div>
+                        <h3>Catálogo Virtual Básico</h3>
+                        <p>Até 50 produtos, busca por nome, integrado ao WhatsApp com carrinho.</p>
+                        <div class="price-block">
+                            <div class="price-installment-highlight">10x de R$ 40,32</div>
+                            <div class="price-total-small">ou <strong>R$ 403,20</strong> à vista</div>
+                        </div>
+                        <div class="service-btns">
+                            <a href="https://wa.me/5531984987116?text=Quero%20o%20*Cat%C3%A1logo%20Virtual%20B%C3%A1sico*%20(10x%20de%20R%24%2040%2C32)" class="btn btn-primary" target="_blank">Quero</a>
+                            <a href="https://datadesh-site-da-empresa.github.io/servicosdigitais/catalogo.html" class="btn btn-secondary" target="_blank">Catálogo</a>
+                        </div>
+                    </div>
+
+                    <!-- Página para Clínicas -->
+                    <div class="service-card reveal">
+                        <div class="service-icon"><i class="fa-solid fa-hospital-user"></i></div>
+                        <h3>Página para Clínicas</h3>
+                        <p>Apresentação profissional para consultórios e clínicas com todas as informações.</p>
+                        <div class="price-block">
+                            <div class="price-installment-highlight">10x de R$ 33,26</div>
+                            <div class="price-total-small">ou <strong>R$ 332,64</strong> à vista</div>
+                        </div>
+                        <div class="service-btns">
+                            <a href="https://wa.me/5531984987116?text=Quero%20uma%20*P%C3%A1gina%20para%20Cl%C3%ADnicas*%20(10x%20de%20R%24%2033%2C26)" class="btn btn-primary" target="_blank">Quero</a>
+                            <a href="https://datadesh-site-da-empresa.github.io/servicosdigitais/catalogo.html" class="btn btn-secondary" target="_blank">Catálogo</a>
+                        </div>
+                    </div>
+
+                    <!-- Dashboard Básico -->
+                    <div class="service-card reveal">
+                        <div class="service-icon"><i class="fa-solid fa-chart-line"></i></div>
+                        <h3>Dashboard Básico</h3>
+                        <p>Painel com gráficos interativos sincronizado com planilhas de dados.</p>
+                        <div class="price-block">
+                            <div class="price-installment-highlight">10x de R$ 28,00</div>
+                            <div class="price-total-small">ou <strong>R$ 280,00</strong> à vista</div>
+                        </div>
+                        <div class="service-btns">
+                            <a href="https://wa.me/5531984987116?text=Quero%20o%20*Dashboard%20B%C3%A1sico*%20(10x%20de%20R%24%2028%2C00)" class="btn btn-primary" target="_blank">Quero</a>
+                            <a href="https://datadesh-site-da-empresa.github.io/servicosdigitais/catalogo.html" class="btn btn-secondary" target="_blank">Catálogo</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== CATÁLOGOS ========== -->
+        <section id="catalogos" class="section catalog-section">
+            <div class="container">
+                <div class="section-header reveal">
+                    <div class="section-kicker"><i class="fa-solid fa-store"></i> Catálogo Digital</div>
+                    <h2 class="section-title"><span>Catálogo digital</span> profissional</h2>
+                    <p class="section-subtitle">Vitrine virtual com carrinho, busca por nome e pedido direto via WhatsApp. Seu negócio organizado e profissional.</p>
+                </div>
+                <div class="catalog-grid">
+                    <div class="catalog-card reveal">
+                        <h3>📱 Por que ter um catálogo digital?</h3>
+                        <ul class="form-benefits" style="margin-top:16px;">
+                            <li><i class="fa-solid fa-check-circle"></i> Visual organizado e profissional</li>
+                            <li><i class="fa-solid fa-check-circle"></i> Categorias personalizadas</li>
+                            <li><i class="fa-solid fa-check-circle"></i> Botão direto para WhatsApp</li>
+                            <li><i class="fa-solid fa-check-circle"></i> Cliente monta o carrinho sozinho</li>
+                            <li><i class="fa-solid fa-check-circle"></i> Até 50 produtos com busca</li>
+                        </ul>
+                    </div>
+                    <div class="catalog-card reveal" style="text-align:center;">
+                        <h3>Catálogo Virtual Básico</h3>
+                        <div class="price-block" style="margin:20px 0;">
+                            <div class="price-installment-highlight">10x de R$ 40,32</div>
+                            <div class="price-total-small">ou <strong>R$ 403,20</strong> à vista</div>
+                        </div>
+                        <div class="service-btns">
+                            <a href="https://wa.me/5531984987116?text=Quero%20o%20*Cat%C3%A1logo%20Virtual%20B%C3%A1sico*%20(10x%20de%20R%24%2040%2C32)" class="btn btn-primary" target="_blank">Solicitar</a>
+                            <a href="https://datadesh-site-da-empresa.github.io/servicosdigitais/catalogo.html" class="btn btn-gold" target="_blank">Ver Catálogo</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== CLÍNICAS ========== -->
+        <section id="clinicas" class="section">
+            <div class="container">
+                <div class="clinic-wrap reveal">
+                    <div class="clinic-visual">
+                        <div class="section-kicker" style="background:rgba(255,255,255,0.1); color:#8af3e5; border-color:rgba(255,255,255,0.2);">🏥 Exclusivo</div>
+                        <h3 style="font-size:1.8rem; margin:16px 0;">Página profissional para <span style="color:#8af3e5;">clínicas e consultórios</span></h3>
+                        <p style="color:rgba(255,255,255,0.8);">Estrutura completa para apresentar serviços, diferenciais, equipe e contato. Visual moderno que transmite credibilidade ao paciente.</p>
+                    </div>
+                    <div class="clinic-pricing">
+                        <div class="price-block" style="text-align:center;">
+                            <div class="price-installment-highlight">10x de R$ 33,26</div>
+                            <div class="price-total-small">ou <strong>R$ 332,64</strong> à vista</div>
+                        </div>
+                        <div class="service-btns">
+                            <a href="https://wa.me/5531984987116?text=Quero%20uma%20*P%C3%A1gina%20para%20Cl%C3%ADnicas*%20(10x%20de%20R%24%2033%2C26)" class="btn btn-primary" target="_blank">Quero para minha clínica</a>
+                            <a href="https://datadesh-site-da-empresa.github.io/servicosdigitais/catalogo.html" class="btn btn-gold" target="_blank">Ver Catálogo</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== FORMULÁRIO DE CONTATO ========== -->
+        <section id="formulario" class="section form-section">
+            <div class="container">
+                <div class="section-header reveal">
+                    <div class="section-kicker"><i class="fa-solid fa-paper-plane"></i> Contato</div>
+                    <h2 class="section-title">Solicite seu <span>orçamento</span></h2>
+                    <p class="section-subtitle">Preencha o formulário abaixo e receba uma resposta rápida diretamente no seu WhatsApp.</p>
+                </div>
+                <div class="form-wrapper">
+                    <div class="form-info reveal">
+                        <h3>Por que entrar em contato?</h3>
+                        <ul class="form-benefits">
+                            <li><i class="fa-solid fa-bolt"></i> Resposta em até 15 minutos</li>
+                            <li><i class="fa-solid fa-file-invoice"></i> Orçamento personalizado e gratuito</li>
+                            <li><i class="fa-solid fa-headset"></i> Suporte completo do início ao fim</li>
+                            <li><i class="fa-solid fa-shield-halved"></i> Profissional com CNPJ e +77 projetos</li>
+                            <li><i class="fa-solid fa-thumbs-up"></i> Satisfação garantida</li>
+                        </ul>
+                        <div style="margin-top:24px; padding:16px; background:#f8fafc; border-radius:16px; border:1px solid var(--line);">
+                            <p style="font-size:13px; color:var(--muted); margin-bottom:4px;"><strong>🏢 DataDesh Soluções Digitais</strong></p>
+                            <p style="font-size:13px; color:var(--muted);">👤 Ana Paula Araujo da Silva</p>
+                            <p style="font-size:13px; color:var(--muted);">📋 CNPJ: 66.884.261/0001-20</p>
+                        </div>
+                    </div>
+                    <div class="form-card reveal">
+                        <h4>📝 Formulário de Contato</h4>
+                        <p class="sub">Os campos marcados com * são obrigatórios</p>
+                        <form id="leadFormPage">
+                            <div class="form-group">
+                                <label>👤 Nome completo *</label>
+                                <input type="text" id="nomeClientePage" required placeholder="Ex: Maria Silva">
+                            </div>
+                            <div class="form-group">
+                                <label>📞 WhatsApp com DDD *</label>
+                                <input type="tel" id="telefoneClientePage" required placeholder="(31) 99999-9999">
+                            </div>
+                            <div class="form-group">
+                                <label>📧 E-mail</label>
+                                <input type="email" id="emailClientePage" placeholder="seu@email.com">
+                            </div>
+                            <div class="form-group">
+                                <label>🎯 Tipo de serviço *</label>
+                                <select id="tipoServicoPage" required>
+                                    <option value="">Selecione uma opção...</option>
+                                    <option value="Site Simples">💻 Site Simples</option>
+                                    <option value="Catálogo Virtual Básico">📱 Catálogo Virtual Básico</option>
+                                    <option value="Página para Clínicas">🏥 Página para Clínicas</option>
+                                    <option value="Dashboard Básico">📊 Dashboard Básico</option>
+                                    <option value="Cartão de Visita Digital">💳 Cartão de Visita Digital</option>
+                                    <option value="Mini Sistema">⚙️ Mini Sistema</option>
+                                    <option value="Org. de Pastas no Drive">📁 Org. de Pastas no Drive</option>
+                                    <option value="Outro">✨ Outro serviço</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>💬 Descreva o que você precisa *</label>
+                                <textarea id="mensagemClientePage" required placeholder="Conte um pouco sobre seu projeto, ideias e necessidades..."></textarea>
+                            </div>
+                            <button type="submit" class="btn-submit-form"><i class="fab fa-whatsapp"></i> Enviar e receber resposta no WhatsApp</button>
+                            <div class="form-response-time"><i class="fa-solid fa-clock"></i> Resposta em até 15 minutos</div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== DEPOIMENTOS ========== -->
+        <section id="depoimentos" class="section" style="background:white;">
+            <div class="container">
+                <div class="section-header reveal">
+                    <div class="section-kicker"><i class="fa-regular fa-star"></i> Feedbacks</div>
+                    <h2 class="section-title">Quem já usou <span>recomenda</span></h2>
+                </div>
+                <div class="testimonials-grid">
+                    <div class="testimonial-card reveal">
+                        <div class="stars">⭐⭐⭐⭐⭐</div>
+                        <p>"A página que a Ana criou trouxe muita credibilidade para minha clínica. Pacientes elogiam!"</p>
+                        <strong>Dra. Mariana L.</strong>
+                    </div>
+                    <div class="testimonial-card reveal">
+                        <div class="stars">⭐⭐⭐⭐⭐</div>
+                        <p>"Meu catálogo digital antes era uma bagunça. Agora é profissional e as vendas aumentaram muito."</p>
+                        <strong>Renata S.</strong>
+                    </div>
+                    <div class="testimonial-card reveal">
+                        <div class="stars">⭐⭐⭐⭐⭐</div>
+                        <p>"Excelente profissional, entrega no prazo e resolveu todas as minhas dúvidas com paciência."</p>
+                        <strong>Carlos A.</strong>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== CTA ========== -->
+        <section class="cta">
+            <div class="container">
+                <h2 class="reveal">Pronto para transformar seu negócio com presença digital?</h2>
+                <div class="hero-actions reveal" style="justify-content:center;">
+                    <a href="https://wa.me/5531984987116" class="btn btn-wpp" target="_blank"><i class="fab fa-whatsapp"></i> Falar com Ana</a>
+                    <a href="https://datadesh-site-da-empresa.github.io/servicosdigitais/catalogo.html" class="btn btn-gold" target="_blank"><i class="fa-solid fa-table-list"></i> Ver Catálogo Completo</a>
+                    <a href="#formulario" class="btn btn-outline-light"><i class="fa-regular fa-file-lines"></i> Preencher Formulário</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- ========== FOOTER ========== -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="brand-icon-footer"><i class="fa-solid fa-chart-simple"></i></div>
+                    <h3 style="margin-bottom:8px;">DataDesh Soluções Digitais</h3>
+                    <p style="color:rgba(255,255,255,0.5); font-size:14px;">Transformando negócios com tecnologia</p>
+                    <p style="color:rgba(255,255,255,0.4); font-size:12px; margin-top:12px;">👤 Ana Paula Araujo da Silva<br>📋 CNPJ: 66.884.261/0001-20</p>
+                </div>
+                <div>
+                    <h4 style="margin-bottom:16px;">Links</h4>
+                    <div class="footer-links">
+                        <a href="#home">Início</a>
+                        <a href="#sobre">Sobre</a>
+                        <a href="#projetos">Projetos</a>
+                        <a href="#servicos">Serviços</a>
+                        <a href="#catalogos">Catálogos</a>
+                        <a href="#clinicas">Clínicas</a>
+                        <a href="#depoimentos">Depoimentos</a>
+                        <a href="#formulario">Contato</a>
+                        <a href="https://datadesh-site-da-empresa.github.io/servicosdigitais/catalogo.html" target="_blank">📚 Catálogo Completo</a>
+                    </div>
+                </div>
+                <div>
+                    <h4 style="margin-bottom:16px;">Contato</h4>
+                    <div class="footer-contact-item"><i class="fab fa-whatsapp"></i> <a href="https://wa.me/5531984987116" target="_blank">(31) 98498-7116</a></div>
+                    <div class="footer-contact-item"><i class="fa-regular fa-envelope"></i> <a href="mailto:datadshsolucoes@gmail.com">datadshsolucoes@gmail.com</a></div>
+                    <div class="footer-contact-item"><i class="fab fa-instagram"></i> <a href="https://www.instagram.com/datadeshsolucoesdigitais/" target="_blank">@datadeshsolucoesdigitais</a></div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2025 DataDesh Soluções - Ana Paula Araujo da Silva | CNPJ: 66.884.261/0001-20 | Todos os direitos reservados</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- WhatsApp Float -->
+    <a href="https://wa.me/5531984987116" class="whatsapp-float" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+
+    <!-- ========== JAVASCRIPT ========== -->
+    <script>
+        // Navbar scroll
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            navbar.classList.toggle('scrolled', window.scrollY > 50);
+        });
+
+        // Menu mobile
+        const menuToggle = document.getElementById('menuToggle');
+        const mobileMenu = document.getElementById('mobileMenu');
+        menuToggle.addEventListener('click', () => {
+            mobileMenu.classList.toggle('active');
+            menuToggle.classList.toggle('active');
+            const icon = menuToggle.querySelector('i');
+            if (mobileMenu.classList.contains('active')) {
+                icon.classList.replace('fa-bars', 'fa-xmark');
+                document.body.style.overflow = 'hidden';
+            } else {
+                icon.classList.replace('fa-xmark', 'fa-bars');
+                document.body.style.overflow = '';
+            }
+        });
+        document.querySelectorAll('.nav-mobile a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.remove('active');
+                menuToggle.classList.remove('active');
+                menuToggle.querySelector('i').classList.replace('fa-xmark', 'fa-bars');
+                document.body.style.overflow = '';
+            });
+        });
+
+        // Reveal on scroll
+        const reveals = document.querySelectorAll('.reveal');
+        function revealOnScroll() {
+            const h = window.innerHeight;
+            reveals.forEach(el => {
+                if (el.getBoundingClientRect().top < h - 100) el.classList.add('active');
+            });
+        }
+        window.addEventListener('scroll', revealOnScroll);
+        window.addEventListener('load', revealOnScroll);
+
+        // Formulário da página
+        document.getElementById('leadFormPage').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const nome = document.getElementById('nomeClientePage').value.trim();
+            const tel = document.getElementById('telefoneClientePage').value.trim();
+            const email = document.getElementById('emailClientePage').value.trim();
+            const servico = document.getElementById('tipoServicoPage').value;
+            const msg = document.getElementById('mensagemClientePage').value.trim();
+            if (!nome || !tel || !servico || !msg) {
+                alert('⚠️ Por favor, preencha todos os campos obrigatórios (*)');
+                return;
+            }
+            const texto = `📋 *NOVO ORÇAMENTO - DATADESH* 📋%0A%0A` +
+                `👤 *Nome:* ${nome}%0A` +
+                `📞 *WhatsApp:* ${tel}%0A` +
+                `📧 *E-mail:* ${email || "Não informado"}%0A` +
+                `🎯 *Serviço:* ${servico}%0A` +
+                `💬 *Mensagem:* ${msg}%0A%0A` +
+                `✅ *Origem:* Formulário do site DataDesh`;
+            window.open(`https://wa.me/5531984987116?text=${texto}`, "_blank");
+            const btn = this.querySelector('.btn-submit-form');
+            btn.innerHTML = '<i class="fa-solid fa-check"></i> Redirecionando...';
+            btn.style.background = 'linear-gradient(135deg, #128C7E, #0d6e5c)';
+            setTimeout(() => {
+                btn.innerHTML = '<i class="fab fa-whatsapp"></i> Enviar e receber resposta no WhatsApp';
+                btn.style.background = 'linear-gradient(135deg, #25D366, #128C7E)';
+                this.reset();
+            }, 3000);
+        });
+
+        // ========== INTRO ==========
+        function createIntroParticles() {
+            const container = document.getElementById('particlesContainer');
+            if (!container) return;
+            const shapes = ['circle', 'diamond', 'square'];
+            for (let i = 0; i < 55; i++) {
+                const p = document.createElement('div');
+                const shape = shapes[Math.floor(Math.random() * shapes.length)];
+                p.classList.add('particle', shape);
+                const size = Math.random() * 8 + 3;
+                p.style.width = size + 'px';
+                p.style.height = (shape === 'diamond' ? size * 1.5 : size) + 'px';
+                p.style.left = Math.random() * 100 + '%';
+                p.style.animationDuration = (Math.random() * 15 + 8) + 's';
+                p.style.animationDelay = Math.random() * 10 + 's';
+                p.style.opacity = Math.random() * 0.6 + 0.2;
+                container.appendChild(p);
+            }
+        }
+
+        let mouseX = 0, mouseY = 0, cursorX = 0, cursorY = 0, dotX = 0, dotY = 0;
+        const customCursor = document.getElementById('customCursor');
+        const customCursorDot = document.getElementById('customCursorDot');
+        document.addEventListener('mousemove', (e) => { mouseX = e.clientX; mouseY = e.clientY; });
+
+        function animateCursor() {
+            cursorX += (mouseX - cursorX) * 0.15;
+            cursorY += (mouseY - cursorY) * 0.15;
+            dotX += (mouseX - dotX) * 0.4;
+            dotY += (mouseY - dotY) * 0.4;
+            if (customCursor) {
+                customCursor.style.left = cursorX - 11 + 'px';
+                customCursor.style.top = cursorY - 11 + 'px';
+            }
+            if (customCursorDot) {
+                customCursorDot.style.left = dotX - 2.5 + 'px';
+                customCursorDot.style.top = dotY - 2.5 + 'px';
+            }
+            requestAnimationFrame(animateCursor);
+        }
+
+        function closeIntro() {
+            const intro = document.getElementById('intro-screen');
+            if (!intro) return;
+            intro.classList.add('hidden');
+            document.body.classList.remove('intro-active');
+            if (customCursor) customCursor.style.display = 'none';
+            if (customCursorDot) customCursorDot.style.display = 'none';
+            setTimeout(() => { if (intro) intro.style.display = 'none'; }, 900);
+        }
+
+        document.getElementById('skipIntro').addEventListener('click', closeIntro);
+        setTimeout(closeIntro, 5000);
+
+        document.addEventListener('DOMContentLoaded', () => {
+            createIntroParticles();
+            animateCursor();
+        });
+
+        document.querySelectorAll('#skipIntro').forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                if (customCursor && document.body.classList.contains('intro-active')) {
+                    customCursor.style.width = '40px';
+                    customCursor.style.height = '40px';
+                    customCursor.style.borderColor = 'rgba(138, 243, 229, 1)';
+                }
+            });
+            el.addEventListener('mouseleave', () => {
+                if (customCursor && document.body.classList.contains('intro-active')) {
+                    customCursor.style.width = '22px';
+                    customCursor.style.height = '22px';
+                    customCursor.style.borderColor = 'rgba(138, 243, 229, 0.8)';
+                }
+            });
+        });
+
+        console.log('✨ DataDesh Soluções - Site completo carregado!');
+        console.log('👤 Ana Paula Araujo da Silva | 📋 CNPJ: 66.884.261/0001-20 | 📊 +77 projetos');
+    </script>
 </body>
 </html>
