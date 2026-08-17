@@ -1,0 +1,1230 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo DataDesh | Soluções Digitais para Pequenos Negócios</title>
+    <meta name="description" content="Catálogo completo com 112 micro-sistemas, sites, catálogos digitais, dashboards e automações para MEI, lojistas e autônomos.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        /* ============================================================
+           ROOT & RESET - MODO CLARO
+           ============================================================ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #f5f7fb;
+            --surface: #ffffff;
+            --surface-hover: #f1f4f9;
+            --text: #1a2332;
+            --text-light: #5b6b7e;
+            --border: #e2e8f0;
+            --primary: #0f766e;
+            --primary-dark: #0a4f4a;
+            --secondary: #7c3aed;
+            --accent: #f59e0b;
+            --shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+            --shadow-glow: 0 0 60px rgba(15, 118, 110, 0.06);
+            --radius: 16px;
+            --radius-lg: 24px;
+            --radius-xl: 32px;
+            --container: 1200px;
+            --whatsapp: #25D366;
+            --whatsapp-dark: #128C7E;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 10px;
+        }
+
+        .container {
+            width: min(100% - 32px, var(--container));
+            margin-inline: auto;
+        }
+
+        /* ============================================================
+           ANIMAÇÕES
+           ============================================================ */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(40px) scale(0.96); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        @keyframes glowPulse {
+            0%, 100% { box-shadow: 0 0 40px rgba(15, 118, 110, 0.04); }
+            50% { box-shadow: 0 0 80px rgba(15, 118, 110, 0.10); }
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1), transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ============================================================
+           HEADER - MODO CLARO
+           ============================================================ */
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(20px) saturate(180%);
+            border-bottom: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+
+        .navbar.scrolled {
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 4px 40px rgba(0, 0, 0, 0.06);
+        }
+
+        .nav-wrap {
+            min-height: 76px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            text-decoration: none;
+        }
+
+        .brand-mark {
+            width: 44px;
+            height: 44px;
+            border-radius: 14px;
+            overflow: hidden;
+            flex-shrink: 0;
+            box-shadow: 0 4px 16px rgba(15, 118, 110, 0.15);
+            transition: transform 0.3s ease;
+        }
+
+        .brand-mark img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .brand-mark:hover {
+            transform: rotate(-8deg) scale(1.05);
+        }
+
+        .brand-text {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.05;
+        }
+
+        .brand-text strong {
+            font-size: 1rem;
+            color: var(--text);
+            letter-spacing: -0.02em;
+        }
+
+        .brand-text span {
+            font-size: 0.7rem;
+            color: var(--text-light);
+            font-weight: 500;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 28px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-light);
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-decoration: none;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--text);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-links a.active {
+            color: var(--primary);
+        }
+
+        .nav-links a.active::after {
+            width: 100%;
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            border: none;
+            border-radius: 50px;
+            padding: 12px 24px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+            cursor: pointer;
+            text-decoration: none;
+            white-space: nowrap;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            box-shadow: 0 4px 24px rgba(15, 118, 110, 0.15);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 12px 40px rgba(15, 118, 110, 0.25);
+        }
+
+        .btn-whatsapp {
+            background: linear-gradient(135deg, #25D366, #128C7E);
+            color: white;
+            box-shadow: 0 4px 24px rgba(37, 211, 102, 0.2);
+        }
+
+        .btn-whatsapp:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 12px 40px rgba(37, 211, 102, 0.3);
+        }
+
+        .btn-secondary {
+            background: var(--surface);
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            background: var(--surface-hover);
+            transform: translateY(-3px);
+            border-color: var(--primary);
+        }
+
+        .nav-icon-link {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            color: var(--text-light);
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .nav-icon-link:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .menu-toggle {
+            display: none;
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            background: var(--surface);
+            color: var(--text);
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        .nav-mobile {
+            display: none;
+            padding: 16px 0 20px;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .nav-mobile.active {
+            display: flex;
+        }
+
+        .nav-mobile a {
+            padding: 14px 16px;
+            border-radius: 12px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            color: var(--text-light);
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .nav-mobile a:hover {
+            background: var(--surface-hover);
+            color: var(--text);
+            border-color: var(--primary);
+        }
+
+        /* ============================================================
+           CATALOG HEADER - MODO CLARO
+           ============================================================ */
+        .catalog-header {
+            padding: 60px 0 40px;
+            position: relative;
+            overflow: hidden;
+            background: var(--bg);
+            text-align: center;
+        }
+
+        .catalog-header::before {
+            content: '';
+            position: absolute;
+            top: -30%;
+            right: -10%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(15, 118, 110, 0.04), transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: glowPulse 6s ease-in-out infinite;
+        }
+
+        .catalog-header h1 {
+            font-size: clamp(2.5rem, 4vw, 3.5rem);
+            font-weight: 900;
+            letter-spacing: -0.03em;
+            color: var(--text);
+            position: relative;
+        }
+
+        .catalog-header h1 span {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .catalog-header .subtitle {
+            color: var(--text-light);
+            font-size: 1.1rem;
+            margin-top: 12px;
+            position: relative;
+            max-width: 700px;
+            margin-inline: auto;
+        }
+
+        .catalog-header .contato-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            justify-content: center;
+            margin-top: 24px;
+            position: relative;
+        }
+
+        .catalog-header .pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            border-radius: 999px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            color: var(--text-light);
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .catalog-header .pill:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .catalog-header .pill-destaque {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            border-color: transparent;
+            color: white;
+            box-shadow: 0 4px 24px rgba(15, 118, 110, 0.15);
+        }
+
+        .catalog-header .pill-destaque:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 40px rgba(15, 118, 110, 0.25);
+            color: white;
+        }
+
+        /* ============================================================
+           AVISO BAR - MODO CLARO
+           ============================================================ */
+        .aviso-bar {
+            background: linear-gradient(135deg, #fffbeb, #fef3c7);
+            border-bottom: 1px solid #fcd34d;
+            border-top: 1px solid #fcd34d;
+            text-align: center;
+            padding: 14px 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #92400e;
+        }
+
+        .aviso-bar i {
+            margin-right: 8px;
+            color: var(--accent);
+        }
+
+        /* ============================================================
+           FILTROS - MODO CLARO
+           ============================================================ */
+        .filtros-bar {
+            background: rgba(255, 255, 255, 0.95);
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 76px;
+            z-index: 100;
+            padding: 16px 0;
+            backdrop-filter: blur(12px);
+        }
+
+        .filtros-wrap {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .filtros-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .busca-input {
+            padding: 12px 18px 12px 44px;
+            border-radius: 999px;
+            border: 2px solid var(--border);
+            font-family: "Inter", sans-serif;
+            font-size: 0.9rem;
+            min-width: 280px;
+            background: white url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="%235b6b7e" stroke-width="2"><circle cx="10" cy="10" r="7"/><line x1="21" y1="21" x2="15" y2="15"/></svg>') no-repeat 16px center;
+            color: var(--text);
+            transition: all 0.3s ease;
+        }
+
+        .busca-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(15, 118, 110, 0.08);
+        }
+
+        .busca-input::placeholder {
+            color: var(--text-light);
+            opacity: 0.6;
+        }
+
+        .filtro-btn {
+            padding: 10px 18px;
+            border-radius: 999px;
+            border: 2px solid var(--border);
+            background: white;
+            font-family: "Inter", sans-serif;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            color: var(--text-light);
+        }
+
+        .filtro-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .filtro-btn.ativo {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            border-color: transparent;
+            box-shadow: 0 4px 16px rgba(15, 118, 110, 0.15);
+        }
+
+        .btn-limpar {
+            padding: 10px 18px;
+            border-radius: 999px;
+            border: 2px solid var(--border);
+            background: white;
+            color: var(--text-light);
+            font-weight: 600;
+            cursor: pointer;
+            font-family: "Inter", sans-serif;
+            font-size: 0.8rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn-limpar:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .contador {
+            font-size: 0.85rem;
+            color: var(--primary);
+            font-weight: 700;
+            background: rgba(15, 118, 110, 0.06);
+            padding: 8px 16px;
+            border-radius: 999px;
+            white-space: nowrap;
+            border: 1px solid rgba(15, 118, 110, 0.1);
+        }
+
+        /* ============================================================
+           SEÇÕES - MODO CLARO
+           ============================================================ */
+        .bloco-section {
+            padding: 40px 0;
+        }
+
+        .bloco-titulo {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: linear-gradient(135deg, rgba(15, 118, 110, 0.06), rgba(124, 58, 237, 0.06));
+            color: var(--text);
+            padding: 12px 24px;
+            border-radius: 999px;
+            font-weight: 700;
+            font-size: 1rem;
+            margin-bottom: 24px;
+            border: 1px solid rgba(15, 118, 110, 0.1);
+        }
+
+        .bloco-titulo i {
+            color: var(--primary);
+        }
+
+        .bloco-contador {
+            background: rgba(15, 118, 110, 0.08);
+            padding: 4px 12px;
+            border-radius: 999px;
+            font-size: 0.75rem;
+            color: var(--primary);
+        }
+
+        /* ============================================================
+           GRID DE CARDS - MODO CLARO
+           ============================================================ */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 20px;
+        }
+
+        .produto-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+            transform-style: preserve-3d;
+            perspective: 600px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+        }
+
+        .produto-card:hover {
+            transform: translateY(-6px) rotateX(2deg) rotateY(2deg);
+            border-color: var(--primary);
+            box-shadow: 0 20px 60px rgba(15, 118, 110, 0.06);
+        }
+
+        .produto-card.oculto {
+            display: none;
+        }
+
+        .card-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .card-codigo {
+            background: rgba(15, 118, 110, 0.06);
+            color: var(--primary);
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 4px 12px;
+            border-radius: 999px;
+            white-space: nowrap;
+            border: 1px solid rgba(15, 118, 110, 0.1);
+        }
+
+        .card-novo {
+            background: linear-gradient(135deg, var(--accent), #d97706);
+            color: white;
+            font-size: 0.6rem;
+            font-weight: 800;
+            padding: 4px 10px;
+            border-radius: 999px;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
+        }
+
+        .card-nome {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--text);
+            line-height: 1.3;
+        }
+
+        .card-desc {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            line-height: 1.6;
+            flex-grow: 1;
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 4px;
+        }
+
+        .btn-interessado {
+            flex: 1;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 14px 20px;
+            border-radius: 999px;
+            background: linear-gradient(135deg, #25D366, #128C7E);
+            color: white;
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(37, 211, 102, 0.15);
+        }
+
+        .btn-interessado:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 12px 40px rgba(37, 211, 102, 0.25);
+        }
+
+        .btn-interessado i {
+            font-size: 1.1rem;
+        }
+
+        /* ============================================================
+           FOOTER - MODO CLARO
+           ============================================================ */
+        .catalog-footer {
+            background: white;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            padding: 48px 0 28px;
+            margin-top: 40px;
+        }
+
+        .catalog-footer p {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        .catalog-footer strong {
+            color: var(--text);
+        }
+
+        .catalog-footer .footer-social {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            margin-bottom: 16px;
+        }
+
+        .catalog-footer .footer-social a {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            display: grid;
+            place-items: center;
+            color: var(--text-light);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .catalog-footer .footer-social a:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            transform: translateY(-4px);
+        }
+
+        .catalog-footer .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            justify-content: center;
+            margin: 12px 0;
+        }
+
+        .catalog-footer .footer-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: color 0.3s ease;
+        }
+
+        .catalog-footer .footer-links a:hover {
+            color: var(--primary);
+        }
+
+        /* ============================================================
+           WHATSAPP FLOAT
+           ============================================================ */
+        .whatsapp-float {
+            position: fixed;
+            right: 24px;
+            bottom: 24px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            background: linear-gradient(135deg, #25D366, #128C7E);
+            color: white;
+            font-size: 30px;
+            box-shadow: 0 12px 36px rgba(37, 211, 102, 0.35);
+            z-index: 999;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            animation: glowPulse 3s ease-in-out infinite;
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.1) translateY(-4px);
+        }
+
+        /* ============================================================
+           RESPONSIVO
+           ============================================================ */
+        @media (max-width: 860px) {
+            .nav-links,
+            .nav-actions .desktop-only {
+                display: none;
+            }
+            .menu-toggle {
+                display: grid;
+                place-items: center;
+            }
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+            .filtros-wrap {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .filtros-group {
+                justify-content: center;
+            }
+            .busca-input {
+                min-width: 100%;
+            }
+            .filtros-bar {
+                top: 76px;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .catalog-header {
+                padding: 40px 0 30px;
+            }
+            .catalog-header h1 {
+                font-size: 2rem;
+            }
+            .bloco-section {
+                padding: 28px 0;
+            }
+            .produto-card {
+                padding: 18px;
+            }
+            .filtros-bar {
+                top: 76px;
+                padding: 12px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ============================================================
+    HEADER - MODO CLARO
+    ============================================================ -->
+    <header class="navbar" id="navbar">
+        <div class="container">
+            <div class="nav-wrap">
+                <a href="https://datadesh-site-da-empresa.github.io/servicosdigitais/" class="brand" target="_blank">
+                    <div class="brand-mark">
+                        <img src="https://raw.githubusercontent.com/DataDesh-Site-da-Empresa/servicosdigitais/main/logo.png" alt="DataDesh Soluções Logo">
+                    </div>
+                    <div class="brand-text">
+                        <strong>DataDesh Soluções</strong>
+                        <span>Catálogo de Soluções</span>
+                    </div>
+                </a>
+                <ul class="nav-links">
+                    <li><a href="https://datadesh-site-da-empresa.github.io/servicosdigitais/#sobre" target="_blank">Sobre</a></li>
+                    <li><a href="https://datadesh-site-da-empresa.github.io/servicosdigitais/#servicos" target="_blank">Serviços</a></li>
+                    <li><a href="https://datadesh-site-da-empresa.github.io/servicosdigitais/#projetos" target="_blank">Projetos</a></li>
+                    <li><a href="#catalogo" class="active">Catálogo</a></li>
+                </ul>
+                <div class="nav-actions">
+                    <a class="nav-icon-link desktop-only" href="https://www.instagram.com/datadeshsolucoesdigitais/" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a class="btn btn-primary desktop-only" href="https://wa.me/5531984987116" target="_blank"><i class="fab fa-whatsapp"></i> Fale comigo</a>
+                    <button class="menu-toggle" id="menuToggle"><i class="fa-solid fa-bars"></i></button>
+                </div>
+            </div>
+            <div class="nav-mobile" id="mobileMenu">
+                <a href="https://datadesh-site-da-empresa.github.io/servicosdigitais/#sobre" target="_blank">Sobre</a>
+                <a href="https://datadesh-site-da-empresa.github.io/servicosdigitais/#servicos" target="_blank">Serviços</a>
+                <a href="https://datadesh-site-da-empresa.github.io/servicosdigitais/#projetos" target="_blank">Projetos</a>
+                <a href="#catalogo">Catálogo</a>
+                <a href="https://wa.me/5531984987116" target="_blank" style="border-color: var(--primary); color: var(--primary);">Falar no WhatsApp</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- ============================================================
+    CATALOG HEADER
+    ============================================================ -->
+    <section class="catalog-header" id="catalogo">
+        <div class="container">
+            <h1>📚 <span>Catálogo</span> DataDesh</h1>
+            <p class="subtitle">112 soluções digitais para pequenos negócios — sites, catálogos, dashboards, automações e micro-sistemas</p>
+            <div class="contato-pills">
+                <a href="https://wa.me/5531984987116" class="pill" target="_blank"><i class="fab fa-whatsapp"></i> (31) 98498-7116</a>
+                <a href="mailto:datadshsolucoes@gmail.com" class="pill"><i class="fa-regular fa-envelope"></i> datadshsolucoes@gmail.com</a>
+                <a href="https://www.instagram.com/datadeshsolucoesdigitais/" class="pill" target="_blank"><i class="fab fa-instagram"></i> @datadeshsolucoesdigitais</a>
+                <a href="https://datadesh-site-da-empresa.github.io/servicosdigitais/" class="pill pill-destaque" target="_blank"><i class="fa-solid fa-globe"></i> Site Principal</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+    AVISO
+    ============================================================ -->
+    <div class="aviso-bar">
+        <i class="fa-solid fa-circle-info"></i> <strong>Interessado em alguma solução?</strong> Clique no botão "Interessado? Clique aqui" e fale diretamente comigo no WhatsApp!
+    </div>
+
+    <!-- ============================================================
+    BARRA DE FILTROS
+    ============================================================ -->
+    <div class="filtros-bar">
+        <div class="container">
+            <div class="filtros-wrap">
+                <div class="filtros-group">
+                    <input type="text" class="busca-input" id="buscaInput" placeholder="🔍 Buscar por nome, descrição ou código...">
+                </div>
+                <div class="filtros-group" id="filtrosCategoria">
+                    <button class="filtro-btn ativo" data-cat="todos">📋 Todos</button>
+                    <button class="filtro-btn" data-cat="formularios">📝 Formulários</button>
+                    <button class="filtro-btn" data-cat="agendamentos">📅 Agendamentos</button>
+                    <button class="filtro-btn" data-cat="cobranca">💰 Cobrança/Fiado</button>
+                    <button class="filtro-btn" data-cat="cardapios">🍽️ Cardápios</button>
+                    <button class="filtro-btn" data-cat="orcamentos">📐 Orçamentos</button>
+                    <button class="filtro-btn" data-cat="portfolio">💼 Portfólio</button>
+                    <button class="filtro-btn" data-cat="financeiro">📊 Financeiro</button>
+                    <button class="filtro-btn" data-cat="servicos">🔧 Serviços</button>
+                </div>
+                <div class="filtros-group">
+                    <span class="contador" id="contadorProdutos">112 produtos</span>
+                    <button class="btn-limpar" id="btnLimpar">🧹 Limpar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================
+    CONTEÚDO PRINCIPAL
+    ============================================================ -->
+    <main class="container" id="catalogoContainer"></main>
+
+    <!-- ============================================================
+    FOOTER
+    ============================================================ -->
+    <footer class="catalog-footer">
+        <div class="container">
+            <div class="footer-social">
+                <a href="https://www.instagram.com/datadeshsolucoesdigitais/" target="_blank"><i class="fab fa-instagram"></i></a>
+                <a href="https://wa.me/5531984987116" target="_blank"><i class="fab fa-whatsapp"></i></a>
+                <a href="mailto:datadshsolucoes@gmail.com"><i class="fa-regular fa-envelope"></i></a>
+            </div>
+            <div class="footer-links">
+                <a href="https://datadesh-site-da-empresa.github.io/servicosdigitais/#sobre" target="_blank">Sobre</a>
+                <a href="https://datadesh-site-da-empresa.github.io/servicosdigitais/#servicos" target="_blank">Serviços</a>
+                <a href="https://datadesh-site-da-empresa.github.io/servicosdigitais/#projetos" target="_blank">Projetos</a>
+                <a href="#catalogo">Catálogo</a>
+            </div>
+            <p><strong>DataDesh Soluções Digitais</strong> — CNPJ: 66.884.261/0001-20</p>
+            <p style="margin-top: 8px; color: rgba(0,0,0,0.3); font-size: 0.8rem;">© 2025 DataDesh Soluções — Todos os direitos reservados</p>
+        </div>
+    </footer>
+
+    <!-- ============================================================
+    WHATSAPP FLOAT
+    ============================================================ -->
+    <a href="https://wa.me/5531984987116" class="whatsapp-float" target="_blank"><i class="fab fa-whatsapp"></i></a>
+
+    <!-- ============================================================
+    SCRIPTS
+    ============================================================ -->
+    <script>
+        // ============================================================
+        // NAVBAR SCROLL
+        // ============================================================
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 60) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // ============================================================
+        // MENU MOBILE
+        // ============================================================
+        const menuToggle = document.getElementById('menuToggle');
+        const mobileMenu = document.getElementById('mobileMenu');
+
+        menuToggle.addEventListener('click', () => {
+            mobileMenu.classList.toggle('active');
+        });
+
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.remove('active');
+            });
+        });
+
+        // ============================================================
+        // BASE DE DADOS: 112 PRODUTOS (SEM PREÇOS)
+        // ============================================================
+        const produtos = [
+            // ==================== SERVIÇOS ORIGINAIS ====================
+            { codigo: "0753-1", nome: "Robô Python - Organizar Pastas no Drive", desc: "Automatiza a criação e organização de pastas no Google Drive", cat: "servicos", bloco: "Serviços Originais", novo: false },
+            { codigo: "0753-2", nome: "Agendas Sincronizadas", desc: "Diversos modelos de Agendas sincronizadas com Google Forms, Agenda Google e planilhas", cat: "servicos", bloco: "Serviços Originais", novo: false },
+            { codigo: "0753-3", nome: "Robô Python - Envio de E-mails em Massa", desc: "Disparo automatizado de e-mails com textos programados, ótimo para e-mail marketing", cat: "servicos", bloco: "Serviços Originais", novo: false },
+            { codigo: "0753-4", nome: "Sete Artes para Posts Carrosel", desc: "Posts otimizados para engajar vendas no Instagram", cat: "servicos", bloco: "Serviços Originais", novo: false },
+            { codigo: "0753-5", nome: "Cartão de Visita Virtual", desc: "Hiper moderno e estiloso, link compartilhável", cat: "servicos", bloco: "Serviços Originais", novo: false },
+            { codigo: "0753-6", nome: "Montagem de Catálogo WhatsApp", desc: "Catálogo profissional com link compartilhável, carrinho e pedido via link", cat: "servicos", bloco: "Serviços Originais", novo: false },
+            { codigo: "0753-7", nome: "Convites Digitais Interativos", desc: "Convite especial com link e botão confirmação sincronizado com Google Forms", cat: "servicos", bloco: "Serviços Originais", novo: false },
+            { codigo: "0753-8", nome: "Currículo Digital", desc: "Currículo moderno, prático, link compartilhável", cat: "portfolio", bloco: "Serviços Originais", novo: false },
+            { codigo: "0753-9", nome: "Dashboard Avançado", desc: "Painel com gráficos responsivo, moderno, sincronizado com planilhas Drive", cat: "financeiro", bloco: "Serviços Originais", novo: false },
+            { codigo: "0753-10", nome: "Dashboard Básico", desc: "Painel com gráficos interativos sincronizado com planilhas Google Drive", cat: "financeiro", bloco: "Serviços Originais", novo: false },
+            { codigo: "0753-11", nome: "Formulário Automatizado Google Drive", desc: "Formulário elaborado com respostas automatizadas para planilha", cat: "formularios", bloco: "Serviços Originais", novo: false },
+            { codigo: "0753-12", nome: "Espaço para Novo Serviço", desc: "Disponível para personalização", cat: "servicos", bloco: "Serviços Originais", novo: false },
+            { codigo: "0753-13", nome: "Organização do Drive", desc: "Pastas organizadas com página de acesso aos links", cat: "servicos", bloco: "Serviços Originais", novo: false },
+            { codigo: "0753-14", nome: "Site Simples", desc: "Código e Domínio entregues ao Cliente", cat: "servicos", bloco: "Serviços Originais", novo: false },
+            { codigo: "0753-15", nome: "Apresentação com Slides", desc: "Slides profissionais para PowerPoint/Google Slides (até 20 slides)", cat: "servicos", bloco: "Serviços Originais", novo: false },
+            { codigo: "0753-16", nome: "Vídeos Animados", desc: "15 segundos de apresentação com seu produto ou anime com sua foto", cat: "servicos", bloco: "Serviços Originais", novo: false },
+            { codigo: "0753-17", nome: "Posts que Engajam e Vendem", desc: "5 Posts Personalizados para Subir o Engajamento do seu produto", cat: "servicos", bloco: "Serviços Originais", novo: false },
+            { codigo: "0753-18", nome: "Compactar Fotos no Drive", desc: "Liberar espaço organizando e compactando imagens no Drive", cat: "servicos", bloco: "Serviços Originais", novo: false },
+            { codigo: "0753-19", nome: "Agenda Eletrônica Personalizada", desc: "Agenda simples personalizada conforme sua necessidade", cat: "agendamentos", bloco: "Serviços Originais", novo: false },
+            { codigo: "0753-20", nome: "Organização Instagram com Vitrine", desc: "Organização de Conta no Instagram com Vitrine e Catálogo WhatsApp", cat: "servicos", bloco: "Serviços Originais", novo: false },
+            { codigo: "0753-21", nome: "Otimizar Celular", desc: "Melhorar o desempenho do seu dispositivo celular", cat: "servicos", bloco: "Serviços Originais", novo: false },
+            { codigo: "0753-22", nome: "Catálogo Virtual Básico", desc: "Até 50 produtos, sincronização Google Sheets, busca por nome", cat: "servicos", bloco: "Serviços Originais", novo: true },
+            { codigo: "0753-23", nome: "Catálogo Virtual Profissional", desc: "Até 200 produtos, categorias, busca, filtros, WhatsApp integrado", cat: "servicos", bloco: "Serviços Originais", novo: true },
+            { codigo: "0753-24", nome: "Sistema Controle Cartão Crédito", desc: "Várias pessoas usando o cartão, perfil admin + usuário, controle de débitos", cat: "financeiro", bloco: "Serviços Originais", novo: true },
+            { codigo: "0753-25", nome: "Sistema Controle Vendas (Fiado)", desc: "Registro de compras fiado, botão de cobrança WhatsApp, cliente consulta débito", cat: "cobranca", bloco: "Serviços Originais", novo: true },
+            { codigo: "0753-26", nome: "Sistema Financeiro Básico", desc: "Controle de entradas/saídas, cálculo de saldo, gráficos simples", cat: "financeiro", bloco: "Serviços Originais", novo: true },
+            { codigo: "0753-27", nome: "Sistema Financeiro Profissional", desc: "Tudo do básico + categorias, metas, relatórios avançados", cat: "financeiro", bloco: "Serviços Originais", novo: true },
+            { codigo: "0753-28", nome: "Cardápio Virtual (c/ Painel Cozinha)", desc: "QR Code na mesa, pedido vai para planilha Drive + painel para cozinha", cat: "cardapios", bloco: "Serviços Originais", novo: true },
+            { codigo: "0753-29", nome: "Cardápio Virtual (WhatsApp Direto)", desc: "QR Code na mesa, pedido vai direto para WhatsApp da cozinha", cat: "cardapios", bloco: "Serviços Originais", novo: true },
+            { codigo: "0753-30", nome: "Controle de Estoque Básico", desc: "Até 100 produtos, cadastro, entrada/saída, alerta estoque baixo, relatório Excel", cat: "servicos", bloco: "Serviços Originais", novo: true },
+            { codigo: "0753-31", nome: "Controle de Estoque Profissional", desc: "Até 500 produtos, categorias, fornecedores, gráficos simples", cat: "servicos", bloco: "Serviços Originais", novo: true },
+            { codigo: "0753-32", nome: "Controle de Estoque Premium", desc: "Produtos ilimitados, dashboard avançado, produtos mais vendidos, backup automático", cat: "servicos", bloco: "Serviços Originais", novo: true },
+            { codigo: "0753-33", nome: "Portfólio Digital Básico", desc: "Página HTML com até 5 projetos", cat: "portfolio", bloco: "Serviços Originais", novo: true },
+            { codigo: "0753-34", nome: "Portfólio Digital Profissional", desc: "Página completa com galeria, filtros por categoria, depoimentos, até 15 projetos", cat: "portfolio", bloco: "Serviços Originais", novo: true },
+            { codigo: "0753-35", nome: "Portfólio Digital Premium", desc: "Site completo com blog, integração GitHub, links para projetos, formulário avançado", cat: "portfolio", bloco: "Serviços Originais", novo: true },
+
+            // ==================== BLOCO 1: FORMULÁRIOS E LISTAS ====================
+            { codigo: "0753-36", nome: "Churrascômetro Pro", desc: "Lista de compras colaborativa com rateio automático para churrascos. Cada convidado se candidata a levar itens.", cat: "formularios", bloco: "Formulários e Listas", novo: true },
+            { codigo: "0753-37", nome: "Presencômetro Eventos", desc: "Lista de presença digital com check-in por selfie e painel do organizador para workshops e palestras.", cat: "formularios", bloco: "Formulários e Listas", novo: true },
+            { codigo: "0753-38", nome: "Festômetro Infantil", desc: "Convite digital com confirmação de presença, alergias e brinquedo favorito da criança.", cat: "formularios", bloco: "Formulários e Listas", novo: true },
+            { codigo: "0753-39", nome: "Enquetômetro de Decisão", desc: "Enquete visual com fotos, prós/contras e prazo final de votação para decidir viagens e rolês.", cat: "formularios", bloco: "Formulários e Listas", novo: true },
+            { codigo: "0753-40", nome: "Pesquisador 5 Estrelas", desc: "Pesquisa NPS que filtra clientes felizes (4-5 estrelas) para avaliar no Google e insatisfeitos para feedback privado.", cat: "formularios", bloco: "Formulários e Listas", novo: true },
+            { codigo: "0753-41", nome: "Cota-Aí", desc: "Vaquinha online com barra de progresso, meta e cobrança automática para presente de amigo secreto ou formatura.", cat: "formularios", bloco: "Formulários e Listas", novo: true },
+            { codigo: "0753-42", nome: "Missão Volta às Aulas", desc: "Checklist de material escolar colaborativo para pais, com status de comprado e rateio.", cat: "formularios", bloco: "Formulários e Listas", novo: true },
+            { codigo: "0753-43", nome: "Checklist do Freela", desc: "Organizador de tarefas e entregas para freelancers, com status e prazos visuais.", cat: "formularios", bloco: "Formulários e Listas", novo: true },
+            { codigo: "0753-44", nome: "Enquete de Condomínio", desc: "Sistema de votação oficial com registro de votos e resultado final para decisões de condomínio.", cat: "formularios", bloco: "Formulários e Listas", novo: true },
+            { codigo: "0753-45", nome: "Planejador de Cardápio Semanal", desc: "Lista de refeições da semana que gera lista de compras automática para a família.", cat: "formularios", bloco: "Formulários e Listas", novo: true },
+
+            // ==================== BLOCO 2: AGENDAMENTOS ====================
+            { codigo: "0753-46", nome: "Agenda do Barbeiro Pro", desc: "Agendamento com lembrete de retorno automático (15 dias) e confirmação por WhatsApp.", cat: "agendamentos", bloco: "Agendamentos", novo: true },
+            { codigo: "0753-47", nome: "Consultório de Estética Inteligente", desc: "Agenda com confirmação 24h e protocolo de pele pós-atendimento enviado ao cliente.", cat: "agendamentos", bloco: "Agendamentos", novo: true },
+            { codigo: "0753-48", nome: "App do Personal Trainer Raiz", desc: "Agenda + ficha de treino viva + status de pagamento do aluno.", cat: "agendamentos", bloco: "Agendamentos", novo: true },
+            { codigo: "0753-49", nome: "Diarista Fidelizada", desc: "Agenda de faxina com dossiê da casa (cômodos, pets, preferências) e notas privadas.", cat: "agendamentos", bloco: "Agendamentos", novo: true },
+            { codigo: "0753-50", nome: "Agenda do Pet Shop", desc: "Banho e tosa com fila virtual, horários disponíveis e alerta 'pet pronto para buscar'.", cat: "agendamentos", bloco: "Agendamentos", novo: true },
+            { codigo: "0753-51", nome: "Fila do Barbeiro", desc: "Fila virtual com QR Code na barbearia, tempo estimado e notificação 'sua vez está chegando'.", cat: "agendamentos", bloco: "Agendamentos", novo: true },
+            { codigo: "0753-52", nome: "Agenda do Professor Particular", desc: "Confirmação de aula com liberação de horário automático se não houver resposta.", cat: "agendamentos", bloco: "Agendamentos", novo: true },
+            { codigo: "0753-53", nome: "Rota do Motorista Escolar", desc: "Painel de rota da van com notificação 'Cheguei na Escola' para os pais.", cat: "agendamentos", bloco: "Agendamentos", novo: true },
+            { codigo: "0753-54", nome: "Agenda do Músico de Banda", desc: "Agenda semanal multi-bandas com confirmação de presença e valor do cachê.", cat: "agendamentos", bloco: "Agendamentos", novo: true },
+            { codigo: "0753-55", nome: "Agenda de Visitas Pastoral", desc: "CRM de visitas com pedidos de oração, histórico e lembretes de retorno.", cat: "agendamentos", bloco: "Agendamentos", novo: true },
+
+            // ==================== BLOCO 3: COBRANÇA E FIADO ====================
+            { codigo: "0753-56", nome: "Caderneta Digital Inteligente", desc: "Registro de fiado da mercearia com cobrança diária e link de consulta para o cliente.", cat: "cobranca", bloco: "Cobrança e Fiado", novo: true },
+            { codigo: "0753-57", nome: "Acertador de Rolê", desc: "Divisor de conta de bar/restaurante com cobrança lúdica e link de pagamento.", cat: "cobranca", bloco: "Cobrança e Fiado", novo: true },
+            { codigo: "0753-58", nome: "Cobrador de Boleto Amigo", desc: "Follow-up automático de boleto com tom amigável e lembretes progressivos.", cat: "cobranca", bloco: "Cobrança e Fiado", novo: true },
+            { codigo: "0753-59", nome: "Caixa da Feira", desc: "PDV simples de feira com cálculo de total e controle de fiado por cliente.", cat: "cobranca", bloco: "Cobrança e Fiado", novo: true },
+            { codigo: "0753-60", nome: "Caderno de Fiado do Feirante", desc: "Histórico de fiado do cliente com alerta de cobrança na próxima feira.", cat: "cobranca", bloco: "Cobrança e Fiado", novo: true },
+            { codigo: "0753-61", nome: "Controle de Vendas da Sacoleira", desc: "Registro de vendas e fiado com meta pessoal e botão de cobrança via WhatsApp.", cat: "cobranca", bloco: "Cobrança e Fiado", novo: true },
+            { codigo: "0753-62", nome: "Cobrador de Mensalidade", desc: "Sistema de cobrança recorrente para serviços como aulas, consultorias e academias.", cat: "cobranca", bloco: "Cobrança e Fiado", novo: true },
+
+            // ==================== BLOCO 4: CARDÁPIOS E CATÁLOGOS ====================
+            { codigo: "0753-63", nome: "Cardápio do Almoço", desc: "PF do bairro com combos diários e pedido direto sem iFood, com link de pagamento Pix.", cat: "cardapios", bloco: "Cardápios e Catálogos", novo: true },
+            { codigo: "0753-64", nome: "Cardápio do Boteco Raiz", desc: "Cardápio de uma tela com os 10 petiscos e aviso de pedido para o garçom via WhatsApp.", cat: "cardapios", bloco: "Cardápios e Catálogos", novo: true },
+            { codigo: "0753-65", nome: "Fila Inteligente de Mesas", desc: "Painel visual para garçom com status das mesas: livre, ocupada, pedindo a conta.", cat: "cardapios", bloco: "Cardápios e Catálogos", novo: true },
+            { codigo: "0753-66", nome: "Catálogo da Sacoleira Pro", desc: "Vitrine PWA com upsell e mensagem de pedido pronta no WhatsApp.", cat: "cardapios", bloco: "Cardápios e Catálogos", novo: true },
+            { codigo: "0753-67", nome: "Marmitaria do Bairro", desc: "Sistema de assinatura de marmitas semanais com relatório de produção.", cat: "cardapios", bloco: "Cardápios e Catálogos", novo: true },
+            { codigo: "0753-68", nome: "Cardápio do Açaí Turbinado", desc: "Upsell automático 'Complete seu açaí com um suco' com aumento de ticket médio.", cat: "cardapios", bloco: "Cardápios e Catálogos", novo: true },
+            { codigo: "0753-69", nome: "Vitrine do Instagram", desc: "Loja PWA integrada ao link da bio do Instagram com carrinho e pedido via WhatsApp.", cat: "cardapios", bloco: "Cardápios e Catálogos", novo: true },
+            { codigo: "0753-70", nome: "Encomenda da Doceira", desc: "Gestor de encomendas com alerta de data de entrega e cálculo automático de preço.", cat: "cardapios", bloco: "Cardápios e Catálogos", novo: true },
+            { codigo: "0753-71", nome: "Cardápio da Pizzaria de Bairro", desc: "Sistema de montagem de pizza meia-a-meia com cálculo automático de preço.", cat: "cardapios", bloco: "Cardápios e Catálogos", novo: true },
+
+            // ==================== BLOCO 5: ORÇAMENTOS ====================
+            { codigo: "0753-72", nome: "Orçômetro do Marido de Aluguel", desc: "Formulário guiado por tipo de problema + fotos para eletricista/encanador.", cat: "orcamentos", bloco: "Orçamentos", novo: true },
+            { codigo: "0753-73", nome: "Orçômetro do Pintor", desc: "Cálculo de m² e fotos para orçar pintura do sofá, sem visita técnica.", cat: "orcamentos", bloco: "Orçamentos", novo: true },
+            { codigo: "0753-74", nome: "Orçômetro do Jardineiro", desc: "Guia visual de serviço e fotos do jardim para orçamento rápido.", cat: "orcamentos", bloco: "Orçamentos", novo: true },
+            { codigo: "0753-75", nome: "Briefing Inteligente para Designer", desc: "Formulário de logo com referências do Pinterest e paleta de cores em botões visuais.", cat: "orcamentos", bloco: "Orçamentos", novo: true },
+            { codigo: "0753-76", nome: "Orçamento Transparente", desc: "Gerador de PDF de plano de tratamento odontológico com parcelamento.", cat: "orcamentos", bloco: "Orçamentos", novo: true },
+            { codigo: "0753-77", nome: "Orçamento de Buffet Express", desc: "Estimativa automática baseada em número de convidados e cardápio escolhido.", cat: "orcamentos", bloco: "Orçamentos", novo: true },
+            { codigo: "0753-78", nome: "Orçômetro do Montador de Móveis", desc: "Guia com fotos do móvel desmontado e endereço para orçamento rápido.", cat: "orcamentos", bloco: "Orçamentos", novo: true },
+
+            // ==================== BLOCO 6: CURRÍCULO E PORTFÓLIO ====================
+            { codigo: "0753-79", nome: "DevLink Pro", desc: "Currículo PWA para devs com gráfico de commits do GitHub e selo de competência.", cat: "portfolio", bloco: "Currículo e Portfólio", novo: true },
+            { codigo: "0753-80", nome: "Portfólio do Designer Vendedor", desc: "Botão 'Quero Este Estilo' em cada projeto que gera lead qualificado.", cat: "portfolio", bloco: "Currículo e Portfólio", novo: true },
+            { codigo: "0753-81", nome: "Portfólio Secreto do Fotógrafo", desc: "Galeria privada com senha e seleção de fotos favoritas pelo cliente.", cat: "portfolio", bloco: "Currículo e Portfólio", novo: true },
+            { codigo: "0753-82", nome: "Prova Online para Cliente Design", desc: "PWA de aprovação de logo com voto e comentário do cliente em cada versão.", cat: "portfolio", bloco: "Currículo e Portfólio", novo: true },
+            { codigo: "0753-83", nome: "Currículo do Corretor de Imóveis", desc: "Página pessoal com imóveis vendidos, depoimentos e botão de contato.", cat: "portfolio", bloco: "Currículo e Portfólio", novo: true },
+
+            // ==================== BLOCO 7: CARTÕES DE VISITA ====================
+            { codigo: "0753-84", nome: "Cartão do Corretor de Alta Conversão", desc: "Link PWA com botão 'Quero Comprar' que já abre WhatsApp com mensagem pronta.", cat: "portfolio", bloco: "Cartões de Visita", novo: true },
+            { codigo: "0753-85", nome: "Cartão do Consultor Exclusivo", desc: "Cartão adaptável à fonte do lead: palestra, Instagram, Google.", cat: "portfolio", bloco: "Cartões de Visita", novo: true },
+            { codigo: "0753-86", nome: "Cartão do Restaurante", desc: "QR Code na mesa que abre cardápio + botão de pedir a conta.", cat: "cardapios", bloco: "Cartões de Visita", novo: true },
+
+            // ==================== BLOCO 8: CONTROLE FINANCEIRO ====================
+            { codigo: "0753-87", nome: "Assassino de Assinaturas", desc: "Detector de cobranças recorrentes no cartão de crédito por leitura de fatura/notificação.", cat: "financeiro", bloco: "Controle Financeiro", novo: true },
+            { codigo: "0753-88", nome: "Calculadora da Liberdade", desc: "App que calcula % da meta para pedir demissão do emprego baseado em gastos.", cat: "financeiro", bloco: "Controle Financeiro", novo: true },
+            { codigo: "0753-89", nome: "Conta Casal Feliz", desc: "Classifica gastos do casal em 😡🕊️❤️ e gera um termômetro financeiro mensal do relacionamento.", cat: "financeiro", bloco: "Controle Financeiro", novo: true },
+            { codigo: "0753-90", nome: "Caixa do Autônomo", desc: "Controle financeiro simples de entradas e saídas para prestadores de serviço.", cat: "financeiro", bloco: "Controle Financeiro", novo: true },
+            { codigo: "0753-91", nome: "Painel do MEI", desc: "Dashboard que centraliza lembretes de DAS, faturamento e agenda do microempreendedor.", cat: "financeiro", bloco: "Controle Financeiro", novo: true },
+
+            // ==================== BLOCO 9: CLÍNICAS, PETS E SAÚDE ====================
+            { codigo: "0753-92", nome: "Dossiê do Paciente", desc: "Ficha médica digital com foto e histórico de consultas odontológicas.", cat: "agendamentos", bloco: "Clínicas, Pets e Saúde", novo: true },
+            { codigo: "0753-93", nome: "AlertPet Vacina", desc: "Sistema de lembrete automático de vacinas para pets com notificação 15 dias antes.", cat: "agendamentos", bloco: "Clínicas, Pets e Saúde", novo: true },
+            { codigo: "0753-94", nome: "Protocolo de Pele", desc: "Sistema de pós-atendimento de estética com fotos e recomendação de produtos.", cat: "agendamentos", bloco: "Clínicas, Pets e Saúde", novo: true },
+            { codigo: "0753-95", nome: "Clube da Beleza", desc: "Sistema de assinatura mensal de procedimentos estéticos com controle de créditos.", cat: "cobranca", bloco: "Clínicas, Pets e Saúde", novo: true },
+
+            // ==================== BLOCO 10: FREELAS, EVENTOS E COMÉRCIO ====================
+            { codigo: "0753-96", nome: "Promoções Relâmpago", desc: "Sistema de sorteio justo para Instagram com filtro de regras e validação.", cat: "formularios", bloco: "Freelas, Eventos e Comércio", novo: true },
+            { codigo: "0753-97", nome: "Checklist do Evento Perfeito", desc: "Checklist mestre para organizador de casamentos e formaturas.", cat: "formularios", bloco: "Freelas, Eventos e Comércio", novo: true },
+            { codigo: "0753-98", nome: "Encomenda do Sacolé", desc: "Gestor de encomendas de geladinho gourmet com controle de sabores.", cat: "cardapios", bloco: "Freelas, Eventos e Comércio", novo: true },
+            { codigo: "0753-99", nome: "Agenda do Estúdio de Pilates", desc: "Agendamento de aulas com limite de vagas por turma e lista de espera.", cat: "agendamentos", bloco: "Freelas, Eventos e Comércio", novo: true },
+            { codigo: "0753-100", nome: "Controle de Materiais do Autônomo", desc: "Mini-estoque no celular para prestadores de serviço.", cat: "servicos", bloco: "Freelas, Eventos e Comércio", novo: true },
+            { codigo: "0753-101", nome: "Setlist Colaborativa", desc: "Setlist de show com link da cifra para cada músico da banda.", cat: "agendamentos", bloco: "Freelas, Eventos e Comércio", novo: true },
+            { codigo: "0753-102", nome: "Tour Virtual Simples para Imóveis", desc: "Galeria de fotos do imóvel + botão de agendar visita.", cat: "portfolio", bloco: "Freelas, Eventos e Comércio", novo: true },
+
+            // ==================== BLOCO 11: IGREJAS E COMUNIDADES ====================
+            { codigo: "0753-103", nome: "Dízimo Digital", desc: "Registro de ofertas e dízimos com relatório mensal e extrato por membro.", cat: "financeiro", bloco: "Igrejas e Comunidades", novo: true },
+            { codigo: "0753-104", nome: "Escala de Ministérios", desc: "Publicador de escala de louvor com notificação automática para os membros.", cat: "agendamentos", bloco: "Igrejas e Comunidades", novo: true },
+
+            // ==================== BLOCO 12: FERRAMENTAS HORIZONTAIS ====================
+            { codigo: "0753-105", nome: "Gestor de Pequenos Projetos", desc: "Kanban simples para o empreendedor organizar as tarefas da semana.", cat: "servicos", bloco: "Ferramentas Horizontais", novo: true },
+            { codigo: "0753-106", nome: "O Carrinho Abandonado", desc: "Sistema que salva o carrinho do cliente por WhatsApp e envia lembrete para finalizar a compra.", cat: "cardapios", bloco: "Ferramentas Horizontais", novo: true },
+            { codigo: "0753-107", nome: "Assinaturas Vitalícias", desc: "Landing page modelo para vender os micro-sistemas como produto recorrente.", cat: "servicos", bloco: "Ferramentas Horizontais", novo: true },
+            { codigo: "0753-108", nome: "Estoque Fácil", desc: "Controle de estoque básico para lojistas com alerta de produto acabando.", cat: "servicos", bloco: "Ferramentas Horizontais", novo: true },
+            { codigo: "0753-109", nome: "Comanda Digital", desc: "Substituto da comanda de papel para bares e restaurantes via QR Code.", cat: "cardapios", bloco: "Ferramentas Horizontais", novo: true },
+            { codigo: "0753-110", nome: "Catálogo de Serviços do Pet Shop", desc: "Vitrine PWA dos serviços do pet shop com agendamento integrado.", cat: "cardapios", bloco: "Ferramentas Horizontais", novo: true },
+            { codigo: "0753-111", nome: "Lembrete do Condomínio", desc: "Sistema de envio de comunicados e alertas de pagamento da taxa condominial.", cat: "cobranca", bloco: "Ferramentas Horizontais", novo: true },
+            { codigo: "0753-112", nome: "Agente de IA para MEI", desc: "Mini-chatbot treinado com dúvidas comuns do Sebrae e legislação MEI para WhatsApp.", cat: "servicos", bloco: "Ferramentas Horizontais", novo: true }
+        ];
+
+        // ============================================================
+        // RENDERIZAÇÃO
+        // ============================================================
+        const container = document.getElementById('catalogoContainer');
+        const buscaInput = document.getElementById('buscaInput');
+        const filtrosCategoria = document.getElementById('filtrosCategoria');
+        const contadorSpan = document.getElementById('contadorProdutos');
+        const btnLimpar = document.getElementById('btnLimpar');
+
+        let categoriaAtiva = 'todos';
+
+        function agruparPorBloco(lista) {
+            const grupos = {};
+            lista.forEach(p => {
+                if (!grupos[p.bloco]) grupos[p.bloco] = [];
+                grupos[p.bloco].push(p);
+            });
+            return grupos;
+        }
+
+        function renderCard(p) {
+            const novoBadge = p.novo ? '<span class="card-novo">NOVO</span>' : '';
+            const mensagemWhats = `Quero o *${p.nome}* (código ${p.codigo}) - vi no catálogo da DataDesh`;
+            return `
+                <div class="produto-card" data-cat="${p.cat}" data-nome="${p.nome.toLowerCase()}" data-desc="${p.desc.toLowerCase()}" data-cod="${p.codigo}">
+                    <div class="card-top">
+                        <span class="card-codigo">${p.codigo}</span>
+                        ${novoBadge}
+                    </div>
+                    <div class="card-nome">${p.nome}</div>
+                    <div class="card-desc">${p.desc}</div>
+                    <div class="card-actions">
+                        <a href="https://wa.me/5531984987116?text=${encodeURIComponent(mensagemWhats)}" class="btn-interessado" target="_blank">
+                            <i class="fab fa-whatsapp"></i> Interessado? Clique aqui
+                        </a>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderizarCatalogo() {
+            const busca = buscaInput.value.toLowerCase();
+
+            let filtrados = produtos.filter(p => {
+                if (categoriaAtiva !== 'todos' && p.cat !== categoriaAtiva) return false;
+                if (busca && !p.nome.toLowerCase().includes(busca) && !p.desc.toLowerCase().includes(busca) && !p.codigo.includes(busca)) return false;
+                return true;
+            });
+
+            const grupos = agruparPorBloco(filtrados);
+
+            let html = '';
+            for (const [bloco, lista] of Object.entries(grupos)) {
+                html += `
+                    <section class="bloco-section">
+                        <div class="bloco-titulo">
+                            <i class="fa-solid fa-folder-tree"></i> ${bloco}
+                            <span class="bloco-contador">${lista.length} itens</span>
+                        </div>
+                        <div class="cards-grid">
+                            ${lista.map(p => renderCard(p)).join('')}
+                        </div>
+                    </section>
+                `;
+            }
+
+            if (filtrados.length === 0) {
+                html = `
+                    <section class="bloco-section" style="text-align:center; padding:80px 0;">
+                        <i class="fa-solid fa-magnifying-glass" style="font-size:3rem; color:var(--text-light); display:block; margin-bottom:20px;"></i>
+                        <h2 style="color:var(--text-light);">Nenhum produto encontrado</h2>
+                        <p style="color:var(--text-light);">Tente outro termo de busca ou categoria.</p>
+                    </section>
+                `;
+            }
+
+            container.innerHTML = html;
+            contadorSpan.textContent = `${filtrados.length} produtos`;
+        }
+
+        // Eventos
+        buscaInput.addEventListener('input', renderizarCatalogo);
+
+        filtrosCategoria.addEventListener('click', (e) => {
+            if (e.target.classList.contains('filtro-btn')) {
+                document.querySelectorAll('.filtro-btn').forEach(b => b.classList.remove('ativo'));
+                e.target.classList.add('ativo');
+                categoriaAtiva = e.target.dataset.cat;
+                renderizarCatalogo();
+            }
+        });
+
+        btnLimpar.addEventListener('click', () => {
+            buscaInput.value = '';
+            categoriaAtiva = 'todos';
+            document.querySelectorAll('.filtro-btn').forEach(b => b.classList.remove('ativo'));
+            document.querySelector('.filtro-btn[data-cat="todos"]').classList.add('ativo');
+            renderizarCatalogo();
+        });
+
+        renderizarCatalogo();
+    </script>
+
+</body>
+</html>
