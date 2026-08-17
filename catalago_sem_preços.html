@@ -264,6 +264,17 @@
             border-color: var(--primary);
         }
 
+        .btn-catalogo {
+            background: linear-gradient(135deg, var(--secondary), #6d28d9);
+            color: white;
+            box-shadow: 0 4px 24px rgba(124, 58, 237, 0.15);
+        }
+
+        .btn-catalogo:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 12px 40px rgba(124, 58, 237, 0.25);
+        }
+
         .nav-icon-link {
             width: 42px;
             height: 42px;
@@ -434,13 +445,13 @@
         }
 
         /* ============================================================
-           FILTROS - MODO CLARO
+           FILTROS - MODO CLARO (SEM STICKY)
            ============================================================ */
         .filtros-bar {
             background: rgba(255, 255, 255, 0.95);
             border-bottom: 1px solid var(--border);
-            position: sticky;
-            top: 76px;
+            /* REMOVIDO: position: sticky; */
+            /* REMOVIDO: top: 76px; */
             z-index: 100;
             padding: 16px 0;
             backdrop-filter: blur(12px);
@@ -802,9 +813,6 @@
             .busca-input {
                 min-width: 100%;
             }
-            .filtros-bar {
-                top: 76px;
-            }
         }
 
         @media (max-width: 640px) {
@@ -819,10 +827,6 @@
             }
             .produto-card {
                 padding: 18px;
-            }
-            .filtros-bar {
-                top: 76px;
-                padding: 12px 0;
             }
         }
     </style>
@@ -890,7 +894,7 @@
     </div>
 
     <!-- ============================================================
-    BARRA DE FILTROS
+    BARRA DE FILTROS (SEM STICKY)
     ============================================================ -->
     <div class="filtros-bar">
         <div class="container">
