@@ -11,7 +11,7 @@
     
     <style>
         /* ============================================================
-           ROOT & RESET - ESTILO PORTFÓLIO
+           ROOT & RESET - MODO CLARO
            ============================================================ */
         * {
             margin: 0;
@@ -20,19 +20,18 @@
         }
 
         :root {
-            --bg: #0a1628;
-            --surface: rgba(255, 255, 255, 0.05);
-            --surface-hover: rgba(255, 255, 255, 0.08);
-            --text: #e2e8f0;
-            --text-light: #94a3b8;
-            --border: rgba(255, 255, 255, 0.06);
-            --primary: #00d4ff;
-            --primary-dark: #0ea5e9;
+            --bg: #f5f7fb;
+            --surface: #ffffff;
+            --surface-hover: #f1f4f9;
+            --text: #1a2332;
+            --text-light: #5b6b7e;
+            --border: #e2e8f0;
+            --primary: #0f766e;
+            --primary-dark: #0a4f4a;
             --secondary: #7c3aed;
             --accent: #f59e0b;
-            --accent2: #10b981;
-            --shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-            --shadow-glow: 0 0 60px rgba(0, 212, 255, 0.06);
+            --shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+            --shadow-glow: 0 0 60px rgba(15, 118, 110, 0.06);
             --radius: 16px;
             --radius-lg: 24px;
             --radius-xl: 32px;
@@ -68,7 +67,7 @@
         }
 
         /* ============================================================
-           ANIMAÇÕES - ESTILO PORTFÓLIO
+           ANIMAÇÕES
            ============================================================ */
         @keyframes fadeInUp {
             from { opacity: 0; transform: translateY(40px) scale(0.96); }
@@ -82,8 +81,8 @@
         }
 
         @keyframes glowPulse {
-            0%, 100% { box-shadow: 0 0 40px rgba(0, 212, 255, 0.06); }
-            50% { box-shadow: 0 0 80px rgba(0, 212, 255, 0.15); }
+            0%, 100% { box-shadow: 0 0 40px rgba(15, 118, 110, 0.04); }
+            50% { box-shadow: 0 0 80px rgba(15, 118, 110, 0.10); }
         }
 
         @keyframes tiltIn {
@@ -114,7 +113,7 @@
         }
 
         /* ============================================================
-           PARTICLES (fundo)
+           PARTICLES (fundo - modo claro)
            ============================================================ */
         #particles-canvas {
             position: fixed;
@@ -127,21 +126,21 @@
         }
 
         /* ============================================================
-           HEADER - ESTILO PORTFÓLIO
+           HEADER - MODO CLARO
            ============================================================ */
         .navbar {
             position: sticky;
             top: 0;
             z-index: 1000;
-            background: rgba(10, 22, 40, 0.92);
+            background: rgba(255, 255, 255, 0.92);
             backdrop-filter: blur(20px) saturate(180%);
             border-bottom: 1px solid var(--border);
             transition: all 0.3s ease;
         }
 
         .navbar.scrolled {
-            background: rgba(10, 22, 40, 0.98);
-            box-shadow: 0 4px 40px rgba(0, 0, 0, 0.3);
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 4px 40px rgba(0, 0, 0, 0.06);
         }
 
         .nav-wrap {
@@ -165,7 +164,7 @@
             border-radius: 14px;
             overflow: hidden;
             flex-shrink: 0;
-            box-shadow: 0 8px 24px rgba(0, 212, 255, 0.2);
+            box-shadow: 0 4px 16px rgba(15, 118, 110, 0.15);
             transition: transform 0.3s ease;
         }
 
@@ -187,7 +186,7 @@
 
         .brand-text strong {
             font-size: 1rem;
-            color: white;
+            color: var(--text);
             letter-spacing: -0.02em;
         }
 
@@ -225,7 +224,7 @@
         }
 
         .nav-links a:hover {
-            color: white;
+            color: var(--text);
         }
 
         .nav-links a:hover::after {
@@ -265,19 +264,19 @@
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
             color: white;
-            box-shadow: 0 4px 24px rgba(0, 212, 255, 0.15);
+            box-shadow: 0 4px 24px rgba(15, 118, 110, 0.15);
         }
 
         .btn-primary:hover {
             transform: translateY(-3px) scale(1.02);
-            box-shadow: 0 12px 40px rgba(0, 212, 255, 0.25);
+            box-shadow: 0 12px 40px rgba(15, 118, 110, 0.25);
         }
 
         .btn-secondary {
             background: var(--surface);
-            color: white;
+            color: var(--text);
             border: 1px solid var(--border);
         }
 
@@ -296,6 +295,17 @@
         .btn-accent:hover {
             transform: translateY(-3px) scale(1.02);
             box-shadow: 0 12px 40px rgba(245, 158, 11, 0.25);
+        }
+
+        .btn-catalogo {
+            background: linear-gradient(135deg, var(--secondary), #6d28d9);
+            color: white;
+            box-shadow: 0 4px 24px rgba(124, 58, 237, 0.15);
+        }
+
+        .btn-catalogo:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 12px 40px rgba(124, 58, 237, 0.25);
         }
 
         .btn-glow {
@@ -328,7 +338,7 @@
             border-radius: 12px;
             border: 1px solid var(--border);
             background: var(--surface);
-            color: white;
+            color: var(--text);
             font-size: 18px;
             cursor: pointer;
         }
@@ -357,12 +367,12 @@
 
         .nav-mobile a:hover {
             background: var(--surface-hover);
-            color: white;
+            color: var(--text);
             border-color: var(--primary);
         }
 
         /* ============================================================
-           HERO - ESTILO PORTFÓLIO
+           HERO - MODO CLARO
            ============================================================ */
         .hero {
             padding: 80px 0 60px;
@@ -378,7 +388,7 @@
             right: -10%;
             width: 700px;
             height: 700px;
-            background: radial-gradient(circle, rgba(0, 212, 255, 0.04), transparent 70%);
+            background: radial-gradient(circle, rgba(15, 118, 110, 0.04), transparent 70%);
             border-radius: 50%;
             pointer-events: none;
             animation: glowPulse 6s ease-in-out infinite;
@@ -412,6 +422,7 @@
             line-height: 1.05;
             letter-spacing: -0.03em;
             margin-bottom: 0.5rem;
+            color: var(--text);
         }
 
         .hero-content h1 .highlight {
@@ -457,7 +468,7 @@
         .hero-tag:hover {
             border-color: var(--primary);
             transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(0, 212, 255, 0.05);
+            box-shadow: 0 8px 24px rgba(15, 118, 110, 0.05);
         }
 
         .hero-tag i {
@@ -497,8 +508,8 @@
             height: 340px;
             border-radius: 50%;
             overflow: hidden;
-            border: 3px solid rgba(0, 212, 255, 0.15);
-            box-shadow: var(--shadow), 0 0 40px rgba(0, 212, 255, 0.05);
+            border: 3px solid rgba(15, 118, 110, 0.15);
+            box-shadow: var(--shadow), 0 0 40px rgba(15, 118, 110, 0.05);
             justify-self: center;
             animation: float3d 6s ease-in-out infinite;
             position: relative;
@@ -529,7 +540,7 @@
         }
 
         /* ============================================================
-           TRUST BAR - ESTILO PORTFÓLIO
+           TRUST BAR - MODO CLARO
            ============================================================ */
         .trust-bar {
             margin-top: -18px;
@@ -538,7 +549,7 @@
         }
 
         .trust-box {
-            background: rgba(255, 255, 255, 0.03);
+            background: rgba(255, 255, 255, 0.8);
             backdrop-filter: blur(20px);
             border: 1px solid var(--border);
             border-radius: var(--radius-lg);
@@ -559,7 +570,7 @@
             width: 48px;
             height: 48px;
             border-radius: 14px;
-            background: rgba(0, 212, 255, 0.08);
+            background: rgba(15, 118, 110, 0.08);
             color: var(--primary);
             display: grid;
             place-items: center;
@@ -570,7 +581,7 @@
         .trust-item div strong {
             display: block;
             font-size: 0.95rem;
-            color: white;
+            color: var(--text);
         }
 
         .trust-item div span {
@@ -579,7 +590,7 @@
         }
 
         /* ============================================================
-           SEÇÕES - ESTILO PORTFÓLIO
+           SEÇÕES - MODO CLARO
            ============================================================ */
         .section {
             padding: 90px 0;
@@ -587,7 +598,7 @@
         }
 
         .section-alt {
-            background: rgba(255, 255, 255, 0.02);
+            background: rgba(255, 255, 255, 0.5);
         }
 
         .section-header {
@@ -602,8 +613,8 @@
             gap: 8px;
             padding: 8px 16px;
             border-radius: 999px;
-            background: rgba(0, 212, 255, 0.06);
-            border: 1px solid rgba(0, 212, 255, 0.1);
+            background: rgba(15, 118, 110, 0.06);
+            border: 1px solid rgba(15, 118, 110, 0.1);
             color: var(--primary);
             font-size: 0.7rem;
             font-weight: 700;
@@ -618,7 +629,7 @@
             line-height: 1.15;
             letter-spacing: -0.03em;
             margin-bottom: 16px;
-            color: white;
+            color: var(--text);
         }
 
         .section-title span {
@@ -636,7 +647,7 @@
         }
 
         /* ============================================================
-           SOBRE - ESTILO PORTFÓLIO
+           SOBRE - MODO CLARO
            ============================================================ */
         .about-grid {
             display: grid;
@@ -672,7 +683,7 @@
             font-weight: 800;
             line-height: 1.15;
             margin-bottom: 0.5rem;
-            color: white;
+            color: var(--text);
         }
 
         .about-copy h2 span {
@@ -707,7 +718,7 @@
             width: 24px;
             height: 24px;
             border-radius: 50%;
-            background: rgba(0, 212, 255, 0.08);
+            background: rgba(15, 118, 110, 0.08);
             color: var(--primary);
             display: grid;
             place-items: center;
@@ -738,12 +749,12 @@
 
         .pill:hover {
             border-color: var(--primary);
-            color: white;
+            color: var(--primary);
             transform: translateY(-2px);
         }
 
         /* ============================================================
-           SERVIÇOS - ESTILO PORTFÓLIO
+           SERVIÇOS - MODO CLARO
            ============================================================ */
         .services-grid {
             display: grid;
@@ -760,6 +771,7 @@
             transform-style: preserve-3d;
             perspective: 600px;
             text-align: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
         }
 
         .service-card:hover {
@@ -775,7 +787,7 @@
             display: grid;
             place-items: center;
             margin: 0 auto 18px;
-            background: linear-gradient(135deg, rgba(0, 212, 255, 0.08), rgba(124, 58, 237, 0.08));
+            background: linear-gradient(135deg, rgba(15, 118, 110, 0.08), rgba(124, 58, 237, 0.08));
             color: var(--primary);
             font-size: 26px;
             transition: all 0.4s ease;
@@ -790,7 +802,7 @@
         .service-card h3 {
             font-size: 1.15rem;
             font-weight: 700;
-            color: white;
+            color: var(--text);
             margin-bottom: 8px;
         }
 
@@ -801,7 +813,7 @@
         }
 
         /* ============================================================
-           PROJETOS - ESTILO PORTFÓLIO (COM IMAGENS)
+           PROJETOS - MODO CLARO
            ============================================================ */
         .projects-grid {
             display: grid;
@@ -817,6 +829,7 @@
             transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
             transform-style: preserve-3d;
             perspective: 600px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
         }
 
         .project-card:hover {
@@ -828,7 +841,7 @@
         .project-media {
             aspect-ratio: 16/10;
             overflow: hidden;
-            background: rgba(255, 255, 255, 0.02);
+            background: rgba(0, 0, 0, 0.02);
             position: relative;
         }
 
@@ -850,7 +863,7 @@
         .project-content h3 {
             font-size: 1.1rem;
             font-weight: 700;
-            color: white;
+            color: var(--text);
             margin-bottom: 4px;
         }
 
@@ -884,8 +897,8 @@
         }
 
         .project-tags span {
-            background: rgba(0, 212, 255, 0.06);
-            border: 1px solid rgba(0, 212, 255, 0.08);
+            background: rgba(15, 118, 110, 0.06);
+            border: 1px solid rgba(15, 118, 110, 0.08);
             border-radius: 50px;
             padding: 2px 12px;
             font-size: 0.65rem;
@@ -894,7 +907,7 @@
         }
 
         /* ============================================================
-           CATÁLOGO - ESTILO PORTFÓLIO
+           CATÁLOGO - MODO CLARO
            ============================================================ */
         .catalog-grid {
             display: grid;
@@ -909,6 +922,7 @@
             border-radius: var(--radius-lg);
             padding: 32px;
             transition: all 0.4s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
         }
 
         .catalog-card:hover {
@@ -919,7 +933,7 @@
         .catalog-card h3 {
             font-size: 1.3rem;
             font-weight: 700;
-            color: white;
+            color: var(--text);
             margin-bottom: 8px;
         }
 
@@ -948,11 +962,46 @@
             font-size: 14px;
         }
 
+        .catalog-demo {
+            background: linear-gradient(135deg, rgba(15, 118, 110, 0.04), rgba(124, 58, 237, 0.04));
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 40px;
+            text-align: center;
+            transition: all 0.4s ease;
+        }
+
+        .catalog-demo:hover {
+            border-color: var(--primary);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .catalog-demo h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 8px;
+        }
+
+        .catalog-demo p {
+            color: var(--text-light);
+            font-size: 0.95rem;
+            line-height: 1.7;
+            margin-bottom: 16px;
+        }
+
+        .catalog-demo .btn-group {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
         /* ============================================================
-           CLÍNICAS - ESTILO PORTFÓLIO
+           CLÍNICAS - MODO CLARO
            ============================================================ */
         .clinic-wrap {
-            background: linear-gradient(135deg, rgba(0, 212, 255, 0.04), rgba(124, 58, 237, 0.04));
+            background: linear-gradient(135deg, rgba(15, 118, 110, 0.04), rgba(124, 58, 237, 0.04));
             border: 1px solid var(--border);
             border-radius: var(--radius-xl);
             overflow: hidden;
@@ -976,7 +1025,7 @@
         .clinic-visual h3 {
             font-size: 1.8rem;
             font-weight: 800;
-            color: white;
+            color: var(--text);
             line-height: 1.2;
         }
 
@@ -999,8 +1048,19 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
-            background: rgba(255, 255, 255, 0.02);
+            background: rgba(255, 255, 255, 0.4);
             border-left: 1px solid var(--border);
+        }
+
+        .clinic-pricing h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        .clinic-pricing p {
+            color: var(--text-light);
+            margin-bottom: 8px;
         }
 
         .clinic-pricing .btn-group {
@@ -1011,7 +1071,7 @@
         }
 
         /* ============================================================
-           DEPOIMENTOS - ESTILO PORTFÓLIO
+           DEPOIMENTOS - MODO CLARO
            ============================================================ */
         .testimonials-grid {
             display: grid;
@@ -1025,6 +1085,7 @@
             border-radius: var(--radius-lg);
             padding: 32px;
             transition: all 0.4s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
         }
 
         .testimonial-card:hover {
@@ -1048,7 +1109,7 @@
         }
 
         .testimonial-card strong {
-            color: white;
+            color: var(--text);
             font-weight: 700;
         }
 
@@ -1058,10 +1119,10 @@
         }
 
         /* ============================================================
-           CTA - ESTILO PORTFÓLIO
+           CTA - MODO CLARO
            ============================================================ */
         .cta {
-            background: linear-gradient(135deg, rgba(0, 212, 255, 0.04), rgba(124, 58, 237, 0.04));
+            background: linear-gradient(135deg, rgba(15, 118, 110, 0.04), rgba(124, 58, 237, 0.04));
             border-top: 1px solid var(--border);
             border-bottom: 1px solid var(--border);
             padding: 80px 0;
@@ -1071,7 +1132,7 @@
         .cta h2 {
             font-size: 2.4rem;
             font-weight: 800;
-            color: white;
+            color: var(--text);
             margin-bottom: 16px;
         }
 
@@ -1097,10 +1158,10 @@
         }
 
         /* ============================================================
-           FOOTER - ESTILO PORTFÓLIO
+           FOOTER - MODO CLARO
            ============================================================ */
         .footer {
-            background: rgba(10, 22, 40, 0.95);
+            background: white;
             border-top: 1px solid var(--border);
             padding: 48px 0 28px;
         }
@@ -1116,7 +1177,7 @@
         .footer-brand h4 {
             font-size: 1.2rem;
             font-weight: 800;
-            color: white;
+            color: var(--text);
         }
 
         .footer-brand p {
@@ -1129,7 +1190,7 @@
         .footer-contact h4 {
             font-size: 0.9rem;
             font-weight: 700;
-            color: white;
+            color: var(--text);
             margin-bottom: 16px;
         }
 
@@ -1171,7 +1232,7 @@
             width: 44px;
             height: 44px;
             border-radius: 50%;
-            background: var(--surface);
+            background: var(--bg);
             border: 1px solid var(--border);
             display: grid;
             place-items: center;
@@ -1227,7 +1288,7 @@
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: white;
             font-size: 22px;
-            box-shadow: 0 12px 36px rgba(0, 212, 255, 0.3);
+            box-shadow: 0 12px 36px rgba(15, 118, 110, 0.3);
             z-index: 998;
             cursor: pointer;
             border: none;
@@ -1248,7 +1309,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.8);
+            background: rgba(0, 0, 0, 0.6);
             backdrop-filter: blur(12px);
             justify-content: center;
             align-items: center;
@@ -1260,7 +1321,7 @@
         }
 
         .modal-form-content {
-            background: #0f1f33;
+            background: white;
             border: 1px solid var(--border);
             border-radius: var(--radius-xl);
             padding: 40px;
@@ -1269,13 +1330,13 @@
             max-height: 90vh;
             overflow-y: auto;
             position: relative;
-            box-shadow: 0 32px 80px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 32px 80px rgba(0, 0, 0, 0.2);
         }
 
         .modal-form-content h2 {
             font-size: 1.8rem;
             font-weight: 800;
-            color: white;
+            color: var(--text);
             margin-bottom: 8px;
         }
 
@@ -1297,7 +1358,7 @@
         }
 
         .close-modal:hover {
-            color: white;
+            color: var(--text);
         }
 
         .form-group {
@@ -1321,8 +1382,8 @@
             border-radius: 14px;
             font-size: 1rem;
             font-family: inherit;
-            background: rgba(255, 255, 255, 0.04);
-            color: white;
+            background: var(--bg);
+            color: var(--text);
             transition: all 0.3s ease;
             outline: none;
         }
@@ -1331,7 +1392,7 @@
         .form-group select:focus,
         .form-group textarea:focus {
             border-color: var(--primary);
-            background: rgba(255, 255, 255, 0.06);
+            box-shadow: 0 0 0 4px rgba(15, 118, 110, 0.08);
         }
 
         .form-group input::placeholder,
@@ -1341,8 +1402,8 @@
         }
 
         .form-group select option {
-            background: #0f1f33;
-            color: white;
+            background: white;
+            color: var(--text);
         }
 
         .form-group textarea {
@@ -1365,7 +1426,7 @@
 
         .btn-submit:hover {
             transform: translateY(-2px);
-            box-shadow: 0 12px 32px rgba(0, 212, 255, 0.2);
+            box-shadow: 0 12px 32px rgba(15, 118, 110, 0.2);
         }
 
         /* ============================================================
@@ -1451,6 +1512,9 @@
             .trust-box {
                 padding: 18px 20px;
             }
+            .catalog-demo {
+                padding: 24px 20px;
+            }
         }
     </style>
 </head>
@@ -1473,7 +1537,7 @@
                     </div>
                     <div class="brand-text">
                         <strong>DataDesh Soluções</strong>
-                        <span>Digitais</span>
+                        <span>Soluções Digitais</span>
                     </div>
                 </a>
                 <ul class="nav-links">
@@ -1486,6 +1550,7 @@
                 </ul>
                 <div class="nav-actions">
                     <a class="nav-icon-link desktop-only" href="https://www.instagram.com/datadeshsolucoesdigitais/" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a class="btn btn-catalogo desktop-only" href="catalago_sem_preços.html" target="_blank"><i class="fa-solid fa-book"></i> Catálogo</a>
                     <a class="btn btn-primary desktop-only btn-glow" href="https://wa.me/5531984987116" target="_blank"><i class="fab fa-whatsapp"></i> Fale comigo</a>
                     <button class="menu-toggle" id="menuToggle"><i class="fa-solid fa-bars"></i></button>
                 </div>
@@ -1497,6 +1562,7 @@
                 <a href="#catalogos">Catálogos</a>
                 <a href="#clinicas">Clínicas</a>
                 <a href="#depoimentos">Depoimentos</a>
+                <a href="catalago_sem_preços.html" target="_blank" style="border-color: var(--secondary); color: var(--secondary);"><i class="fa-solid fa-book"></i> Catálogo</a>
                 <a href="https://wa.me/5531984987116" target="_blank" style="border-color: var(--primary); color: var(--primary);">Falar no WhatsApp</a>
             </div>
         </div>
@@ -1514,7 +1580,7 @@
                     </div>
                     <h1 class="reveal">Transformo ideias em <span class="highlight">presença digital</span></h1>
                     <p class="subtitle reveal">Sites, catálogos, páginas e dashboards</p>
-                    <p class="bio reveal">Crio soluções digitais com visual moderno e foco em resultado. <strong style="color: var(--primary);">+60 projetos</strong> já concluídos para pequenos negócios e órgãos públicos.</p>
+                    <p class="bio reveal">Crio soluções digitais com visual moderno e foco em resultado. <strong style="color: var(--primary);">+98 projetos</strong> já concluídos para pequenos negócios e órgãos públicos.</p>
 
                     <div class="hero-tags reveal">
                         <span class="hero-tag"><i class="fas fa-code"></i> Sites & Páginas</span>
@@ -1527,12 +1593,13 @@
 
                     <div class="hero-actions reveal">
                         <a href="https://wa.me/5531984987116" class="btn btn-primary btn-glow" target="_blank"><i class="fab fa-whatsapp"></i> Quero minha solução</a>
+                        <a href="catalago_sem_preços.html" class="btn btn-catalogo" target="_blank"><i class="fa-solid fa-book"></i> Ver Catálogo</a>
                         <a href="#projetos" class="btn btn-secondary"><i class="fa-regular fa-eye"></i> Ver projetos</a>
                     </div>
 
                     <div class="hero-stats reveal">
                         <div class="stat">
-                            <h3>60+</h3>
+                            <h3>98+</h3>
                             <p>Projetos</p>
                         </div>
                         <div class="stat">
@@ -1591,7 +1658,7 @@
                 <div class="about-copy reveal">
                     <div class="section-kicker"><i class="fa-solid fa-user-tie"></i> Sobre mim</div>
                     <h2>Oi, sou a <span>Ana</span></h2>
-                    <p>Tecnóloga em Ciência de Dados, especialista em criar páginas, catálogos, dashboards e ferramentas digitais com visual moderno e foco em resultado. Já concluí <strong style="color: var(--primary);">mais de 60 projetos</strong> para diferentes negócios e órgãos públicos.</p>
+                    <p>Tecnóloga em Ciência de Dados, especialista em criar páginas, catálogos, dashboards e ferramentas digitais com visual moderno e foco em resultado. Já concluí <strong style="color: var(--primary);">mais de 98 projetos</strong> para diferentes negócios e órgãos públicos.</p>
 
                     <ul class="about-list">
                         <li><i class="fa-solid fa-check"></i> Sites, páginas e catálogos com visual sofisticado</li>
@@ -1812,7 +1879,26 @@
                     <p>Até 50 produtos • Busca por nome • WhatsApp integrado</p>
                     <div style="display: flex; gap: 10px; margin-top: 16px; flex-wrap: wrap;">
                         <a href="https://wa.me/5531984987116?text=Quero%20um%20cat%C3%A1logo%20digital!" class="btn btn-primary" target="_blank">Quero meu catálogo</a>
-                        <a href="https://datadesh-site-da-empresa.github.io/servicosdigitais/catalogo.html" class="btn btn-secondary" target="_blank">Ver demo</a>
+                        <a href="catalago_sem_preços.html" class="btn btn-secondary" target="_blank">Ver demo</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- NOVA SEÇÃO: CATÁLOGO COMPLETO COMO EXEMPLO -->
+            <div style="margin-top: 48px;">
+                <div class="catalog-demo reveal-tilt">
+                    <div class="section-kicker" style="margin: 0 auto 12px; display: inline-flex;">
+                        <i class="fa-solid fa-book-open"></i> Catálogo Completo
+                    </div>
+                    <h3>Conheça meu <span style="color: var(--primary);">catálogo de soluções</span></h3>
+                    <p>Mais de 112 soluções digitais disponíveis — sites, catálogos, dashboards, automações e micro-sistemas para pequenos negócios.</p>
+                    <div class="btn-group">
+                        <a href="catalago_sem_preços.html" class="btn btn-catalogo" target="_blank">
+                            <i class="fa-solid fa-book"></i> Ver Catálogo Completo
+                        </a>
+                        <a href="https://wa.me/5531984987116?text=Quero%20saber%20mais%20sobre%20o%20cat%C3%A1logo%20de%20solu%C3%A7%C3%B5es!" class="btn btn-primary" target="_blank">
+                            <i class="fab fa-whatsapp"></i> Quero uma solução
+                        </a>
                     </div>
                 </div>
             </div>
@@ -1826,18 +1912,18 @@
         <div class="container">
             <div class="clinic-wrap reveal-tilt">
                 <div class="clinic-visual">
-                    <div class="section-kicker" style="background: rgba(0,212,255,0.08); border-color: rgba(0,212,255,0.1); color: var(--primary);">
+                    <div class="section-kicker" style="background: rgba(15,118,110,0.08); border-color: rgba(15,118,110,0.1); color: var(--primary);">
                         <i class="fa-solid fa-hospital-user"></i> Especial para clínicas
                     </div>
                     <h3>Página profissional para <span>clínicas e consultórios</span></h3>
                     <p>Estrutura completa para apresentar serviços, diferenciais, equipe e contato. Visual moderno que transmite credibilidade ao paciente.</p>
                 </div>
                 <div class="clinic-pricing">
-                    <h3 style="font-size: 1.3rem; font-weight: 700; color: white;">Solução completa</h3>
-                    <p style="color: var(--text-light); margin-bottom: 8px;">Apresentação profissional com layout exclusivo</p>
+                    <h3>Solução completa</h3>
+                    <p>Apresentação profissional com layout exclusivo</p>
                     <div class="btn-group">
                         <a href="https://wa.me/5531984987116?text=Quero%20uma%20p%C3%A1gina%20para%20minha%20cl%C3%ADnica!" class="btn btn-primary" target="_blank"><i class="fab fa-whatsapp"></i> Quero a minha</a>
-                        <a href="https://datadesh-site-da-empresa.github.io/servicosdigitais/catalogo.html" class="btn btn-secondary" target="_blank">Ver exemplos</a>
+                        <a href="catalago_sem_preços.html" class="btn btn-secondary" target="_blank">Ver exemplos</a>
                     </div>
                 </div>
             </div>
@@ -1888,6 +1974,7 @@
             <p>Vamos conversar sobre como posso ajudar sua empresa a ter uma presença digital profissional.</p>
             <div class="btn-group">
                 <a href="https://wa.me/5531984987116" class="btn btn-primary btn-glow" target="_blank"><i class="fab fa-whatsapp"></i> Falar com Ana</a>
+                <a href="catalago_sem_preços.html" class="btn btn-catalogo" target="_blank"><i class="fa-solid fa-book"></i> Ver Catálogo</a>
                 <a href="#projetos" class="btn btn-secondary"><i class="fa-regular fa-eye"></i> Ver projetos</a>
             </div>
         </div>
@@ -1910,6 +1997,7 @@
                     <a href="#projetos">Projetos</a>
                     <a href="#catalogos">Catálogos</a>
                     <a href="#clinicas">Clínicas</a>
+                    <a href="catalago_sem_preços.html" target="_blank">Catálogo Completo</a>
                 </div>
                 <div class="footer-contact">
                     <h4>Contato</h4>
@@ -1991,7 +2079,7 @@
     ============================================================ -->
     <script>
         // ============================================================
-        // PARTICLES
+        // PARTICLES - MODO CLARO
         // ============================================================
         const canvas = document.getElementById('particles-canvas');
         const ctx = canvas.getContext('2d');
@@ -2012,7 +2100,8 @@
                 this.size = Math.random() * 2 + 0.5;
                 this.speedX = (Math.random() - 0.5) * 0.5;
                 this.speedY = (Math.random() - 0.5) * 0.5;
-                this.opacity = Math.random() * 0.3 + 0.1;
+                this.opacity = Math.random() * 0.2 + 0.05;
+                this.color = Math.random() > 0.5 ? '15, 118, 110' : '124, 58, 237';
             }
 
             update() {
@@ -2025,12 +2114,12 @@
             draw() {
                 ctx.beginPath();
                 ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(0, 212, 255, ${this.opacity})`;
+                ctx.fillStyle = `rgba(${this.color}, ${this.opacity})`;
                 ctx.fill();
             }
         }
 
-        function initParticles(count = 60) {
+        function initParticles(count = 50) {
             particles = [];
             for (let i = 0; i < count; i++) {
                 particles.push(new Particle());
@@ -2046,7 +2135,7 @@
                     const dist = Math.sqrt(dx * dx + dy * dy);
                     if (dist < 120) {
                         ctx.beginPath();
-                        ctx.strokeStyle = `rgba(0, 212, 255, ${0.06 * (1 - dist / 120)})`;
+                        ctx.strokeStyle = `rgba(15, 118, 110, ${0.04 * (1 - dist / 120)})`;
                         ctx.lineWidth = 0.5;
                         ctx.moveTo(particles[i].x, particles[i].y);
                         ctx.lineTo(particles[j].x, particles[j].y);
