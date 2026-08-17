@@ -121,12 +121,12 @@
         }
         .aviso-bar i { margin-right: 6px; color: #f59e0b; }
 
-        /* FILTROS */
+        /* FILTROS - SEM STICKY */
         .filtros-bar {
             background: white;
             border-bottom: 1px solid var(--line);
-            position: sticky;
-            top: 0;
+            /* REMOVIDO: position: sticky; */
+            /* REMOVIDO: top: 0; */
             z-index: 100;
             padding: 16px 0;
             box-shadow: var(--shadow-sm);
@@ -403,7 +403,7 @@
     <i class="fa-solid fa-circle-info"></i> <strong>Abaixo de R$ 50,00:</strong> somente à vista. <strong>Acima de R$ 50,00:</strong> parcelado em até 10x sem juros. <strong>20% de sinal</strong> para iniciar o projeto.
 </div>
 
-<!-- BARRA DE FILTROS -->
+<!-- BARRA DE FILTROS (SEM STICKY) -->
 <div class="filtros-bar">
     <div class="container">
         <div class="filtros-wrap">
